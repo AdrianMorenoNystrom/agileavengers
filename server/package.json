@@ -1,0 +1,23 @@
+{
+    "name": "server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "nodemon app.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.18.2",
+        "http-errors": "^2.0.0"
+    },
+    "devDependencies": {
+        "cookie-parser": "^1.4.6",
+        "debug": "^4.3.4",
+        "morgan": "^1.10.0",
+        "nodemon": "^3.1.0"
+    }
+}
