@@ -9,7 +9,7 @@ const notion = new Client({
     auth: process.env.NOTION_TOKEN,
 });
 
-app.get('/api', async (req, res) => {
+app.get('/people', async (req, res) => {
     const databaseId = process.env.NOTION_DATABASE_ID;
 
     try {
@@ -22,6 +22,22 @@ app.get('/api', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
+app.get('/projects', async (req, res) => {
+    const databaseId = process.env.NOTION_DATABASE_ID_PROJECTS;
+
+    try {
+        const response = await notion.databases.query({ database_id: databaseId });
+        const relevantData = response.results;
+
+        res.json({ message: relevantData });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+
 
 app.listen(port, () => {
     console.log(`Server listening on ${port}`);
