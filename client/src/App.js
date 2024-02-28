@@ -21,6 +21,7 @@ function App() {
         };
         callBackendAPI();
     }, []);
+
     return (
         <div className="App">
             <h1>People - Notion Data</h1>
