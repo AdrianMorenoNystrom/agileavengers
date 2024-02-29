@@ -40,6 +40,7 @@ app.get('/projects', async (req, res) => {
 
 
 app.post('/projects',jsonParser,async(req,res)=>{
+    // Lägger bara till Projektnamn och timmar som test till en början.
     const projectName = req.body.projectName;
     const hours = req.body.hours;
     const databaseId = process.env.NOTION_DATABASE_ID_PROJECTS;
