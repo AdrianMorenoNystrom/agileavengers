@@ -2,7 +2,8 @@ const express = require('express');
 const dotenv = require('dotenv').config();
 const { Client } = require('@notionhq/client');
 const port = process.env.PORT || 3500;
-
+var bodyParser = require('body-parser');
+var jsonParser = bodyParser.json();
 const app = express();
 
 const notion = new Client({
@@ -37,6 +38,35 @@ app.get('/projects', async (req, res) => {
     }
 });
 
+
+app.post('/projects',jsonParser,async(req,res)=>{
+    const projectName = req.body.projectName;
+    const hours = req.body.hours;
+    const databaseId = process.env.NOTION_DATABASE_ID_PROJECTS;
+    try {
+        const response = await notion.pages.create({
+            parent: { database_id: databaseId },
+            properties: {
+                Hours: {
+                    number: parseFloat(hours)
+                },
+                "Projectname": {
+                    title: [
+                        {
+                            text: {
+                                content: projectName
+                            }
+                        }
+                    ]
+                }
+            }
+        });
+        console.log(response);
+        console.log("Success!");
+    } catch (error) {
+        console.log(error);
+    }
+})
 
 
 app.listen(port, () => {
