@@ -8,6 +8,7 @@ export default function AddProject() {
     const[projectStart,setProjectStart] = useState("");
     const[projectEnd,setProjectEnd] = useState("");
 
+    // Projects get the "status" of Next up automatically when added. 
     const status = "Next up";
 
     function SubmitToNotion(event) {
