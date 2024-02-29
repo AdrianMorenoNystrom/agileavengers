@@ -1,10 +1,14 @@
 import React from 'react';
 import { useState } from 'react';
-import useFetchData from './UseFetchData';
+import '../teststyle.css'
 
 export default function AddProject() {
     const [projectName, setProjectName] = useState("");
     const [hours, setHours] = useState("");
+    const[projectStart,setProjectStart] = useState("");
+    const[projectEnd,setProjectEnd] = useState("");
+
+    const status = "Next up";
 
     function SubmitToNotion(event) {
         event.preventDefault(); 
@@ -17,7 +21,10 @@ export default function AddProject() {
             },
             body: JSON.stringify({
                 projectName: projectName,
-                hours: hours
+                hours: hours,
+                status:status,
+                projectStart:projectStart,
+                projectEnd:projectEnd
             })
         })
         .then(response => {
@@ -35,7 +42,7 @@ export default function AddProject() {
     }
 
     return (
-        <div>
+        <div className='content'>
             <form onSubmit={SubmitToNotion}>
                 <div>
                     <h1>Add project to database</h1>
@@ -44,6 +51,12 @@ export default function AddProject() {
 
                     <p>Hours</p>
                     <input type="text" id="hours" value={hours} onChange={(e) => setHours(e.target.value)} required></input>
+
+                    <p>Timespan</p>
+                    <span>From: </span>
+                    <input type='date' id="timefrom"  min="2024-01-01" max="2026-01-01" onChange={(e) => setProjectStart(e.target.value)} required></input>
+                    <p></p>
+                    <span>To: </span><input type='date' id="timeto"  min="2024-01-01" max="2026-01-01" onChange={(e) => setProjectEnd(e.target.value)} required></input>
                 </div>
                 <div>
                     <button type="submit">
