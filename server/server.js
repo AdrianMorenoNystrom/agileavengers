@@ -1,85 +1,25 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const { Client } = require("@notionhq/client");
 
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
 });
 
-app.get('/people', async (req, res) => {
-    const databaseId = process.env.NOTION_DATABASE_ID;
+module.exports = { express, notion };
 
-    try {
-        const response = await notion.databases.query({ database_id: databaseId });
-        const relevantData = response.results;
+// Import routes and set up endpoints
+const peopleRouter = require("./routes/people/index");
+app.use("/people", peopleRouter);
 
-        res.json({ message: relevantData });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
+const projectsRouter = require("./routes/projects/index");
+app.use("/projects", projectsRouter);
 
-app.get('/projects', async (req, res) => {
-    const databaseId = process.env.NOTION_DATABASE_ID_PROJECTS;
+const addProjectsRouter = require("./routes/projects/addProject");
+app.use("/projects/add", addProjectsRouter);
 
-    try {
-        const response = await notion.databases.query({ database_id: databaseId });
-        const relevantData = response.results;
-
-        res.json({ message: relevantData });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
-
-app.post('/projects',jsonParser,async(req,res)=>{
-    // Lägger bara till Projektnamn och timmar som test till en början.
-    const projectName = req.body.projectName;
-    const hours = req.body.hours;
-    const status=req.body.status;
-    const projectStart=req.body.projectStart;
-    const projectEnd=req.body.projectEnd;
-    const databaseId = process.env.NOTION_DATABASE_ID_PROJECTS;
-    try {
-        const response = await notion.pages.create({
-            parent: { database_id: databaseId },
-            properties: {
-                Hours: {
-                    number: parseFloat(hours)
-                },
-                "Projectname": {
-                    title: [
-                        {
-                            text: {
-                                content: projectName
-                            }
-                        }
-                    ]
-                },
-                "Status":{
-                    select:{
-                        name:status
-                    }
-                },
-                "Timespan":{
-                    date:{
-                        start:projectStart,
-                        end:projectEnd
-                    }
-                }
-            }
-        });
-        console.log(response);
-        console.log("Success!");
-    } catch (error) {
-        console.log(error);
-    }
-})
-
-
+const port = process.env.PORT || 3500;
 app.listen(port, () => {
   console.log(`Server listening on ${port}`);
 });
