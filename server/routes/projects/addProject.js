@@ -1,6 +1,8 @@
 require("dotenv").config();
-const { express, notion } = require("../../server");
+
+const { express } = require("../../express");
 const router = express.Router();
+const notion = require("../../notion");
 const bodyParser = require("body-parser");
 const jsonParser = bodyParser.json();
 
