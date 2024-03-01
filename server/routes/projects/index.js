@@ -1,7 +1,6 @@
 require("dotenv").config();
 const { express, notion } = require("../../server");
 const router = express.Router();
-console.log("Hello");
 
 // Get all data from Projects Table
 router.get("/", async (req, res) => {
