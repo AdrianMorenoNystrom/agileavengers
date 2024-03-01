@@ -1,6 +1,7 @@
 require("dotenv").config();
-const { express, notion } = require("../../server");
+const { express } = require("../../express");
 const router = express.Router();
+const notion = require("../../notion");
 
 // Get all data from People Table
 router.get("/", async (req, res) => {
