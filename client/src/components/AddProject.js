@@ -14,7 +14,7 @@ export default function AddProject() {
     function SubmitToNotion(event) {
         event.preventDefault(); 
 
-        fetch(('/projects'), {
+        fetch(('/projects/add'), {
             method: "post",
             headers: {
                 "Accept": "application/json",

@@ -1,51 +1,25 @@
-const express = require('express');
-const dotenv = require('dotenv').config();
-const { Client } = require('@notionhq/client');
-const cors = require('cors');
-const port = process.env.PORT || 3500;
+require("dotenv").config();
+const express = require("express");
 const app = express();
-
-// Define the CORS options
-const corsOptions = {
-    credentials: true,
-    origin: ['http://localhost:3000', 'http://localhost:3500'] // Whitelist the domains you want to allow
-};
-
-app.use(cors(corsOptions)); 
-
+const { Client } = require("@notionhq/client");
 
 const notion = new Client({
-    auth: process.env.NOTION_TOKEN,
+  auth: process.env.NOTION_TOKEN,
 });
 
-app.get('/people', async (req, res) => {
-    const databaseId = process.env.NOTION_DATABASE_ID;
+module.exports = { express, notion };
 
-    try {
-        const response = await notion.databases.query({ database_id: databaseId });
-        const relevantData = response.results;
+// Import routes and set up endpoints
+const peopleRouter = require("./routes/people/index");
+app.use("/people", peopleRouter);
 
-        res.json({ message: relevantData });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
+const projectsRouter = require("./routes/projects/index");
+app.use("/projects", projectsRouter);
 
-app.get('/projects', async (req, res) => {
-    const databaseId = process.env.NOTION_DATABASE_ID_PROJECTS;
+const addProjectsRouter = require("./routes/projects/addProject");
+app.use("/projects/add", addProjectsRouter);
 
-    try {
-        const response = await notion.databases.query({ database_id: databaseId });
-        const relevantData = response.results;
-
-        res.json({ message: relevantData });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
+const port = process.env.PORT || 3500;
 app.listen(port, () => {
-    console.log(`Server listening on ${port}`);
+  console.log(`Server listening on ${port}`);
 });
