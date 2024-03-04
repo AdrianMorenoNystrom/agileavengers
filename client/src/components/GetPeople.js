@@ -1,13 +1,13 @@
 import useFetchData from './UseFetchData';
 
-import React from 'react'
+import React from 'react';
 
 export default function GetPeople() {
     const data = useFetchData('/people');
 
     return (
         <>
-            <h1>People - Notion Data</h1>
+            <h2>People - Notion Data</h2>
             <table className="table">
                 <div className="row-title">
                     <div>Name</div>

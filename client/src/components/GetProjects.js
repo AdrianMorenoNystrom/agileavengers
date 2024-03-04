@@ -1,6 +1,6 @@
 import useFetchData from './UseFetchData';
 
-import React from 'react'
+import React from 'react';
 
 export default function GetProjects() {
     const data = useFetchData('/projects');
