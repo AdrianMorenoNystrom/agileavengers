@@ -1,21 +1,20 @@
+import React from 'react';
 import useFetchData from './UseFetchData';
 
-import React from 'react'
-
-export default function GetPeople() {
+const GetPeople = ({ people }) => {
     const data = useFetchData('/people');
 
     return (
         <>
             <h1>People - Notion Data</h1>
-            <table className="table">
+            <div className="table">
                 <div className="row-title">
                     <div>Name</div>
                     <div>Total Hours</div>
                 </div>
                 {data &&
                     data.map((page) => {
-                        console.log(page); // Gör så att vi se objektet i konsolen.
+                        // console.log(page); // Gör så att vi se objektet i konsolen.
                         return (
                             <div className="table-content" key={page.id}>
                                 <div className="names">
@@ -27,7 +26,9 @@ export default function GetPeople() {
                             </div>
                         );
                     })}
-            </table>
+            </div>
         </>
     );
-}
+};
+
+export default GetPeople;

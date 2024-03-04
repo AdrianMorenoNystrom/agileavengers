@@ -1,6 +1,6 @@
 import useFetchData from './UseFetchData';
 
-import React from 'react'
+import React from 'react';
 
 export default function GetProjects() {
     const data = useFetchData('/projects');
@@ -16,7 +16,7 @@ export default function GetProjects() {
                 </div>
                 {data &&
                     data.map((page) => {
-                        console.log(page); // Gör så att vi se objektet i konsolen.
+                        // console.log(page); // Gör så att vi se objektet i konsolen.
                         return (
                             <div className="table-content" key={page.id}>
                                 <div className="names">
