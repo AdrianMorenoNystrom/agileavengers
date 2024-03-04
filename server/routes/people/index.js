@@ -6,7 +6,7 @@ const notion = require("../../notion");
 
 // Get all data from People Table
 router.get("/", async (req, res) => {
-  const databaseId = process.env.NOTION_DATABASE_ID;
+  const databaseId = process.env.NOTION_DATABASE_ID_PEOPLE;
 
   try {
     const response = await notion.databases.query({ database_id: databaseId });
