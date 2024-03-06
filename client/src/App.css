@@ -2,12 +2,6 @@ p {
     margin: 0;
 }
 
-.App {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .row-title {
     display: flex;
     background-color: #282c34;

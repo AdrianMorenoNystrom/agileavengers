@@ -4,20 +4,21 @@ import './App.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
+import GetPeople from './components/GetPeople';
+import SignIn from './pages/SignIn-page';
+import Page404 from './pages/Page404';
 
 function App() {
     return (
         <Router>
-            <div className='App'>
-                <header><Header /></header>
-                <main>
-                    <Routes>
-                        <Route path='/' element={<Home />} />
-                        <Route path='*' element={<div>Error: Page not found</div>} />
-                    </Routes>
-                </main>
-                <footer><Footer /></footer>
-            </div>
+            <Header />
+            <Routes>
+                <Route path='/login' element={<SignIn />} />
+                <Route index element={<Home />} />
+                <Route path='/people' element={<GetPeople />} />
+                <Route path='*' element={<Page404 />} />
+            </Routes>
+            <Footer />
         </Router>
     );
 }
