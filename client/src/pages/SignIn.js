@@ -9,19 +9,19 @@ import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import LoginIcon from '@mui/icons-material/Login';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useLocation, useNavigate } from 'react-router-dom';
+import useFetchData from '../components/UseFetchData';
+
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Agile Avengers
-      </Link>{' '}
+      <Link color="inherit" underline='none'>Agile Avengers</Link>{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -33,18 +33,26 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  // const navigate = useNavigate();
+  // const location = useLocation();
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+    try {
+      const data = new FormData(event.currentTarget);
+      console.log({
+        email: data.get('email'),
+        password: data.get('password'),
+      });
+    } catch (error) {
+      console.error(error.message);
+    } finally {
+      // setEmail('');
+      // setPassword('');
+    }
   };
 
   return (
@@ -59,8 +67,8 @@ export default function SignIn() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
+          <Avatar sx={{ m: 1, bgcolor: '#1976d2' }}>
+            <LoginIcon color='inherit' />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in
@@ -75,6 +83,8 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+            // value={email}
+            // onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -85,6 +95,8 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+            // value={password}
+            // onChange={(e) => setPassword(e.target.value)}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
