@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,51 +10,81 @@ import PersonAddOutlinedIcon from '@mui/icons-material/PersonAddOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useLocation, useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 
 function Copyright(props) {
-    return (
-      <Typography variant="body2" color="text.secondary" align="center" {...props}>
-        {'Copyright © '}
-        <Link color="inherit" href="https://mui.com/">
-          Agile Avengers
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
-    );
-  }
+  return (
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+      <Link color="inherit" href="https://mui.com/">
+        Agile Avengers
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 
 const defaultTheme = createTheme();
 
+const SubmitToNotion = (fullName, email, password) => {
+  fetch('/people/add', {
+    method: 'post',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      fullName: fullName,
+      email: email,
+      password: password,
+    }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Failed to submit new user to Notion');
+      }
+      return response.json();
+    })
+    .then(() => {
+      console.log('Success!, new user created');
+    })
+    .catch((error) => {
+      console.log('Error!', error.message);
+    });
+};
+
 export default function CreateAccount() {
-
-    const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
-
-
-    const handleSubmit = (event) => {
+  const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
+  const [showErrorAlert, setShowErrorAlert] = React.useState(false);
+  const handleSubmit = async (event) => {
+    try {
       event.preventDefault();
       const data = new FormData(event.currentTarget);
-      console.log({
-        firstname: data.get('firstName'),
-        lastname: data.get('lastName'),
-        email: data.get('email'),
-        password: data.get('password')
-      });
-
-    
-
-      event.currentTarget.reset();
+      const fullName = data.get('fullName');
+      const email = data.get('email');
+      const password = data.get('password');
+  
+      await SubmitToNotion(fullName, email, password);
+  
+      event.target.reset();
       setShowSuccessAlert(true);
 
-    setTimeout(() => {
-      setShowSuccessAlert(false);
-    }, 5000);
-    };
+      setTimeout(() => {
+        setShowSuccessAlert(false);
+      }, 5000);
+    } catch (error) {
+      console.error('Error submitting to Notion:', error);
+      setShowErrorAlert(true);
 
-    return (
-        <ThemeProvider theme={defaultTheme}>
+      setTimeout(() => {
+        setShowErrorAlert(false);
+      }, 5000);
+    }
+  };
+
+  return (
+    <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -67,81 +96,72 @@ export default function CreateAccount() {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <PersonAddOutlinedIcon/>
+            <PersonAddOutlinedIcon />
           </Avatar>
-          
+
           <Typography component="h1" variant="h5">
-            Create Account 
+            Create Account
           </Typography>
           {showSuccessAlert && (
             <Alert severity="success">Account successfully created!</Alert>
           )}
+          {showErrorAlert && (
+            <Alert severity="error">Failed to create account.</Alert>
+          )}
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
-                name="firstName"
-                variant="outlined"
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Create Account
-            </Button>
-              <Grid item>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  autoComplete="fname"
+                  name="fullName"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="fullName"
+                  label="Full name"
+                  autoFocus
+                />
               </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                />
+              </Grid>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Create Account
+              </Button>
+              <Grid item></Grid>
               <Link href="/Login" variant="body2">
-                  Already have an account? Sign in here!
-                </Link>
+                Already have an account? Sign in here!
+              </Link>
             </Grid>
           </Box>
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
-    );
+  );
 }
