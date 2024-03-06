@@ -10,6 +10,7 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import LoginIcon from '@mui/icons-material/Login';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -19,9 +20,7 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Agile Avengers
-      </Link>{' '}
+      <Link color="inherit" underline='none'>Agile Avengers</Link>{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -59,8 +58,8 @@ export default function SignIn() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
+          <Avatar sx={{ m: 1, bgcolor: '#1976d2' }}>
+            <LoginIcon color='inherit' />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in
@@ -78,7 +77,7 @@ export default function SignIn() {
             />
             <TextField
               margin="normal"
-              required
+              // required
               fullWidth
               name="password"
               label="Password"
