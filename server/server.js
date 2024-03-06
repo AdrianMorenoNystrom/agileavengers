@@ -1,6 +1,9 @@
 const { app, startServer } = require("./express");
 
 // Import routes and set up endpoints
+const loginRouter = require("./routes/login/index");
+app.use("/login", loginRouter);
+
 const peopleRouter = require("./routes/people/index");
 app.use("/people", peopleRouter);
 
