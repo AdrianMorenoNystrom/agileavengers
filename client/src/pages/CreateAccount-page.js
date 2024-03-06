@@ -29,11 +29,6 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function CreateAccount() {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-  
     const handleSubmit = (event) => {
       event.preventDefault();
       const data = new FormData(event.currentTarget);
