@@ -1,10 +1,13 @@
-import GetPeople from '../components/GetPeople';
+import { CssBaseline } from '@mui/material';
+import Container from '@mui/material/Container';
 
 const Home = () => {
     return (
-        <div>
-            <GetPeople />
-        </div>
+        <Container component="main" maxWidth="md">
+            <CssBaseline>
+                <h1>Home</h1>
+            </CssBaseline>
+        </Container>
     );
 };
 
