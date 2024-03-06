@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useLocation, useNavigate } from 'react-router-dom';
+import Alert from '@mui/material/Alert';
 
 function Copyright(props) {
     return (
@@ -29,14 +30,30 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function CreateAccount() {
+
+    const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
+
+
     const handleSubmit = (event) => {
       event.preventDefault();
       const data = new FormData(event.currentTarget);
       console.log({
+        firstname: data.get('firstName'),
+        lastname: data.get('lastName'),
         email: data.get('email'),
-        password: data.get('password'),
+        password: data.get('password')
       });
+
+    
+
+      event.currentTarget.reset();
+      setShowSuccessAlert(true);
+
+    setTimeout(() => {
+      setShowSuccessAlert(false);
+    }, 5000);
     };
+
     return (
         <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -52,9 +69,13 @@ export default function CreateAccount() {
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <PersonAddOutlinedIcon/>
           </Avatar>
+          
           <Typography component="h1" variant="h5">
             Create Account 
           </Typography>
+          {showSuccessAlert && (
+            <Alert severity="success">Account successfully created!</Alert>
+          )}
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
