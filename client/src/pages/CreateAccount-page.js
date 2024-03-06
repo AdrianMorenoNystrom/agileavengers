@@ -12,6 +12,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
 import SubmitToNotion from '../components/SubmitUser';
+import NameFieldValidation from './functions/NameValidation';
 
 function Copyright(props) {
   return (
@@ -28,11 +29,12 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
-<SubmitToNotion/>
+
 
 export default function CreateAccount() {
   const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
   const [showErrorAlert, setShowErrorAlert] = React.useState(false);
+
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
@@ -40,8 +42,9 @@ export default function CreateAccount() {
       const fullName = data.get('fullName');
       const email = data.get('email');
       const password = data.get('password');
-  
-      await SubmitToNotion(fullName, email, password);
+      
+
+      SubmitToNotion(fullName, email, password);
   
       event.target.reset();
       setShowSuccessAlert(true);
@@ -87,16 +90,9 @@ export default function CreateAccount() {
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField
-                  autoComplete="fname"
-                  name="fullName"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="fullName"
-                  label="Full name"
-                  autoFocus
-                />
+
+                <NameFieldValidation/> 
+
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -118,7 +114,6 @@ export default function CreateAccount() {
                   label="Password"
                   type="password"
                   id="password"
-                  autoComplete="current-password"
                 />
               </Grid>
               <Button
