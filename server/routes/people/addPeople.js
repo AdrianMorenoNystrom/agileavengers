@@ -10,7 +10,8 @@ router.post("/", jsonParser, async (req, res) => {
   const fullName = req.body.fullName;
   const email = req.body.email;
   const password = req.body.password;
-
+  // Accounts get the role "user" as default.
+  const role = "User";
   const databaseId = process.env.NOTION_DATABASE_ID_PEOPLE;
   try {
     const response = await notion.pages.create({
@@ -43,6 +44,11 @@ router.post("/", jsonParser, async (req, res) => {
             },
           ],
         },
+        Role:{
+          select:{
+            name:role,
+          }
+        }
       },
     });
     console.log(response);
