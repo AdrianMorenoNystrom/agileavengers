@@ -35,13 +35,13 @@ export default function CreateAccount() {
       const email = data.get('email');
       const password = data.get('password');
       
+      // To do, check valid email? 
 
       if (!fullName || !email || !password) {
         setShowErrorAlert(true);
         setTimeout(() => {
           setShowErrorAlert(false);
         }, 3000);
-  
         return;
       }
 
