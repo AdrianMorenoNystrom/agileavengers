@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -14,14 +15,17 @@ import Alert from '@mui/material/Alert';
 import SubmitToNotion from '../components/SubmitUser';
 import NameFieldValidation from './functions/NameValidation';
 import Copyright from '../components/Copyright';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 const defaultTheme = createTheme();
 
 export default function CreateAccount() {
-  
+
+  const navigate = useNavigate();
   const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
   const [showErrorAlert, setShowErrorAlert] = React.useState(false);
+  const [showLoading, setShowLoading] = React.useState(false);
 
   const handleSubmit = async (event) => {
     try {
@@ -32,14 +36,35 @@ export default function CreateAccount() {
       const password = data.get('password');
       
 
-      SubmitToNotion(fullName, email, password);
+      if (!fullName || !email || !password) {
+        setShowErrorAlert(true);
+        setTimeout(() => {
+          setShowErrorAlert(false);
+        }, 3000);
   
+        return;
+      }
+
+
+      SubmitToNotion(fullName, email, password);
+
+
+      // Loading animation and the order it comes in can be changed for a better user experience.
+
+      setShowLoading(true);
+
       event.target.reset();
-      setShowSuccessAlert(true);
+      setTimeout(() => {
+        setShowSuccessAlert(true);
+        setShowLoading(false);
+      }, 2000)
 
       setTimeout(() => {
         setShowSuccessAlert(false);
+        navigate('/Login');
       }, 5000);
+
+
     } catch (error) {
       console.error('Error submitting to Notion:', error);
       setShowErrorAlert(true);
@@ -70,31 +95,37 @@ export default function CreateAccount() {
             Create Account
           </Typography>
 
+          {showLoading && (
+              <CircularProgress />
+          )}
+
           {showSuccessAlert && (
             <Alert severity="success">Account successfully created!</Alert>
           )}
 
           {showErrorAlert && (
-            <Alert severity="error">Failed to create account.</Alert>
+            <Alert severity="error">Failed to create account. Make sure you don't leave any field empty!</Alert>
           )}
-
+        
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <Grid container spacing={2}>
+              
               <Grid item xs={12}>
 
                 <NameFieldValidation/> 
 
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                />
+              <TextField
+              variant="outlined"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus>
+              </TextField>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -107,6 +138,7 @@ export default function CreateAccount() {
                   id="password"
                 />
               </Grid>
+              
               <Button
                 type="submit"
                 fullWidth
