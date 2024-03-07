@@ -13,25 +13,13 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
 import SubmitToNotion from '../components/SubmitUser';
 import NameFieldValidation from './functions/NameValidation';
+import Copyright from '../components/Copyright';
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Agile Avengers
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const defaultTheme = createTheme();
 
-
-
 export default function CreateAccount() {
+  
   const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
   const [showErrorAlert, setShowErrorAlert] = React.useState(false);
 
@@ -81,12 +69,15 @@ export default function CreateAccount() {
           <Typography component="h1" variant="h5">
             Create Account
           </Typography>
+
           {showSuccessAlert && (
             <Alert severity="success">Account successfully created!</Alert>
           )}
+
           {showErrorAlert && (
             <Alert severity="error">Failed to create account.</Alert>
           )}
+
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
