@@ -1,13 +1,14 @@
 require("dotenv").config();
 
 const { express } = require("../../express");
-const router = express.Router();
 const notion = require("../../notion");
 const bodyParser = require("body-parser");
+
+const router = express.Router();
 const jsonParser = bodyParser.json();
 
 router.post("/", jsonParser, async (req, res) => {
-  const databaseId = process.env.NOTION_DATABASE_ID;
+  const databaseId = process.env.NOTION_DATABASE_ID_PEOPLE;
   const { username, password } = req.body;
 
   try {
@@ -15,16 +16,20 @@ router.post("/", jsonParser, async (req, res) => {
     const userData = await usernameLookUp(response, username);
 
     if (userData.found && isPasswordCorrect(userData.password, password)) {
-      res.json({ message: "Du är nu inloggad! Efter att session implementerats...",
+      res.status(200).json({
+        success: true
       });
-    } else if (userData.found) {
-      res.json({ message: "Fel lösen, giltigt namn" });
     } else {
-      res.json({ message: "Ogiltigt användarnamn" });
+      res.status(401).json({
+        success: false
+      });
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({
+      success: false,
+      error: "Internal Server Error"
+    });
   }
 });
 
