@@ -7,7 +7,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "install": "cd client && npm install && cd ../server && npm install",
         "start": "npm run server",
-        "server": "cd server && nodemon server.js",
+        "server": "cd server && nodemon server.mjs",
         "client": "cd client && npm start"
     },
     "keywords": [],
@@ -23,9 +23,11 @@
         "@mui/material": "^5.15.11",
         "@notionhq/client": "^2.2.14",
         "body-parser": "^1.20.2",
+        "cookie-parser": "^1.4.6",
         "cors": "^2.8.5",
         "dotenv": "^16.4.5",
         "express": "^4.18.2",
+        "express-session": "^1.18.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-router-dom": "^6.22.2"
