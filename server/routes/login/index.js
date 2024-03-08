@@ -36,12 +36,12 @@ router.post("/", jsonParser, async (req, res) => {
 async function usernameLookUp(response, targetUsername) {
   const result = response.results.find((result) => {
     const username =
-      result.properties.Username?.rich_text[0]?.text.content.toLowerCase();
+      result.properties.Email?.rich_text[0]?.text.content.toLowerCase();
     return username === targetUsername;
   });
 
   if (result) {
-    const username = result.properties.Username?.rich_text[0]?.text.content.toLowerCase();
+    const username = result.properties.Email?.rich_text[0]?.text.content.toLowerCase();
     const password = result.properties.Password?.rich_text[0]?.text.content;
     const pageId = result.id;
 

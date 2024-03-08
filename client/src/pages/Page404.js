@@ -9,7 +9,7 @@ const Page404 = ({ isAuthenticated }) => {
     return (
         <Container component="main" maxWidth="xl">
             <CssBaseline />
-            <Typography variant="h3" mt={2} mb={2}>
+            <Typography variant="h4" mt={2} mb={2}>
                 Error: Page Not Found
             </Typography>
             <Typography>
