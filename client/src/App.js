@@ -16,6 +16,7 @@ function App() {
         <Router>
             {isAuthenticated && <Header isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />}
             <Routes>
+                <Route path='/createaccount' element={<CreateAccount/>}/>
                 <Route path='/login' element={<SignIn />} />
                 <Route index element={<Home />} />
                 <Route path='/people' element={<GetPeople />} />
