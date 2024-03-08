@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import GetPeople from './components/GetPeople';
 import SignIn from './pages/SignIn';
 import Page404 from './pages/Page404';
+import CreateAccount from './pages/CreateAccount-page';
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -15,16 +16,10 @@ function App() {
         <Router>
             {isAuthenticated && <Header isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />}
             <Routes>
-                <Route path='/login' element={<SignIn setIsAuthenticated={setIsAuthenticated} />} />
-                {isAuthenticated ? (
-                    <>
-                        <Route path='/' element={<Home />} />
-                        <Route path='/people' element={<GetPeople />} />
-                    </>
-                ) : (
-                    <Route path="/" element={<Navigate to="/login" />} />
-                )}
-                <Route path='*' element={<Page404 isAuthenticated={isAuthenticated} />} />
+                <Route path='/login' element={<SignIn />} />
+                <Route index element={<Home />} />
+                <Route path='/people' element={<GetPeople />} />
+                <Route path='*' element={<Page404 />} />
             </Routes>
             {isAuthenticated && <Footer />}
         </Router>

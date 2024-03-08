@@ -13,8 +13,4 @@ app.use("/projects", projectsRouter);
 const addProjectsRouter = require("./routes/projects/addProject");
 app.use("/projects/add", addProjectsRouter);
 
-const showProjectRouter = require("./routes/projects/showProject");
-app.use("/projects/active", showProjectRouter);
-
-
 startServer();
