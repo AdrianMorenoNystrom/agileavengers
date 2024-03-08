@@ -54,7 +54,7 @@ export default function SignIn({ setIsAuthenticated }) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          username: email,
+          username: email.trim(),
           password: password,
         }),
       });
