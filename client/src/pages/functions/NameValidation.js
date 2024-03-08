@@ -14,14 +14,14 @@ export default function NameValidation() {
   };
   return (
     <TextField
-    autoComplete="fname"
-    name="fullName"
-    variant="outlined"
-    required
-    fullWidth
-    id="fullName"
-    label="Full name"
-    autoFocus
+      autoComplete="fname"
+      name="fullName"
+      variant="outlined"
+      required
+      fullWidth
+      id="fullName"
+      label="Full Name"
+      autoFocus
       value={name}
       onChange={handleNameChange}
       error={nameError}

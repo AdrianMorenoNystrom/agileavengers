@@ -16,11 +16,14 @@ function App() {
         <Router>
             {isAuthenticated && <Header isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />}
             <Routes>
-                <Route path='/createaccount' element={<CreateAccount/>}/>
-                <Route path='/login' element={<SignIn />} />
-                <Route index element={<Home />} />
+                <Route path='/login' element={<SignIn setIsAuthenticated={setIsAuthenticated} />} />
+
+                <Route path='/' element={<Home />} />
                 <Route path='/people' element={<GetPeople />} />
-                <Route path='*' element={<Page404 />} />
+                <Route path='/createaccount' element={<CreateAccount />} />
+
+                <Route path="/" element={<Navigate to="/login" />} />
+                <Route path='*' element={<Page404 isAuthenticated={isAuthenticated} />} />
             </Routes>
             {isAuthenticated && <Footer />}
         </Router>

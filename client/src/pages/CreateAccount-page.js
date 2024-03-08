@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -16,16 +17,20 @@ import SubmitToNotion from '../components/SubmitUser';
 import NameFieldValidation from './functions/NameValidation';
 import Copyright from '../components/Copyright';
 import CircularProgress from '@mui/material/CircularProgress';
-
+import CreateAccountError from '../components/CreateAccountError';
 
 const defaultTheme = createTheme();
 
 export default function CreateAccount() {
 
   const navigate = useNavigate();
-  const [showSuccessAlert, setShowSuccessAlert] = React.useState(false);
-  const [showErrorAlert, setShowErrorAlert] = React.useState(false);
-  const [showLoading, setShowLoading] = React.useState(false);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
+  const [invalidAccountMessage, setInvalidAccountMessage] = useState(false);
+
+  const handleCloseMessage = () => {
+    setInvalidAccountMessage(false);
+  };
 
   const handleSubmit = async (event) => {
     try {
@@ -34,20 +39,15 @@ export default function CreateAccount() {
       const fullName = data.get('fullName');
       const email = data.get('email');
       const password = data.get('password');
-      
+
       // To do, check valid email? 
 
       if (!fullName || !email || !password) {
-        setShowErrorAlert(true);
-        setTimeout(() => {
-          setShowErrorAlert(false);
-        }, 3000);
+        setInvalidAccountMessage(true);
         return;
       }
 
-
       SubmitToNotion(fullName, email, password);
-
 
       // Loading animation and the order it comes in can be changed for a better user experience.
 
@@ -57,21 +57,16 @@ export default function CreateAccount() {
       setTimeout(() => {
         setShowSuccessAlert(true);
         setShowLoading(false);
-      }, 2000)
+      }, 2000);
 
       setTimeout(() => {
         setShowSuccessAlert(false);
-        navigate('/Login');
+        navigate('/login');
       }, 5000);
 
 
     } catch (error) {
       console.error('Error submitting to Notion:', error);
-      setShowErrorAlert(true);
-
-      setTimeout(() => {
-        setShowErrorAlert(false);
-      }, 5000);
     }
   };
 
@@ -96,36 +91,32 @@ export default function CreateAccount() {
           </Typography>
 
           {showLoading && (
-              <CircularProgress />
+            <CircularProgress />
           )}
 
           {showSuccessAlert && (
             <Alert severity="success">Account successfully created!</Alert>
           )}
 
-          {showErrorAlert && (
-            <Alert severity="error">Failed to create account. Make sure you don't leave any field empty!</Alert>
-          )}
-        
+          <CreateAccountError open={invalidAccountMessage} onClose={handleCloseMessage} />
+
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            <Grid container spacing={2}>
-              
+            <Grid container rowSpacing={3}>
+
               <Grid item xs={12}>
-
-                <NameFieldValidation/> 
-
+                <NameFieldValidation />
               </Grid>
               <Grid item xs={12}>
-              <TextField
-              variant="outlined"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus>
-              </TextField>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                >
+                </TextField>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -138,7 +129,7 @@ export default function CreateAccount() {
                   id="password"
                 />
               </Grid>
-              
+
               <Button
                 type="submit"
                 fullWidth
@@ -149,7 +140,7 @@ export default function CreateAccount() {
               </Button>
               <Grid item></Grid>
               <Link href="/Login" variant="body2">
-                Already have an account? Sign in here!
+                Do you already have an account? Sign in here!
               </Link>
             </Grid>
           </Box>
