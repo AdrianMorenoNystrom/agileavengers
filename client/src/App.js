@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -10,17 +10,18 @@ import Page404 from './pages/Page404';
 import CreateAccount from './pages/CreateAccount-page';
 
 function App() {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
     return (
         <Router>
-            <Header />
+            {isAuthenticated && <Header isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />}
             <Routes>
                 <Route path='/login' element={<SignIn />} />
-                <Route path='/createaccount' element={<CreateAccount />}/>
                 <Route index element={<Home />} />
                 <Route path='/people' element={<GetPeople />} />
                 <Route path='*' element={<Page404 />} />
             </Routes>
-            <Footer />
+            {isAuthenticated && <Footer />}
         </Router>
     );
 }

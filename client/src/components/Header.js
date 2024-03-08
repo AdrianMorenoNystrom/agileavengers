@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -14,6 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import { styled, alpha } from '@mui/material/styles';
+import Logout from './Logout';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -45,7 +47,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     width: '100%',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)})`,
         transition: theme.transitions.create('width'),
         [theme.breakpoints.up('sm')]: {
@@ -58,11 +59,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const pages = ['Projects', 'People', 'Time Reports'];
-const settings = ['Profile', 'Account', 'Logout'];
 
-function ResponsiveAppBar() {
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
+function ResponsiveAppBar({ isAuthenticated, setIsAuthenticated }) {
+    const [anchorElNav, setAnchorElNav] = useState(null);
+    const [anchorElUser, setAnchorElUser] = useState(null);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -164,11 +164,13 @@ function ResponsiveAppBar() {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                {settings.map((setting) => (
-                                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                        <Typography textAlign="center">{setting}</Typography>
-                                    </MenuItem>
-                                ))}
+                                <MenuItem key="Profile" onClick={handleCloseUserMenu}>
+                                    <Typography textAlign="center">Profile</Typography>
+                                </MenuItem>
+                                <MenuItem key="Account" onClick={handleCloseUserMenu}>
+                                    <Typography textAlign="center">Account</Typography>
+                                </MenuItem>
+                                {isAuthenticated && <Logout onClose={handleCloseUserMenu} setIsAuthenticated={setIsAuthenticated} />}
                             </Menu>
                         </Box>
                     </Toolbar>

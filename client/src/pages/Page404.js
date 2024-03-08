@@ -1,17 +1,28 @@
-import { Link } from "@mui/material";
+import { Link, Typography } from "@mui/material";
 import Container from "@mui/material/Container";
 import CssBaseline from '@mui/material/CssBaseline';
 import React from "react";
 
-const Page404 = () => {
+const Page404 = ({ isAuthenticated }) => {
+    console.log('isAuthenticated:', isAuthenticated);
+
     return (
-        <Container component="main" maxWidth="md">
-            <CssBaseline>
-                <h1>Error: Page Not Found</h1>
-                <Link to="/login">Go to login page</Link>
-                <br />
-                <Link to="/">Go start page</Link>
-            </CssBaseline>
+        <Container component="main" maxWidth="xl">
+            <CssBaseline />
+            <Typography variant="h3" mt={2} mb={2}>
+                Error: Page Not Found
+            </Typography>
+            <Typography>
+                {isAuthenticated ? (
+                    <Link href="/" variant="h6" underline="hover">
+                        Go to start page
+                    </Link>
+                ) : (
+                    <Link href="/login" variant="h6" underline="hover">
+                        Go to login page
+                    </Link>
+                )}
+            </Typography>
         </Container>
     );
 };

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,9 +14,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useLocation, useNavigate } from 'react-router-dom';
-import useFetchData from '../components/UseFetchData';
-
+import LoginError from '../components/LoginError';
 
 function Copyright(props) {
   return (
@@ -28,30 +27,49 @@ function Copyright(props) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
-
 const defaultTheme = createTheme();
 
-export default function SignIn() {
-  // const navigate = useNavigate();
-  // const location = useLocation();
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
+export default function SignIn({ setIsAuthenticated }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [invalidLoginMessage, setInvalidLoginMessage] = useState(false);
+  const navigate = useNavigate();
+
+  const handleCloseMessage = () => {
+    setInvalidLoginMessage(false);
+  };
+
+  const resetUserInput = () => {
+    setEmail('');
+    setPassword('');
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const data = new FormData(event.currentTarget);
-      console.log({
-        email: data.get('email'),
-        password: data.get('password'),
+      const response = await fetch('http://localhost:3500/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: email,
+          password: password,
+        }),
       });
+
+      const responseData = await response.json();
+
+      if (responseData.success) {
+        setIsAuthenticated(true);
+        navigate('/');
+        resetUserInput();
+      } else {
+        setInvalidLoginMessage(true);
+      }
     } catch (error) {
-      console.error(error.message);
-    } finally {
-      // setEmail('');
-      // setPassword('');
+      console.error('Error: ', error.message);
     }
   };
 
@@ -83,8 +101,8 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
-            // value={email}
-            // onChange={(e) => setEmail(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -95,13 +113,14 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
-            // value={password}
-            // onChange={(e) => setPassword(e.target.value)}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
+            <LoginError open={invalidLoginMessage} onClose={handleCloseMessage} />
             <Button
               type="submit"
               fullWidth
