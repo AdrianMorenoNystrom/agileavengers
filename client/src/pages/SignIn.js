@@ -54,7 +54,7 @@ export default function SignIn({ setIsAuthenticated }) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          username: email.trim(),
+          username: email,
           password: password,
         }),
       });
@@ -136,7 +136,7 @@ export default function SignIn({ setIsAuthenticated }) {
                 </Link>
               </Grid>
               <Grid item xs>
-              <Link href="/Createaccount" variant="body2">
+                <Link href="/Createaccount" variant="body2">
                   Don't have an account? Create one here!
                 </Link>
               </Grid>
