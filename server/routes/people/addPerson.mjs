@@ -1,20 +1,24 @@
-require("dotenv").config();
+import express from "express";
+import dotenv from "dotenv";
+import notion from "../../notion.mjs";
+import bodyParser from "body-parser";
 
-const { express } = require("../../express");
-const router = express.Router();
-const notion = require("../../notion");
-const bodyParser = require("body-parser");
+dotenv.config();
+
 const jsonParser = bodyParser.json();
+const router = express.Router();
 
-router.post("/", jsonParser, async (req, res) => {
-  const fullName = req.body.fullName;
-  const email = req.body.email;
-  const password = req.body.password;
+router.post("/api/people/add", jsonParser, async (request, response) => {
+  if (!request.session.user) return response.sendStatus(401);
+
+  const fullName = request.body.fullName;
+  const email = request.body.email;
+  const password = request.body.password;
   // Accounts get the role "user" as default.
   const role = "User";
   const databaseId = process.env.NOTION_DATABASE_ID_PEOPLE;
   try {
-    const response = await notion.pages.create({
+    const result = await notion.pages.create({
       parent: { database_id: databaseId },
       properties: {
         Name: {
@@ -44,20 +48,20 @@ router.post("/", jsonParser, async (req, res) => {
             },
           ],
         },
-        Role:{
-          select:{
-            name:role,
-          }
-        }
+        Role: {
+          select: {
+            name: role,
+          },
+        },
       },
     });
-    console.log(response);
+    console.log(result);
     console.log("Success!");
-    res.status(200).json({ message: 'Success!' });
+    response.status(200).json({ message: "Success!" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    response.status(500).json({ error: "Internal Server Error" });
   }
 });
 
-module.exports = router;
+export default router;

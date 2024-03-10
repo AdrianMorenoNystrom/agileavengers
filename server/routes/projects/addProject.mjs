@@ -1,24 +1,28 @@
-require("dotenv").config();
+import express from "express";
+import dotenv from "dotenv";
+import notion from "../../notion.mjs";
+import bodyParser from "body-parser";
 
-const { express } = require("../../express");
-const router = express.Router();
-const notion = require("../../notion");
-const bodyParser = require("body-parser");
+dotenv.config();
+
 const jsonParser = bodyParser.json();
+const router = express.Router();
 
-router.post("/", jsonParser, async (req, res) => {
+router.post("/api/projects/add", jsonParser, async (request, response) => {
+  if (!request.session.user) return response.sendStatus(401);
+
   // Lägger bara till Projektnamn och timmar som test till en början.
-  const projectName = req.body.projectName;
-  const hours = req.body.hours;
-  const status = req.body.status;
-  const projectStart = req.body.projectStart;
-  const projectEnd = req.body.projectEnd;
+  const projectName = request.body.projectName;
+  const hours = request.body.hours;
+  const status = request.body.status;
+  const projectStart = request.body.projectStart;
+  const projectEnd = request.body.projectEnd;
   const databaseId = process.env.NOTION_DATABASE_ID_PROJECTS;
   try {
-    const response = await notion.pages.create({
+    const result = await notion.pages.create({
       parent: { database_id: databaseId },
       properties: {
-        Hours: {
+        "Total Hours": {
           number: parseFloat(hours),
         },
         Projectname: {
@@ -43,11 +47,11 @@ router.post("/", jsonParser, async (req, res) => {
         },
       },
     });
-    console.log(response);
-    console.log("Success!");
+    console.log(result);
+    response.sendStatus(200);
   } catch (error) {
     console.log(error);
   }
 });
 
-module.exports = router;
+export default router;
