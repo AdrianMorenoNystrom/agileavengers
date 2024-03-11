@@ -3,7 +3,7 @@ import useFetchData from './UseFetchData';
 // import { User, Clock } from 'lucide-react';
 import './getpeoplenew.scss';
 
-export default function GetPeople() {
+export default function GetPeopleNew() {
     const { data } = useFetchData("/api/people");
 
     // Temporary slice to show only 5 entries, 
