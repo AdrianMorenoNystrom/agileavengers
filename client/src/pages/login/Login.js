@@ -57,12 +57,12 @@ export default function SignIn({ setIsAuthenticated }) {
           email: email,
           password: password,
         }),
- 
+
         credentials: "include",
       });
- 
-      const responseData = await response.json();
- 
+
+      // const responseData = await response.json();
+
       if (response.status === 200) {
         setIsAuthenticated(true);
         navigate("/");

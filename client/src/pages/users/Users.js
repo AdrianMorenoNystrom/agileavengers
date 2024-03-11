@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
 function Users() {
   return (
     <div>users</div>
-  )
+  );
 }
 
-export default Users
+export default Users;
