@@ -1,0 +1,55 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {}
+
+th {
+    padding: 12px;
+    text-align: left;
+}
+
+tbody {
+    border-top: 2px solid #ddd;
+}
+
+tr {
+    border-bottom: 1px solid #ddd;
+}
+
+td {
+    padding: 12px;
+}
+
+@media screen and (max-width: 600px) {
+
+    /* Responsive styling */
+    table {
+        border: 0;
+    }
+
+    thead {
+        display: none;
+    }
+
+    tr {
+        border-bottom: 1px solid #ddd;
+        display: block;
+        margin-bottom: 20px;
+    }
+
+    td {
+        border-bottom: none;
+        display: block;
+        text-align: right; // Adjust text alignment for smaller screens
+    }
+
+    td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: inline-block;
+        width: 50%;
+        margin-right: 10px;
+    }
+}
