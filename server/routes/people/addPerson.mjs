@@ -55,6 +55,7 @@ router.post("/api/people/add", jsonParser, async (request, response) => {
         },
       },
     });
+    
     console.log(result);
     console.log("Success!");
     response.status(200).json({ message: "Success!" });

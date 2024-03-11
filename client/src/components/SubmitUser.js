@@ -1,6 +1,6 @@
 
 function SubmitToNotion(fullName, email, password) {
-    fetch("/api/people/add", {
+    fetch("http://localhost:3500/api/people/add", {
       method: "post",
       headers: {
         Accept: "application/json",
@@ -11,6 +11,7 @@ function SubmitToNotion(fullName, email, password) {
         email: email,
         password: password,
       }),
+      credentials: "include",
     })
       .then((response) => {
         if (!response.ok) {

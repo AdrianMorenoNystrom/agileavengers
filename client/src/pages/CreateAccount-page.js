@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -23,7 +22,6 @@ const defaultTheme = createTheme();
 
 export default function CreateAccount() {
 
-  const navigate = useNavigate();
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   const [invalidAccountMessage, setInvalidAccountMessage] = useState(false);
@@ -53,15 +51,15 @@ export default function CreateAccount() {
 
       setShowLoading(true);
 
-      event.target.reset();
+
       setTimeout(() => {
         setShowSuccessAlert(true);
         setShowLoading(false);
+        event.target.reset();
       }, 2000);
 
       setTimeout(() => {
         setShowSuccessAlert(false);
-        navigate('/login');
       }, 5000);
 
 
