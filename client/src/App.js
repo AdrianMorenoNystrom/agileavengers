@@ -11,22 +11,14 @@ import Users from './pages/users/Users';
 import User from './pages/user/User';
 import Navbar from './components/navbar/Navbar';
 import Menu from './components/menu/Menu';
+import PrivateRoutes from './components/PrivateRoutes';
+import AuthProvider from './components/AuthProvider';
 
 function App() {
-    const [isAuthenticated, setIsAuthenticated] = useState(() => localStorage.getItem(process.env.AUTH_KEY) === 'true');
-
-    useEffect(() => {
-        localStorage.setItem(process.env.AUTH_KEY, isAuthenticated);
-    }, [isAuthenticated]);
-
-    const PrivateRoute = ({ element, ...props }) => {
-        return isAuthenticated ? element : <Navigate to="/login" />;
-    };
-
     const Layout = () => {
         return (
             <div className="main">
-                <Navbar isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
+                <Navbar />
                 <div className="container">
                     <div className="menuContainer">
                         <Menu />
@@ -41,18 +33,19 @@ function App() {
 
     return (
         <Router>
-
-            <Routes>
-                <Route element={<PrivateRoute element={<Layout />} />}>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/projects" element={<Projects />} />
-                    <Route path="/projects/:id" element={<Project />} />
-                    <Route path="/users" element={<Users />} />
-                    <Route path="/users/:id" element={<User />} />
-                    <Route path="*" element={<Page404 />} />
-                </Route>
-                <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
-            </Routes>
+            <AuthProvider>
+                <Routes>
+                    <Route element={<PrivateRoutes element={<Layout />} />}>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/projects" element={<Projects />} />
+                        <Route path="/projects/:id" element={<Project />} />
+                        <Route path="/users" element={<Users />} />
+                        <Route path="/users/:id" element={<User />} />
+                        <Route path="*" element={<Page404 />} />
+                    </Route>
+                    <Route path="/login" element={<Login />} />
+                </Routes>
+            </AuthProvider>
         </Router>
     );
 }
