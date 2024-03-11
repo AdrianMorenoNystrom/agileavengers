@@ -11,7 +11,7 @@ import Container from '@mui/material/Container';
 import { CssBaseline } from '@mui/material';
 
 export default function ActiveProjects() {
-    const { data, isLoading, error } = useFetchData('/projects/active'); // Använder den nya endpointen
+    const { data, isLoading, error } = useFetchData('/api/projects/active'); // Använder den nya endpointen
 
 
     if (isLoading) return <div>Laddar...</div>;

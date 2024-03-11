@@ -6,7 +6,7 @@ const Logout = ({ onClose, setIsAuthenticated }) => {
 
     const handleLogout = () => {
         setIsAuthenticated(false);
-        navigate('/login');
+        navigate("/api/auth/login");
         onClose();
     };
 
