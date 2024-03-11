@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -15,6 +15,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import LoginError from '../../components/LoginError';
+import AuthContext from '../../components/AuthContext';
 
 function Copyright(props) {
   return (
@@ -29,7 +30,8 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
-export default function SignIn({ setIsAuthenticated }) {
+export default function SignIn() {
+  const { setIsAuthenticated } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [invalidLoginMessage, setInvalidLoginMessage] = useState(false);

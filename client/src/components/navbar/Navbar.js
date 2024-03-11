@@ -8,7 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Logout from "../Logout";
 
 
-const Navbar = ({ setIsAuthenticated }) => {
+const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
@@ -49,7 +49,7 @@ const Navbar = ({ setIsAuthenticated }) => {
         >
           <MenuItem onClick={handleClose}>Profile</MenuItem>
           <MenuItem onClick={handleClose}>My account</MenuItem>
-          <Logout onClose={handleClose} setIsAuthenticated={setIsAuthenticated} />
+          <Logout onClose={handleClose} />
         </Menu>
       </div>
     </div>
