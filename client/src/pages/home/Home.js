@@ -1,7 +1,6 @@
 import React from "react";
 import "./home.scss";
 import GetPeopleNew from '../../components/GetPeopleNew'
-import GetProjects from '../../components/GetProjects';
 import ActiveProjects from '../../components/ActiveProjects';
 
 function Home() {
