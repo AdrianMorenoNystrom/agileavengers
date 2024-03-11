@@ -4,7 +4,7 @@ import useFetchData from './UseFetchData';
 import './getpeoplenew.scss';
 
 export default function GetPeople() {
-    const { data } = useFetchData('api/people');
+    const { data } = useFetchData('/people');
 
     // Temporary slice to show only 5 entries, 
     // pagination should be implemented instead

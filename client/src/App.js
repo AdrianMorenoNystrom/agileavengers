@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate, Outlet } from 'react-router-dom';
 import './App.css';
 import './styles/global.scss';
-// import Footer from './components/Footer';
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import Page404 from './pages/Page404';
@@ -12,31 +11,51 @@ import Users from './pages/users/Users';
 import User from './pages/user/User';
 import Navbar from './components/navbar/Navbar';
 import Menu from './components/menu/Menu';
+<<<<<<< HEAD
 import AddUser from './pages/CreateAccount-page';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
+=======
+import PrivateRoutes from './components/PrivateRoutes';
+import AuthProvider from './components/AuthProvider';
 
-  // PrivateRoute is a helper component to protect routes that require authentication
-  const PrivateRoute = ({ element, ...props }) => {
-    return isAuthenticated ? element : <Navigate to="/login" />;
-  };
+function App() {
+    const Layout = () => {
+        return (
+            <div className="main">
+                <Navbar />
+                <div className="container">
+                    <div className="menuContainer">
+                        <Menu />
+                    </div>
+                    <div className="contentContainer">
+                        <Outlet />
+                    </div>
+                </div>
+            </div>
+        );
+    };
+>>>>>>> 0ea9b46f137bc5d3f5bcb5653e989063c87baace
 
-  const Layout = () => {
     return (
-      <div className="main">
-        <Navbar isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>
-        <div className="container">
-          <div className="menuContainer">
-            <Menu />
-          </div>
-          <div className="contentContainer">
-            <Outlet />
-          </div>
-        </div>
-        {/* <Footer /> */}
-      </div>
+        <Router>
+            <AuthProvider>
+                <Routes>
+                    <Route element={<PrivateRoutes element={<Layout />} />}>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/projects" element={<Projects />} />
+                        <Route path="/projects/:id" element={<Project />} />
+                        <Route path="/users" element={<Users />} />
+                        <Route path="/users/:id" element={<User />} />
+                        <Route path="*" element={<Page404 />} />
+                    </Route>
+                    <Route path="/login" element={<Login />} />
+                </Routes>
+            </AuthProvider>
+        </Router>
     );
+<<<<<<< HEAD
   };
 
   return (
@@ -55,6 +74,8 @@ function App() {
       </Routes>
     </Router>
   );
+=======
+>>>>>>> 0ea9b46f137bc5d3f5bcb5653e989063c87baace
 }
 
 export default App;

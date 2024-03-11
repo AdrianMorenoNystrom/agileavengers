@@ -2,13 +2,9 @@ import React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import useFetchData from './UseFetchData';
-import Container from '@mui/material/Container';
-import { CssBaseline } from '@mui/material';
 
 export default function ActiveProjects() {
     const { data, isLoading, error } = useFetchData('/api/projects/active'); // Använder den nya endpointen
@@ -18,11 +14,7 @@ export default function ActiveProjects() {
     if (error) return <div>Fel vid hämtning av data: {error}</div>;
 
     return (
-        <Container component="main" maxWidth="md">
-            <CssBaseline>
-                <h1>Aktiva Projekt</h1>
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="active projects table">
+                    <Table aria-label="active projects table">
                         <TableHead>
                             <TableRow>
                                 <TableCell>Projektnamn</TableCell>
@@ -44,8 +36,5 @@ export default function ActiveProjects() {
                             ))}
                         </TableBody>
                     </Table>
-                </TableContainer>
-            </CssBaseline>
-        </Container>
     );
 }

@@ -13,15 +13,9 @@ const Page404 = ({ isAuthenticated }) => {
                 Error: Page Not Found
             </Typography>
             <Typography>
-                {isAuthenticated ? (
-                    <Link href="/" variant="h6" underline="hover">
-                        Go to start page
-                    </Link>
-                ) : (
-                    <Link href="/login" variant="h6" underline="hover">
-                        Go to login page
-                    </Link>
-                )}
+                <Link href="/" variant="h6" underline="hover">
+                    Go to start page
+                </Link>
             </Typography>
         </Container>
     );

@@ -1,7 +1,10 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { MenuItem, Typography } from "@mui/material";
+import AuthContext from "./AuthContext";
 
-const Logout = ({ onClose, setIsAuthenticated }) => {
+const Logout = ({ onClose }) => {
+    const { setIsAuthenticated } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleLogout = () => {

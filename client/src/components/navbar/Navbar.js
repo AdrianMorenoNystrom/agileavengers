@@ -8,7 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Logout from "../Logout";
 
 
-const Navbar = ({ setIsAuthenticated }) => {
+const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
@@ -22,15 +22,15 @@ const Navbar = ({ setIsAuthenticated }) => {
   return (
     <div className="navbar">
       <div className="logo">
-        <Rocket size={20}/>
+        <Rocket size={20} />
         <span>Agile Avengers</span>
       </div>
       <div className="icons">
         <div className="notification">
-          <Bell className="icons" size={20}/>
+          <Bell className="icons" size={20} />
           <span>1</span>
         </div>
-        <Settings className="icon" size={20}/>
+        <Settings className="icon" size={20} />
         <div className="user" onClick={handleClick}>
           <span>UserName</span>
           <img
@@ -49,7 +49,7 @@ const Navbar = ({ setIsAuthenticated }) => {
         >
           <MenuItem onClick={handleClose}>Profile</MenuItem>
           <MenuItem onClick={handleClose}>My account</MenuItem>
-          <Logout onClose={handleClose} setIsAuthenticated={setIsAuthenticated} />
+          <Logout onClose={handleClose} />
         </Menu>
       </div>
     </div>
