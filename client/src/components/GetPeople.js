@@ -11,7 +11,7 @@ import useFetchData from './UseFetchData';
 import { CssBaseline } from '@mui/material';
 
 export default function GetPeople() {
-    const data = useFetchData('/people');
+    const data = useFetchData("/api/people");
 
     return (
         <Container component="main" maxWidth="md">

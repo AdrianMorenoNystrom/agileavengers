@@ -14,32 +14,32 @@ export default function AddProject() {
     function SubmitToNotion(event) {
         event.preventDefault(); 
 
-        fetch(('/projects/add'), {
-            method: "post",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                projectName: projectName,
-                hours: hours,
-                status:status,
-                projectStart:projectStart,
-                projectEnd:projectEnd
-            })
+        fetch("/api/projects/add", {
+          method: "post",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            projectName: projectName,
+            hours: hours,
+            status: status,
+            projectStart: projectStart,
+            projectEnd: projectEnd,
+          }),
         })
-        .then(response => {
+          .then((response) => {
             if (!response.ok) {
-                throw new Error('Failed to submit project to Notion');
+              throw new Error("Failed to submit project to Notion");
             }
             return response.json();
-        })
-        .then(data => {
+          })
+          .then((data) => {
             console.log("Success!", data);
-        })
-        .catch(error => {
-            console.log('Error!', error.message);
-        });
+          })
+          .catch((error) => {
+            console.log("Error!", error.message);
+          });
     }
 
     return (
