@@ -18,11 +18,7 @@ export default function ActiveProjects() {
     if (error) return <div>Fel vid hämtning av data: {error}</div>;
 
     return (
-        <Container component="main" maxWidth="md">
-            <CssBaseline>
-                <h1>Aktiva Projekt</h1>
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="active projects table">
+                    <Table aria-label="active projects table">
                         <TableHead>
                             <TableRow>
                                 <TableCell>Projektnamn</TableCell>
@@ -44,8 +40,5 @@ export default function ActiveProjects() {
                             ))}
                         </TableBody>
                     </Table>
-                </TableContainer>
-            </CssBaseline>
-        </Container>
     );
 }
