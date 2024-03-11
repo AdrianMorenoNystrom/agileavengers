@@ -22,15 +22,15 @@ const Navbar = ({ setIsAuthenticated }) => {
   return (
     <div className="navbar">
       <div className="logo">
-        <Rocket size={20}/>
+        <Rocket size={20} />
         <span>Agile Avengers</span>
       </div>
       <div className="icons">
         <div className="notification">
-          <Bell className="icons" size={20}/>
+          <Bell className="icons" size={20} />
           <span>1</span>
         </div>
-        <Settings className="icon" size={20}/>
+        <Settings className="icon" size={20} />
         <div className="user" onClick={handleClick}>
           <span>UserName</span>
           <img
