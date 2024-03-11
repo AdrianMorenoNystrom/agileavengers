@@ -14,7 +14,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import LoginError from '../components/LoginError';
+import LoginError from '../../components/LoginError';
 
 function Copyright(props) {
   return (
@@ -48,28 +48,30 @@ export default function SignIn({ setIsAuthenticated }) {
     event.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:3500/login', {
-        method: 'POST',
+      const response = await fetch("http://localhost:3500/api/auth/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: email,
+          email: email,
           password: password,
         }),
+ 
+        credentials: "include",
       });
-
+ 
       const responseData = await response.json();
-
-      if (responseData.success) {
+ 
+      if (response.status === 200) {
         setIsAuthenticated(true);
-        navigate('/');
+        navigate("/");
         resetUserInput();
       } else {
         setInvalidLoginMessage(true);
       }
     } catch (error) {
-      console.error('Error: ', error.message);
+      console.error("Error: ", error.message);
     }
   };
 

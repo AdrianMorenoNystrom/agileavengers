@@ -2,6 +2,7 @@ import React from "react";
 import "./home.scss";
 import GetPeopleNew from '../../components/GetPeopleNew'
 import GetProjects from '../../components/GetProjects';
+import ActiveProjects from '../../components/ActiveProjects';
 
 function Home() {
   return (
@@ -16,7 +17,9 @@ function Home() {
       <div className="box box3"><h2>Todo</h2></div>
 
       <div className="box box4">
-      <h2>Some data</h2>
+      <h2>Active projects</h2>
+      <ActiveProjects /> {}
+
       </div>
 
       <div className="box box5">
