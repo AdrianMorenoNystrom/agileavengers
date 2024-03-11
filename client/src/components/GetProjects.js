@@ -16,7 +16,6 @@ export default function GetProjects() {
     return (
         <Container component="main" maxWidth="md">
             <CssBaseline>
-                <h1>Projects - Notion Data</h1>
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="projects table">
                         <TableHead>

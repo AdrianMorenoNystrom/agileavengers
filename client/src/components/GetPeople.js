@@ -16,7 +16,6 @@ export default function GetPeople() {
     return (
         <Container component="main" maxWidth="md">
             <CssBaseline>
-                <h1>People - Notion Data</h1>
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="people table">
                         <TableHead>
