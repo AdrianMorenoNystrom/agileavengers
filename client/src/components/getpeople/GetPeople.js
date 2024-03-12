@@ -1,7 +1,7 @@
 import React from 'react';
-import useFetchData from './UseFetchData';
+import useFetchData from '../UseFetchData';
 // import { User, Clock } from 'lucide-react';
-import './getpeoplenew.scss';
+import './getpeople.scss';
 
 export default function GetPeopleNew() {
     const { data } = useFetchData("/api/people");
