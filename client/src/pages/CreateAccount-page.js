@@ -84,7 +84,7 @@ export default function CreateAccount() {
           </Avatar>
 
           <Typography component="h1" variant="h5">
-            Create Account
+            Add User
           </Typography>
 
           {showLoading && (
