@@ -14,8 +14,8 @@ router.post("/api/people/add", jsonParser, async (request, response) => {
   const fullName = request.body.fullName;
   const email = request.body.email;
   const password = request.body.password;
-  // Accounts get the role "user" as default.
   const role = "User";
+
   const databaseId = process.env.NOTION_DATABASE_ID_PEOPLE;
   try {
     const result = await notion.pages.create({

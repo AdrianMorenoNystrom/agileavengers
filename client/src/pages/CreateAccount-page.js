@@ -4,7 +4,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import PersonAddOutlinedIcon from '@mui/icons-material/PersonAddOutlined';
@@ -14,9 +13,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
 import SubmitToNotion from '../components/SubmitUser';
 import NameFieldValidation from './functions/NameValidation';
-import Copyright from '../components/Copyright';
 import CircularProgress from '@mui/material/CircularProgress';
 import CreateAccountError from '../components/CreateAccountError';
+
 
 const defaultTheme = createTheme();
 
@@ -93,7 +92,7 @@ export default function CreateAccount() {
           )}
 
           {showSuccessAlert && (
-            <Alert severity="success">Account successfully created!</Alert>
+            <Alert severity="success">User successfully added!</Alert>
           )}
 
           <CreateAccountError open={invalidAccountMessage} onClose={handleCloseMessage} />
@@ -127,23 +126,20 @@ export default function CreateAccount() {
                   id="password"
                 />
               </Grid>
-
+              <Grid item xs={12}>
+              </Grid>
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Create Account
+                Add user to database
               </Button>
               <Grid item></Grid>
-              <Link href="/Login" variant="body2">
-                Do you already have an account? Sign in here!
-              </Link>
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
   );

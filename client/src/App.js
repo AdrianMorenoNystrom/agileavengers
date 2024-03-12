@@ -11,14 +11,9 @@ import Users from './pages/users/Users';
 import User from './pages/user/User';
 import Navbar from './components/navbar/Navbar';
 import Menu from './components/menu/Menu';
-<<<<<<< HEAD
-import AddUser from './pages/CreateAccount-page';
-
-function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
-=======
 import PrivateRoutes from './components/PrivateRoutes';
 import AuthProvider from './components/AuthProvider';
+import CreateAccount from './pages/CreateAccount-page';
 
 function App() {
     const Layout = () => {
@@ -36,7 +31,6 @@ function App() {
             </div>
         );
     };
->>>>>>> 0ea9b46f137bc5d3f5bcb5653e989063c87baace
 
     return (
         <Router>
@@ -48,6 +42,7 @@ function App() {
                         <Route path="/projects/:id" element={<Project />} />
                         <Route path="/users" element={<Users />} />
                         <Route path="/users/:id" element={<User />} />
+                        <Route path="/adduser" element={<CreateAccount />} />
                         <Route path="*" element={<Page404 />} />
                     </Route>
                     <Route path="/login" element={<Login />} />
@@ -55,27 +50,6 @@ function App() {
             </AuthProvider>
         </Router>
     );
-<<<<<<< HEAD
-  };
-
-  return (
-    <Router>
-      <Routes>
-          <Route path="/" element={<PrivateRoute element={<Layout />} />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/projects/:id" element={<Project />} />
-            <Route path="/users" element={<Users />} />
-            <Route path="/users/:id" element={<User />} />
-            <Route path="/Adduser" element={<AddUser/>} />
-        </Route>
-        <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
-        <Route path="*" element={<Page404 />} />
-      </Routes>
-    </Router>
-  );
-=======
->>>>>>> 0ea9b46f137bc5d3f5bcb5653e989063c87baace
 }
 
 export default App;
