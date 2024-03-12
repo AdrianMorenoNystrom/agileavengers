@@ -30,7 +30,7 @@ export default function ActiveProjects() {
                         </TableCell>
                        {/* <TableCell align="right">                    
                             {project?.properties?.['Project Leader']?.people?.[0]?.title?.FirstName || "N/A"}
-                </TableCell> } //Behövs backend logik för att häma namn för project Leader*/}
+                </TableCell> } //Behövs backend-logik för att häma namn för project Leader*/}
                         <TableCell align="right">                      
                             {project?.properties?.['Hours Left']?.formula?.number || "N/A"}
                         </TableCell>
