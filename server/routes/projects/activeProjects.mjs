@@ -32,6 +32,7 @@ router.get("/api/projects/active", async (request, response) => {
         ],
       },
     });
+    
     const relevantData = result.results;
  
     response.json({ message: relevantData });
