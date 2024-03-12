@@ -24,7 +24,7 @@ router.get("/api/projects/active", async (request, response) => {
             },
           },
           {
-            property: "👤 People", // Använd det exakta namnet som visas i din Notion-databas
+            property: "People", // Använd det exakta namnet som visas i din Notion-databas
             relation: {
               contains: userId,
             },
