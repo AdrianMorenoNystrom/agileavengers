@@ -12,10 +12,14 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
 import SubmitToNotion from '../components/SubmitUser';
-import NameFieldValidation from './functions/NameValidation';
+import FirstNameFieldValidation from './functions/FirstNameValidation';
+import LastNameFieldValidation from './functions/LastNameValidation';
 import CircularProgress from '@mui/material/CircularProgress';
 import CreateAccountError from '../components/CreateAccountError';
-
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 const defaultTheme = createTheme();
 
@@ -32,19 +36,21 @@ export default function CreateAccount() {
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
-      const data = new FormData(event.currentTarget);
-      const fullName = data.get('fullName');
+      const data = new FormData(event.target);
+      const firstName = data.get('firstname');
+      const lastName = data.get('lastname');
       const email = data.get('email');
       const password = data.get('password');
+      const role = data.get('role');
 
       // To do, check valid email? 
 
-      if (!fullName || !email || !password) {
+      if (!firstName || !lastName || !email || !password || !role) {
         setInvalidAccountMessage(true);
         return;
       }
 
-      SubmitToNotion(fullName, email, password);
+      SubmitToNotion(firstName,lastName, email, password, role);
 
       // Loading animation and the order it comes in can be changed for a better user experience.
 
@@ -55,7 +61,7 @@ export default function CreateAccount() {
         setShowSuccessAlert(true);
         setShowLoading(false);
         event.target.reset();
-      }, 2000);
+      }, 1000);
 
       setTimeout(() => {
         setShowSuccessAlert(false);
@@ -101,7 +107,14 @@ export default function CreateAccount() {
             <Grid container rowSpacing={3}>
 
               <Grid item xs={12}>
-                <NameFieldValidation />
+
+                <FirstNameFieldValidation />
+
+              </Grid>
+              <Grid item xs={12}>
+
+                <LastNameFieldValidation />
+                
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -127,6 +140,20 @@ export default function CreateAccount() {
                 />
               </Grid>
               <Grid item xs={12}>
+              <FormControl fullWidth>
+              <InputLabel id="selectrole">Role</InputLabel>
+              <Select
+                labelId="selectrole"
+                id="role"
+                label="Role"
+                name="role"
+                defaultValue={''}
+              >
+                <MenuItem value="User">User</MenuItem>
+                <MenuItem value="Admin">Admin</MenuItem>
+                <MenuItem value="Owner">Owner</MenuItem>
+              </Select>
+              </FormControl>
               </Grid>
               <Button
                 type="submit"

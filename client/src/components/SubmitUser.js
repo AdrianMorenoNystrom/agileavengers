@@ -1,5 +1,5 @@
 
-function SubmitToNotion(fullName, email, password) {
+function SubmitToNotion(firstName,lastName, email, password,role) {
     fetch("http://localhost:3500/api/people/add", {
       method: "post",
       headers: {
@@ -7,9 +7,11 @@ function SubmitToNotion(fullName, email, password) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        fullName: fullName,
+        firstName: firstName,
+        lastName: lastName,
         email: email,
         password: password,
+        role: role,
       }),
       credentials: "include",
     })

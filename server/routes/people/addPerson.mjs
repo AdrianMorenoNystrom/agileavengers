@@ -11,21 +11,31 @@ const router = express.Router();
 router.post("/api/people/add", jsonParser, async (request, response) => {
   if (!request.session.user) return response.sendStatus(401);
 
-  const fullName = request.body.fullName;
+  const firstName = request.body.firstName;
+  const lastName = request.body.lastName;
   const email = request.body.email;
   const password = request.body.password;
-  const role = "User";
+  const role = request.body.role;
 
   const databaseId = process.env.NOTION_DATABASE_ID_PEOPLE;
   try {
     const result = await notion.pages.create({
       parent: { database_id: databaseId },
       properties: {
-        Name: {
+        Firstname: {
           title: [
             {
               text: {
-                content: fullName,
+                content: firstName,
+              },
+            },
+          ],
+        },
+        Lastname: {
+          "rich_text": [
+            {
+              text: {
+                content: lastName,
               },
             },
           ],
