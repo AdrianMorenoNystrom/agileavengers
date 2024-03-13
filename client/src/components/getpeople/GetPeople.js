@@ -22,7 +22,7 @@ export default function GetPeople() {
                 <tbody>
                     {filteredItems.map((page) => (
                         <tr key={page.id}>
-                            <td>{page?.properties?.Firstname?.title?.[0]?.text?.content}{page?.properties?.Lastname?.rich_text?.[0]?.text?.content}</td>
+                            <td>{page?.properties?.['First Name']?.title?.[0]?.text?.content} {page?.properties?.['Last Name']?.rich_text?.[0]?.text?.content}</td>
                             <td>{page?.properties?.['Total hours']?.rollup?.number}</td>
                         </tr>
                     ))}

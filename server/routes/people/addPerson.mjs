@@ -22,7 +22,7 @@ router.post("/api/people/add", jsonParser, async (request, response) => {
     const result = await notion.pages.create({
       parent: { database_id: databaseId },
       properties: {
-        Firstname: {
+        "First Name": {
           title: [
             {
               text: {
@@ -31,7 +31,7 @@ router.post("/api/people/add", jsonParser, async (request, response) => {
             },
           ],
         },
-        Lastname: {
+        "Last Name": {
           "rich_text": [
             {
               text: {
