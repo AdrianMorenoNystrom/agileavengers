@@ -21,7 +21,6 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.11",
     "@mui/material": "^5.15.11",
-    "@mui/x-charts": "^6.19.5",
     "@notionhq/client": "^2.2.14",
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",

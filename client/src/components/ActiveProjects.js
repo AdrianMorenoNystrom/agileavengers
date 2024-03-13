@@ -7,8 +7,7 @@ import TableRow from '@mui/material/TableRow';
 import useFetchData from './UseFetchData';
 
 export default function ActiveProjects() {
-    const { data, isLoading, error } = useFetchData('/api/projects/active'); // Använder den nya endpointen
-
+    const { data, isLoading, error } = useFetchData('/api/projects/active'); // Använder den nya endpointen    
 
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
@@ -19,7 +18,6 @@ export default function ActiveProjects() {
                 <TableRow>
                     <TableCell>Projektnamn</TableCell>
                     <TableCell align="right">Totala Timmar</TableCell>
-                    { }
                 </TableRow>
             </TableHead>
             <TableBody>
@@ -31,7 +29,6 @@ export default function ActiveProjects() {
                         <TableCell align="right">
                             {project?.properties?.['Total hours']?.rollup?.number}
                         </TableCell>
-                        { }
                     </TableRow>
                 ))}
             </TableBody>
