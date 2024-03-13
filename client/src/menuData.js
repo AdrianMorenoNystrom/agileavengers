@@ -32,7 +32,7 @@ export const menuData = [
             {
                 id: 1,
                 title: "Report time",
-                url: "/someting",
+                url: "/timereport",
                 icon: "calendar-check"
             },
         ],

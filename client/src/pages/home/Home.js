@@ -1,15 +1,15 @@
 import React from "react";
 import "./home.scss";
-import GetPeopleNew from '../../components/getpeople/GetPeople'
 import ActiveProjects from '../../components/ActiveProjects';
+import GetPeopleNew from "../../components/getpeople/GetPeople";
 import DataTable from "../../components/datatable/DataTable";
 
 function Home() {
   return (
-    <div className="home">      
+    <div className="home">
       <div className="box box1">
-      <h2>Active projects</h2>
-      <ActiveProjects /> {}
+        <h2>Active projects</h2>
+        <ActiveProjects />
       </div>
 
       <div className="box box2">
@@ -22,7 +22,7 @@ function Home() {
         <DataTable /> 
       </div>      
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;
