@@ -9,6 +9,7 @@ import Projects from './pages/projects/Projects';
 import Project from './pages/project/Project';
 import Users from './pages/users/Users';
 import User from './pages/user/User';
+import Timereport from "./pages/timereport/Timereport";
 import Navbar from './components/navbar/Navbar';
 import Menu from './components/menu/Menu';
 import PrivateRoutes from './components/PrivateRoutes';
@@ -41,6 +42,7 @@ function App() {
                         <Route path="/projects/:id" element={<Project />} />
                         <Route path="/users" element={<Users />} />
                         <Route path="/users/:id" element={<User />} />
+                        <Route path="/timereport" element={<Timereport />} />
                         <Route path="*" element={<Page404 />} />
                     </Route>
                     <Route path="/login" element={<Login />} />
