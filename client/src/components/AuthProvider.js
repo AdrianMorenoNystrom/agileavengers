@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import AuthContext from './AuthContext';
 
 const AuthProvider = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem(process.env.AUTH_KEY) === 'true');
+    const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem('isAuthenticated') === 'true');
 
     useEffect(() => {
-        localStorage.setItem(process.env.AUTH_KEY, isAuthenticated);
+        localStorage.setItem('isAuthenticated', isAuthenticated);
     }, [isAuthenticated]);
 
     const contextValue = {
