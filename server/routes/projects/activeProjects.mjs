@@ -24,6 +24,20 @@ router.get("/api/projects/active", async (request, response) => {
             },
           },
           {
+            or: [
+              {
+                property: "People",
+                relation: {
+                  contains: userId,
+                },
+              },
+              {
+                property: "Project Leader",
+                relation: {
+                  contains: userId,
+                }
+              },
+            ],
           },
         ],
       },
