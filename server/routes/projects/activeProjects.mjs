@@ -9,7 +9,7 @@ const router = express.Router();
 router.get("/api/projects/active", async (request, response) => {
   if (!request.session.user) return response.sendStatus(401);
 
-  const userId = request.session.user.id; // Användarens Notion ID som du sparar i sessionen.
+  const userId = request.session.user.id; // Användarens ID from Notion som sparas i sessionen.
   const databaseId = process.env.NOTION_DATABASE_ID_PROJECTS;
 
   try {
@@ -43,8 +43,7 @@ router.get("/api/projects/active", async (request, response) => {
       },
     });
 
-    const relevantData = result.results;
-
+     const relevantData = result.results;
     response.json({ message: relevantData });
   } catch (error) {
     console.error(error);
