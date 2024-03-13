@@ -1,4 +1,4 @@
-import express from "express";
+import express, { request, response } from "express";
 import dotenv from "dotenv";
 import notion from "../../notion.mjs";
 
@@ -10,10 +10,40 @@ const router = express.Router();
 router.get("/api/projects", async (request, response) => {
   if (!request.session.user) return response.sendStatus(401);
 
+  const userId = request.session.user.id;
   const databaseId = process.env.NOTION_DATABASE_ID_PROJECTS;
 
   try {
-    const result = await notion.databases.query({ database_id: databaseId });
+    const result = await notion.databases.query({
+      database_id: databaseId,
+      filter: {
+        or: [
+          {
+            property: "People",
+            relation: {
+              contains: userId,
+            },
+          },
+          {
+            property: "Project Leader",
+            relation: {
+              contains: userId,
+            }
+          },
+        ],
+      },
+      sorts: [
+        {
+          property: "Status",
+          direction: "ascending",
+        },
+        {
+          property: "Timespan",
+          direction: "ascending",
+        },
+      ],
+    });
+
     const relevantData = result.results;
 
     response.json({ message: relevantData });
