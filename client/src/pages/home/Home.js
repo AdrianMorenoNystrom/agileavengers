@@ -1,22 +1,22 @@
 import React from "react";
 import "./home.scss";
-import GetPeopleNew from '../../components/getpeople/GetPeople'
+import ProjectOverview from "../../components/ProjectOverview";
 import ActiveProjects from '../../components/ActiveProjects';
 
 function Home() {
   return (
-    <div className="home">      
+    <div className="home">
       <div className="box box1">
-      <h2>Active projects</h2>
-      <ActiveProjects /> {}
+        <h2>Active projects</h2>
+        <ActiveProjects /> { }
       </div>
 
       <div className="box box2">
         <h2>Users</h2>
-        <GetPeopleNew />
+        <ProjectOverview />
       </div>
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;
