@@ -6,6 +6,7 @@ import { Rocket } from 'lucide-react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Logout from "../Logout";
+import GetAvatar from "../GetAvatar";
 
 
 const Navbar = () => {
@@ -32,11 +33,7 @@ const Navbar = () => {
         </div>
         <Settings className="icon" size={20} />
         <div className="user" onClick={handleClick}>
-          <span>UserName</span>
-          <img
-            src="https://images.pexels.com/photos/11038549/pexels-photo-11038549.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"
-            alt=""
-          />
+          <GetAvatar />
         </div>
         <Menu
           id="basic-menu"
