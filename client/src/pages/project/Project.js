@@ -1,13 +1,13 @@
 import React from 'react';
 import '../../components/single/single.scss';
-import useFetchData from '../../components/UseFetchDataSingle';
+import useFetchData from '../../components/UseFetchData';
 import { useParams } from 'react-router-dom'; 
 
 function Project() {
   const { id } = useParams();
   console.log(id); 
 
-  const { data, isLoading, error } = useFetchData(`/api/projects/project/${id}`);
+  const { data, isLoading, error } = useFetchData(`/api/projects/project/${id}`, true);
 
   if (isLoading) return <div>Laddar...</div>;
   if (error) return <div>Fel vid hämtning av data: {error}</div>;
