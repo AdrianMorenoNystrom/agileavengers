@@ -13,6 +13,7 @@ import Menu from './components/menu/Menu';
 import PrivateRoutes from './components/PrivateRoutes';
 import AuthProvider from './components/AuthProvider';
 import Projects from './pages/projects/Projects';
+import Project from './pages/project/Project';
 
 function App() {
     const Layout = () => {
@@ -38,6 +39,7 @@ function App() {
                     <Route element={<PrivateRoutes element={<Layout />} />}>
                         <Route path="/" element={<Home />} />
                         <Route path="/projects" element={<Projects />} />
+                        <Route path="/projects/:id" element={<Project />} />
                         <Route path="/users" element={<Users />} />
                         <Route path="/users/:id" element={<User />} />
                         <Route path="/timereport" element={<Timereport />} />

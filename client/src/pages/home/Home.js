@@ -18,7 +18,7 @@ function Home() {
       </div>
 
       <div className="box box3">
-        <h2>DataTable</h2>
+        <h2>Open single</h2>
         <DataTable /> 
       </div>      
     </div>
