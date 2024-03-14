@@ -6,19 +6,23 @@ dotenv.config();
 
 const router = express.Router();
 
-router.get("/api/projects/project", async (request, response) => {
-     if (!request.session.user) return response.sendStatus(401);
+router.get("/api/projects/project/:id", async (request, response) => {
+    if (!request.session.user) return response.sendStatus(401);
 
-  const pageId = "6801ccd5-1acc-4c19-a293-3074bacba39c";
+    const {id} = request.params; 
 
-  try {
-    const pageData = await notion.pages.retrieve({ page_id: pageId });
-    response.json({ data: pageData });
-    console.log(response);
-  } catch (error) {
-    console.error(error);
-    response.status(500).json({ error: "Internal Server Error" });
-  }
+    if (!id) {
+        return response.status(400).json({ error: "Missing pageId parameter" });
+    }
+
+    try {
+        const pageData = await notion.pages.retrieve({ page_id: id });
+
+        response.json({ data: pageData });
+    } catch (error) {
+        console.error(error);
+        response.status(500).json({ error: "Internal Server Error" });
+    }
 });
 
 export default router;

@@ -1,8 +1,9 @@
-import React from "react";
 import { DataGrid } from '@mui/x-data-grid';
 import useFetchData from '../../components/UseFetchData';
 import { useNavigate } from 'react-router-dom'; 
 import Button from '@mui/material/Button';
+import React, { useState } from "react";
+
 
 const DataTable = () => {
     const { data, isLoading, error } = useFetchData('/api/projects/active');
@@ -15,7 +16,6 @@ const DataTable = () => {
     const handleClick = (cellValues) => {
         navigate(cellValues.row.url);
     };
-
 
     // Sets Columns fields
     const columns = [
@@ -42,6 +42,7 @@ const DataTable = () => {
 
     // Maps rows data with properties
     const rows = data?.map(project => ({
+        pageId: project?.id,
         id: project?.properties?.ID?.unique_id?.number,
         projectName: project?.properties?.Projectname?.title?.[0]?.text?.content,
         url: `/projects/${project?.id}` 
