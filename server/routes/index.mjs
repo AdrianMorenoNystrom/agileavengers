@@ -6,6 +6,7 @@ import addPersonRoute from "./people/addPerson.mjs";
 import addProjectRoute from "./projects/addProject.mjs";
 import projectsRoute from "./projects/allProjects.mjs";
 import showProjectsRoute from "./projects/activeProjects.mjs";
+import addTimereportsRoute from "./timereports/addTimereport.mjs";
 import showSingleProjectsRoute from "./projects/singleProject.mjs";
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(addPersonRoute);
 app.use(addProjectRoute);
 app.use(projectsRoute);
 app.use(showProjectsRoute);
+app.use(addTimereportsRoute);
 app.use(showSingleProjectsRoute);
 
 export default app;

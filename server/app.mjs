@@ -29,7 +29,7 @@ app.use(
     secret: randomSecret,
     saveUninitialized: false,
     resave: false,
-    cookie: { maxAge: 60000 * 60 },
+    cookie: { maxAge: 60000 * 60 * 24 * 365 },
     name: "agile-cookie",
   })
 );
