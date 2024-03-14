@@ -7,7 +7,7 @@ dotenv.config();
 const router = express.Router();
 
 router.get("/api/projects/project", async (request, response) => {
-    if (!request.session.user) return response.sendStatus(401);
+     if (!request.session.user) return response.sendStatus(401);
 
   const pageId = "6801ccd5-1acc-4c19-a293-3074bacba39c";
 

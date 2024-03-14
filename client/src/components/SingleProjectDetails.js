@@ -12,9 +12,10 @@ export default function SingleProjectDetails() {
     return (
         <>
             {data.properties && (
-                    <div className="info">{data?.created_time} 
-                    {data?.properties?.Projectname?.title[0]?.plain_text}
-                    </div>
+                <div className="info">
+                    <div>{data?.created_time}</div> 
+                    <div>{data?.properties?.Projectname?.title[0]?.plain_text}</div>
+                </div>
             )}
         </>
     );
