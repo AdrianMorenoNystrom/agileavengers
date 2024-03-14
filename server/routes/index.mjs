@@ -7,6 +7,7 @@ import addProjectRoute from "./projects/addProject.mjs";
 import projectsRoute from "./projects/allProjects.mjs";
 import showProjectsRoute from "./projects/activeProjects.mjs";
 import getUser from './people/getUser.mjs';
+import addTimereportsRoute from "./timereports/addTimereport.mjs";
 
 const app = express();
 
@@ -18,5 +19,6 @@ app.use(addProjectRoute);
 app.use(projectsRoute);
 app.use(showProjectsRoute);
 app.use(getUser);
+app.use(addTimereportsRoute);
 
 export default app;
