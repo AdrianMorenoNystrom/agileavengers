@@ -10,7 +10,7 @@ const router = express.Router();
 Route to get all timereports associated with a project or user, depending if
 project_id is included or not.
 */
-router.get("/api/projects/timereports", async (request, response) => {
+router.get("/api/timereports", async (request, response) => {
   if (!request.session.user) return response.sendStatus(401);
 
   try {
