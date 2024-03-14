@@ -6,6 +6,7 @@ import addPersonRoute from "./people/addPerson.mjs";
 import addProjectRoute from "./projects/addProject.mjs";
 import projectsRoute from "./projects/allProjects.mjs";
 import showProjectsRoute from "./projects/activeProjects.mjs";
+import getUser from './people/getUser.mjs';
 
 const app = express();
 
@@ -16,5 +17,6 @@ app.use(addPersonRoute);
 app.use(addProjectRoute);
 app.use(projectsRoute);
 app.use(showProjectsRoute);
+app.use(getUser);
 
 export default app;

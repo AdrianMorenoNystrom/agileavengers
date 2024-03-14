@@ -6,7 +6,6 @@ dotenv.config();
 
 const router = express.Router();
 
-// Get all data from Projects Table
 router.get("/api/projects", async (request, response) => {
   if (!request.session.user) return response.sendStatus(401);
 
