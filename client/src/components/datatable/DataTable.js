@@ -36,15 +36,19 @@ const DataTable = () => {
                 );
             }
         },
-        { field: 'id', headerName: 'ID', width: 90 },
-        { field: 'projectName', headerName: 'Project Name', width: 150, editable: false },
+        // { field: 'id', headerName: 'ID', width: 90 },
+        { field: 'projectName', headerName: 'Project Name', width: 150},
+        { field: 'hoursLeft', headerName: 'Hours left', width: 150},
+        { field: 'endDate', headerName: 'End Date', width: 150},
+
     ];
 
     // Maps rows data with properties
     const rows = data?.map(project => ({
-        pageId: project?.id,
         id: project?.properties?.ID?.unique_id?.number,
         projectName: project?.properties?.Projectname?.title?.[0]?.text?.content,
+        hoursLeft: project?.properties?.['Hours Left']?.formula?.number || "N/A",
+        endDate: project?.properties?.Timespan?.date?.end || "N/A",
         url: `/projects/${project?.id}` 
     })) || [];
 
