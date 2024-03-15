@@ -12,12 +12,9 @@ import Navbar from './components/navbar/Navbar';
 import Menu from './components/menu/Menu';
 import PrivateRoutes from './components/PrivateRoutes';
 import AuthProvider from './components/AuthProvider';
-<<<<<<< HEAD
 import CreateAccount from './pages/CreateAccount-page';
-=======
 import Projects from './pages/projects/Projects';
 import Project from './pages/project/Project';
->>>>>>> 803511b68b42f2c56f8ca20e2668469980fd65f9
 
 function App() {
     const Layout = () => {
