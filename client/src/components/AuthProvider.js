@@ -1,8 +1,16 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import AuthContext from './AuthContext';
 
 const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem('isAuthenticated') === 'true');
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!isAuthenticated || isAuthenticated === null) {
+            navigate('/login');
+        }
+    }, [isAuthenticated, navigate]);
 
     useEffect(() => {
         localStorage.setItem('isAuthenticated', isAuthenticated);
@@ -11,6 +19,7 @@ const AuthProvider = ({ children }) => {
     const contextValue = {
         isAuthenticated,
         setIsAuthenticated,
+
     };
 
     return (
