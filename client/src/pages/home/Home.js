@@ -7,20 +7,23 @@ import DataTable from "../../components/datatable/DataTable";
 function Home() {
   const [selectedProject, setSelectedProject] = useState(null);
 
-  const handleProjectSelect = (project) => {
-    setSelectedProject(project);
-  };
+  const projectStatusHeader = selectedProject
+    ? selectedProject.properties.Status.select.name === "Done"
+      ? "Most Recently Finished Project"
+      : "Active Projects"
+    : "Loading...";
 
   return (
     <div className="home">
       <div className="box box1">
-        <h2>Active projects</h2>
-        <ActiveProjects onProjectSelect={handleProjectSelect} />
+       <h2>{projectStatusHeader}</h2>
+        <ActiveProjects onProjectSelect={setSelectedProject} />
+        <h2>Project Details</h2>
+        <ProjectChart project={selectedProject} />
       </div>
 
       <div className="box box2">
-        <h2>Project Details</h2>
-        {selectedProject && <ProjectChart project={selectedProject} />}
+       
       </div>
 
       <div className="box box3">
