@@ -1,5 +1,5 @@
 import React from 'react';
-import { PieChart } from '@mui/x-charts/PieChart';
+import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
 
 const ProjectChart = ({ project }) => {
     const hoursWorked = project?.properties?.['Hours Worked']?.rollup?.number || 0;
@@ -23,6 +23,12 @@ const ProjectChart = ({ project }) => {
                 }]}
                 width={400}
                 height={200}
+                sx={{
+                    [`& .${pieArcLabelClasses.root}`]: {
+                        fill: 'white',
+                        fontWeight: 'bold',
+                    },
+                }}
             />
         </>
     );

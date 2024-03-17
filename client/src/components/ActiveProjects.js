@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -9,6 +9,15 @@ import useFetchData from './UseFetchData';
 export default function ActiveProjects({ onProjectSelect }) {
     const { data, isLoading, error } = useFetchData('/api/projects/active');
     const [selectedProjectId, setSelectedProjectId] = useState(null);
+
+    useEffect(() => {
+        // När datan har laddats och inte är tom, välj det första projektet som standard
+        //Om inget aktivt projekt finns så visas det senaste med status Done
+        if (data && data.length > 0) {
+            onProjectSelect(data[0]);
+            setSelectedProjectId(data[0].id);
+        }
+    }, [data, onProjectSelect]);
 
     if (isLoading) return <div>Laddar...</div>;
     if (error) return <div>Fel vid hämtning av data: {error}</div>;
@@ -29,7 +38,7 @@ export default function ActiveProjects({ onProjectSelect }) {
                 </TableRow>
             </TableHead>
             <TableBody>
-                {data && data.map((project) => (    
+                {data && data.map((project) => (
                     <TableRow
                         key={project.id}
                         onClick={() => handleRowClick(project)}
