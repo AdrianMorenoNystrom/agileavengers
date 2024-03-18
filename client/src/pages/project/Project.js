@@ -22,58 +22,62 @@ function Project() {
     if (error) return <div>Fel vid hämtning av data: {error}</div>;
     if (!data) return <div>No data available</div>;
 
+    const properties = data.properties;
+    const projectName = properties?.Projectname?.title[0]?.plain_text || '';
+    const statusName = properties?.Status?.select?.name || '';
+    const startDate = new Date(data.created_time);
+    const endDate = new Date(properties?.Timespan?.date?.end);
+    const leaderName = properties?.['Project Leader Name']?.rollup?.array?.[0]?.formula?.string || '';
+    
     return (
         <div className='single'>
             <div className='project'>
-              <div className='project-heading'>
-                {data.properties && (
-                <>
-                  <div className='topInfo'>
-                  <h1>{data?.properties?.Projectname?.title[0]?.plain_text}</h1>
-                  <Chip className="status" color={statusCheck(data?.properties?.Status?.select?.name)} size="small" label={data?.properties?.Status?.select?.name || ''} />
-                  </div>
-                    <div className="project-info">
-                        <div className='item'>
-                            <div className='itemTitle'>Start date: </div>
-                            <div className='itemValue'>{dateFormatter.format(new Date(data?.created_time))}</div>             
-                        </div>
-                        <div className='item'>
-                            <div className='itemTitle'>End date: </div>
-                            <div className='itemValue'>{dateFormatter.format(new Date(data?.properties?.Timespan?.date?.end)) || ''}</div>             
-                        </div>   
-                          <div className='item'>
-                              <div className='itemTitle'>Leader: </div>
-                              <div className='itemValue'>{data?.properties?.['Project Leader Name']?.rollup?.array?.[0]?.formula?.string || ''}</div>             
-                          </div>
-                          <div className='item'>
-                              <div className='itemTitle'>Team: </div>
-                              <div className='itemValue'>
-                                <AvatarGroup max={4}>
-                                  <Avatar>H</Avatar>
-                                  <Avatar sx={{ bgcolor: deepOrange[500] }}>N</Avatar>
-                                  <Avatar sx={{ bgcolor: deepPurple[500] }}>OP</Avatar>
-                                </AvatarGroup></div>             
-                          </div>
-                          <div className='item'>
-                            <div className='itemTitle'>Project info</div>
-                            <p className='itemValue'>This is a very important and exciting project
-                            where we will do very good stuff for many people and eat lotsa cake.</p>
-                          </div>
-                    </div>
-                    </>
-                )}
+                <div className='project-heading'>
+                            <div className='topInfo'>
+                                <h1>{projectName}</h1>
+                                <Chip className="status" color={statusCheck(statusName)} size="small" label={statusName} />
+                            </div>
+                            <div className="project-info">
+                                <div className='item'>
+                                    <div className='itemTitle'>Start date: </div>
+                                    <div className='itemValue'>{dateFormatter.format(startDate)}</div>             
+                                </div>
+                                <div className='item'>
+                                    <div className='itemTitle'>End date: </div>
+                                    <div className='itemValue'>{dateFormatter.format(endDate) || ''}</div>             
+                                </div>   
+                                <div className='item'>
+                                    <div className='itemTitle'>Leader: </div>
+                                    <div className='itemValue'>{leaderName}</div>             
+                                </div>
+                                <div className='item'>
+                                    <div className='itemTitle'>Team: </div>
+                                    <div className='itemValue'>
+                                        <AvatarGroup max={4}>
+                                            <Avatar>H</Avatar>
+                                            <Avatar sx={{ bgcolor: deepOrange[500] }}>N</Avatar>
+                                            <Avatar sx={{ bgcolor: deepPurple[500] }}>OP</Avatar>
+                                        </AvatarGroup>
+                                    </div>             
+                                </div>
+                                <div className='item'>
+                                    <div className='itemTitle'>Project info</div>
+                                    <p className='itemValue'>This is a very important and exciting project where we will do very good stuff for many people and eat lotsa cake.</p>
+                                </div>
+                            </div>
                 </div>
+                
                 <div className='activities'>
-                  <h2>Latest activities</h2>
-                  <ul>
-                    <li>
-                      <div className='activity'>
-                        <time className='date'>20 minutes ago</time>
-                        <p className=''>Olof worked 5 hours</p>
-                        <p className='activity-tag'>coding</p>
-                      </div>
-                    </li>
-                  </ul>
+                    <h2>Latest activities</h2>
+                    <ul>
+                        <li>
+                            <div className='activity'>
+                                <time className='date'>20 minutes ago</time>
+                                <p className=''>Olof worked 5 hours</p>
+                                <p className='activity-tag'>coding</p>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
                 <div className='charts'><ProjectChart project={data} /> </div>
                 <div className='timeReports'></div>
