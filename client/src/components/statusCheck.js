@@ -1,3 +1,5 @@
+// Project.js
+// changes colour of chip depending on project status
 
 const statusCheck = (status) => {
     switch(status) {
@@ -10,6 +12,7 @@ const statusCheck = (status) => {
         case "Done":
             return "success";
         default:
+            return "primary";
       }    
 }
 
