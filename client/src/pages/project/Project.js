@@ -2,7 +2,7 @@ import React from 'react';
 import useFetchData from '../../components/UseFetchData';
 import { useParams } from 'react-router-dom'; 
 import dateFormatter from '../../components/DateFormatter';
-import GetAvatar from '../../components/GetAvatar';
+import GetProjectAvatar from '../../components/GetProjectAvatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import Avatar from '@mui/material/Avatar';
 import Chip from '@mui/material/Chip';
@@ -21,7 +21,6 @@ function Project() {
     if (isLoading) return <div>Laddar...</div>;
     if (error) return <div>Fel vid hämtning av data: {error}</div>;
     if (!data) return <div>No data available</div>;
-
     return (
         <div className='single'>
             <div className='project'>
@@ -43,15 +42,15 @@ function Project() {
                         </div>   
                           <div className='item'>
                               <div className='itemTitle'>Leader: </div>
-                              <div className='itemValue'>{data?.properties?.['Project Leader Name']?.rollup?.array?.[0]?.formula?.string || ''}</div>             
+                              <div className='itemValue'>{data?.properties?.['Project Leader Name']?.rollup?.array?.[0]?.formula?.string || ''}</div>        
                           </div>
                           <div className='item'>
                               <div className='itemTitle'>Team: </div>
                               <div className='itemValue'>
                                 <AvatarGroup max={4}>
-                                  <Avatar>H</Avatar>
-                                  <Avatar sx={{ bgcolor: deepOrange[500] }}>N</Avatar>
-                                  <Avatar sx={{ bgcolor: deepPurple[500] }}>OP</Avatar>
+
+                                 <GetProjectAvatar />
+
                                 </AvatarGroup></div>             
                           </div>
                           <div className='item'>
