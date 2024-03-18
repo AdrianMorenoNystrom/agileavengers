@@ -10,7 +10,7 @@ import { deepOrange, deepPurple } from '@mui/material/colors';
 import ProjectChart from '../../components/ProjectChart'; 
 import '../../components/single/single.scss'
 import './project.scss'
-
+import statusCheck from '../../components/statusCheck';
 
 function Project() {
     const { id } = useParams();
@@ -30,7 +30,7 @@ function Project() {
                 <>
                   <div className='topInfo'>
                   <h1>{data?.properties?.Projectname?.title[0]?.plain_text}</h1>
-                  <Chip className="status" color="success" size="small" label={data?.properties?.Status?.select?.name || ''} />
+                  <Chip className="status" color={statusCheck(data?.properties?.Status?.select?.name)} size="small" label={data?.properties?.Status?.select?.name || ''} />
                   </div>
                     <div className="project-info">
                         <div className='item'>
