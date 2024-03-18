@@ -14,7 +14,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import LoginError from '../../components/LoginError';
+import AlertMessage from '../../components/AlertMessage';
 import AuthContext from '../../components/AuthContext';
 
 function Copyright(props) {
@@ -124,7 +124,12 @@ export default function SignIn() {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
-            <LoginError open={invalidLoginMessage} onClose={handleCloseMessage} />
+            <AlertMessage
+              message="Invalid email address or password. Please try again."
+              severity='error'
+              open={invalidLoginMessage}
+              onClose={handleCloseMessage}
+            />
             <Button
               type="submit"
               fullWidth
