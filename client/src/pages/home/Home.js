@@ -18,18 +18,12 @@ function Home() {
       <div className="box box1">
        <h2>{projectStatusHeader}</h2>
         <ActiveProjects onProjectSelect={setSelectedProject} />
+        <div className="Details">
         <h2>Project Details</h2>
+        </div>        
         <ProjectChart project={selectedProject} />
       </div>
 
-      <div className="box box2">
-       
-      </div>
-
-      <div className="box box3">
-        <h2>Open single</h2>
-        <DataTable /> 
-      </div>      
     </div>
   );
 }
