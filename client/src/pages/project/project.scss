@@ -1,0 +1,56 @@
+@import "../../styles/variables.scss";
+
+.project {
+
+    .project-heading {
+        padding: 2em;
+        background-color: $light-bg;
+        margin-bottom: 3em;
+
+        .topInfo {
+            display: flex;
+            align-items: center;
+
+            .status {
+                margin: 0 1em;
+            }
+        }
+
+        .project-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+            .item {
+                margin: 1em 0.5em;
+                flex-basis: calc(50% - 1em);
+
+                .itemTitle {
+                    margin: 0.5em 0;
+                    font-size: small;
+                    font-weight: 600;
+                }
+
+                .itemValue {
+                    display: flex;
+                }
+            }
+        }
+    }
+
+    .activities {
+        padding: 2em;
+        background-color: #ffd9da;
+        margin-bottom: 3em;
+
+        time {
+            font-size: 0.7em;
+        }
+    }
+
+    .charts {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}

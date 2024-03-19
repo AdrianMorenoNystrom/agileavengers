@@ -5,6 +5,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+
 }
 
 a {
@@ -12,14 +13,20 @@ a {
     color: inherit;
 }
 
+p {
+    line-height: 1.5em;
+}
+
 .main {
     font-family: "Inter", sans-serif;
     background-color: $main-bg;
     color: $main-color;
+
 }
 
 .container {
     display: flex;
+    height: 100vh;
 }
 
 .menuContainer {

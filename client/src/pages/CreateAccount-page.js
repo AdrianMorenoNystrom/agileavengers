@@ -20,6 +20,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import AlertMessage from '../components/AlertMessage';
 
 const defaultTheme = createTheme();
 
@@ -101,7 +102,12 @@ export default function CreateAccount() {
             <Alert severity="success">User successfully added!</Alert>
           )}
 
-          <CreateAccountError open={invalidAccountMessage} onClose={handleCloseMessage} />
+          <AlertMessage
+            message="Failed to create account. Make sure you don't leave any field empty!"
+            severity='error'
+            open={invalidAccountMessage}
+            onClose={handleCloseMessage}
+          />
 
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <Grid container rowSpacing={3}>
