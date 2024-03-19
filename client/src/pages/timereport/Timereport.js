@@ -24,8 +24,8 @@ export default function Timereport() {
   const [hours, setHours] = useState(null);
   const [note, setNote] = useState("");
   const [alertMessage, setAlertMessage] = useState({});
-  const [category, setCategory] = useState("");
- 
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [allCategories, setAllCategories] = useState([]);
  
   const resetUserInput = () => {
     setProjectId("");
@@ -33,8 +33,8 @@ export default function Timereport() {
     setFromTime(null);
     setToTime(null);
     setHours(null);
-    setNote("");
-    setCategory("");
+    setSelectedCategory("");
+    setNote("")
   };
  
   useEffect(() => {
@@ -52,6 +52,21 @@ export default function Timereport() {
  
   const { data, isLoading, error } = useFetchData("/api/projects/active");
  
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch("/api/timereports");
+        const data = await response.json();
+        const uniqueCategories = [...new Set(data.map((item) => item.properties.Category.select.name))];
+        setAllCategories(uniqueCategories);
+      } catch (error) {
+        console.error("Error fetching categories: ", error);
+      }
+    };
+    fetchCategories();
+  }, []);
+ 
+ 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error fetching data: {error}</div>;
  
@@ -62,8 +77,10 @@ export default function Timereport() {
       fromTime === null ||
       toTime === null ||
       hours === null ||
-      hours <= 0
-    ) {
+      hours <= 0||
+      selectedCategory === ""
+     
+      ) {
       const alertMessage = {
         severity: "error",
         message:
@@ -94,7 +111,7 @@ export default function Timereport() {
             date: date,
             hours: hours,
             note: note,
-            category: category
+            category: selectedCategory
           }),
           credentials: "include",
         }
@@ -207,20 +224,21 @@ export default function Timereport() {
             </Stack>
           </LocalizationProvider>
           <FormControl fullWidth>
-  <InputLabel id="category-select-label">Category</InputLabel>
-  <Select
-    labelId="category-select-label"
-    id="category-select"
-    value={category}
-    label="Category"
-    onChange={(event) => setCategory(event.target.value)}
-    sx={{ marginBottom: 2 }}>
-    <MenuItem value={"Administration"}>Administration</MenuItem>
-    <MenuItem value={"Meeting"}>Meeting</MenuItem>
-    <MenuItem value={"Other"}>Other</MenuItem>
-  </Select>
-</FormControl>
- 
+            <InputLabel id="category-select-label">Category</InputLabel>
+            <Select
+              labelId="category-select-label"
+              id="category-select"
+              value={selectedCategory}
+              label="Category"
+              onChange={(event) => setSelectedCategory(event.target.value)}
+              sx={{ marginBottom: 2 }}>
+              {allCategories.map((category) => (
+                <MenuItem key={category} value={category}>
+                  {category}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
           <TextField
             value={note}
             onChange={(event) => setNote(event.target.value)}
