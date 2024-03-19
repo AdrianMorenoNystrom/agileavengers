@@ -173,7 +173,7 @@ export default function Timereport() {
                 },
               }}>
               <DatePicker
-                value="{date}"
+                value={date}
                 onChange={(newDate) =>
                   setDate(dayjs(newDate.$d).format("YYYY-MM-DD"))
                 }
@@ -184,7 +184,6 @@ export default function Timereport() {
                     error: false,
                   },
                 }}
-                key={date ? "selected" : "null"}
               />
               <TimePicker
                 ampm={false}
