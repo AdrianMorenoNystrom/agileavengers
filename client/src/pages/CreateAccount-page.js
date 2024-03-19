@@ -15,7 +15,6 @@ import SubmitToNotion from '../components/SubmitUser';
 import FirstNameFieldValidation from './functions/FirstNameValidation';
 import LastNameFieldValidation from './functions/LastNameValidation';
 import CircularProgress from '@mui/material/CircularProgress';
-import CreateAccountError from '../components/CreateAccountError';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
