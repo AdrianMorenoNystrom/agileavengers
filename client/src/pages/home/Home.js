@@ -19,8 +19,8 @@ function Home() {
 
       <div className="box box3">
         <h2>DataTable</h2>
-        <DataTable /> 
-      </div>      
+        <DataTable />
+      </div>
     </div>
   );
 }

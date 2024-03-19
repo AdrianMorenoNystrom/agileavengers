@@ -6,11 +6,11 @@
     "dependencies": {
         "@emotion/react": "^11.11.4",
         "@emotion/styled": "^11.11.0",
-        "@mui/material": "^5.15.12",
         "@mui/icons-material": "^5.15.11",
+        "@mui/material": "^5.15.12",
+        "@mui/styled-engine-sc": "^6.0.0-alpha.17",
         "@mui/x-charts": "^6.19.5",
         "@mui/x-data-grid": "^6.19.6",
-        "@mui/styled-engine-sc": "^6.0.0-alpha.17",
         "@mui/x-date-pickers": "^6.19.6",
         "@testing-library/jest-dom": "^5.17.0",
         "@testing-library/react": "^13.4.0",
