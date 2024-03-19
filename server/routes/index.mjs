@@ -10,6 +10,7 @@ import getUser from "./people/getUser.mjs";
 import addTimereportsRoute from "./timereports/addTimereport.mjs";
 import getTimereportsRoute from "./timereports/getTimereports.mjs";
 import showSingleProjectsRoute from "./projects/singleProject.mjs";
+import logoutRoute from "./auth/logout.mjs";
 
 const app = express();
 
@@ -24,5 +25,6 @@ app.use(getUser);
 app.use(addTimereportsRoute);
 app.use(getTimereportsRoute);
 app.use(showSingleProjectsRoute);
+app.use(logoutRoute);
 
 export default app;
