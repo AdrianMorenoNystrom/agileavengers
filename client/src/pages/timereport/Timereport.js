@@ -174,9 +174,11 @@ export default function Timereport() {
               }}>
               <DatePicker
                 value={date}
-                onChange={(newDate) =>
-                  setDate(dayjs(newDate.$d).format("YYYY-MM-DD"))
-                }
+                onChange={(newDate) => {
+                  if (newDate) {
+                    setDate(dayjs(newDate.$d).format("YYYY-MM-DD"));
+                  }
+                }}
                 label="Date"
                 sx={{ marginBottom: 2 }}
                 slotProps={{
