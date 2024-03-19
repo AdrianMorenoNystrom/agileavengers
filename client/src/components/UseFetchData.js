@@ -38,7 +38,7 @@ function useFetchData(url, isSingle) {
         };
 
         fetchData();
-    }, [url, isSingle]);
+    }, [url, isSingle, navigate]);
 
     return { data, isLoading, error };
 }
