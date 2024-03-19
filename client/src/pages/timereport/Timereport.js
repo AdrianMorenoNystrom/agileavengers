@@ -15,7 +15,7 @@ import Button from "@mui/material/Button";
 import AlertMessage from "../../components/AlertMessage";
 import dayjs from "dayjs";
 import "dayjs/locale/en-gb";
-
+ 
 export default function Timereport() {
   const [projectId, setProjectId] = useState("");
   const [date, setDate] = useState(null);
@@ -24,7 +24,9 @@ export default function Timereport() {
   const [hours, setHours] = useState(null);
   const [note, setNote] = useState("");
   const [alertMessage, setAlertMessage] = useState({});
-
+  const [category, setCategory] = useState("");
+ 
+ 
   const resetUserInput = () => {
     setProjectId("");
     setDate(null);
@@ -32,8 +34,9 @@ export default function Timereport() {
     setToTime(null);
     setHours(null);
     setNote("");
+    setCategory("");
   };
-
+ 
   useEffect(() => {
     if (fromTime && toTime) {
       const differenceInMinutes = toTime.diff(fromTime, "minute");
@@ -46,12 +49,12 @@ export default function Timereport() {
       setHours(null);
     }
   }, [fromTime, toTime]);
-
+ 
   const { data, isLoading, error } = useFetchData("/api/projects/active");
-
+ 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error fetching data: {error}</div>;
-
+ 
   const isFormInvalid = () => {
     if (
       projectId === "" ||
@@ -59,7 +62,6 @@ export default function Timereport() {
       fromTime === null ||
       toTime === null ||
       hours === null ||
-      note === "" ||
       hours <= 0
     ) {
       const alertMessage = {
@@ -68,17 +70,17 @@ export default function Timereport() {
           "Failed to submit form! Please fill out all fields and ensure your work hours are accurate.",
       };
       setAlertMessage(alertMessage);
-
+ 
       return true;
     }
-
+ 
     return false;
   };
-
+ 
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (isFormInvalid()) return;
-
+ 
     try {
       const response = await fetch(
         "http://localhost:3500/api/timereports/add",
@@ -92,14 +94,15 @@ export default function Timereport() {
             date: date,
             hours: hours,
             note: note,
+            category: category
           }),
           credentials: "include",
         }
       );
-
+ 
       const alertMessage = handleResponse(response.status);
       setAlertMessage(alertMessage);
-
+ 
       if (response.status === 200) {
         resetUserInput();
       }
@@ -107,7 +110,7 @@ export default function Timereport() {
       console.error("Error: ", error.message);
     }
   };
-
+ 
   const handleResponse = (status) => {
     if (status === 200) {
       return {
@@ -121,7 +124,7 @@ export default function Timereport() {
       };
     }
   };
-
+ 
   return (
     <Container maxWidth="md">
       <Box component="form" onSubmit={handleSubmit} sx={{ minWidth: 120 }}>
@@ -173,10 +176,12 @@ export default function Timereport() {
                 },
               }}>
               <DatePicker
-                value="{date}"
-                onChange={(newDate) =>
-                  setDate(dayjs(newDate.$d).format("YYYY-MM-DD"))
-                }
+                value={date}
+                onChange={(newDate) => {
+                  if (newDate) {
+                    setDate(dayjs(newDate.$d).format("YYYY-MM-DD"));
+                  }
+                }}
                 label="Date"
                 sx={{ marginBottom: 2 }}
                 slotProps={{
@@ -184,7 +189,6 @@ export default function Timereport() {
                     error: false,
                   },
                 }}
-                key={date ? "selected" : "null"}
               />
               <TimePicker
                 ampm={false}
@@ -202,6 +206,21 @@ export default function Timereport() {
               />
             </Stack>
           </LocalizationProvider>
+          <FormControl fullWidth>
+  <InputLabel id="category-select-label">Category</InputLabel>
+  <Select
+    labelId="category-select-label"
+    id="category-select"
+    value={category}
+    label="Category"
+    onChange={(event) => setCategory(event.target.value)}
+    sx={{ marginBottom: 2 }}>
+    <MenuItem value={"Administration"}>Administration</MenuItem>
+    <MenuItem value={"Meeting"}>Meeting</MenuItem>
+    <MenuItem value={"Other"}>Other</MenuItem>
+  </Select>
+</FormControl>
+ 
           <TextField
             value={note}
             onChange={(event) => setNote(event.target.value)}
@@ -217,3 +236,4 @@ export default function Timereport() {
     </Container>
   );
 }
+ 

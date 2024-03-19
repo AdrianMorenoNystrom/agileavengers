@@ -17,7 +17,7 @@ import SubmitToNotion from '../components/SubmitUser';
 import NameFieldValidation from './functions/NameValidation';
 import Copyright from '../components/Copyright';
 import CircularProgress from '@mui/material/CircularProgress';
-import CreateAccountError from '../components/CreateAccountError';
+import AlertMessage from '../components/AlertMessage';
 
 const defaultTheme = createTheme();
 
@@ -98,7 +98,12 @@ export default function CreateAccount() {
             <Alert severity="success">Account successfully created!</Alert>
           )}
 
-          <CreateAccountError open={invalidAccountMessage} onClose={handleCloseMessage} />
+          <AlertMessage
+            message="Failed to create account. Make sure you don't leave any field empty!"
+            severity='error'
+            open={invalidAccountMessage}
+            onClose={handleCloseMessage}
+          />
 
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <Grid container rowSpacing={3}>
