@@ -23,7 +23,6 @@ function Home() {
         </div>        
         <ProjectChart project={selectedProject} />
       </div>
-
     </div>
   );
 }
