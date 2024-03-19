@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 
 function useFetchData(url, isSingle) {
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -11,6 +13,10 @@ function useFetchData(url, isSingle) {
                 setIsLoading(true);
 
                 const response = await fetch(url);
+
+                if (response.status === 401) {
+                  navigate("/login");
+                }
 
                 if (!response.ok) {
                     throw new Error('Failed to fetch data');
