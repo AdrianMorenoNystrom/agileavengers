@@ -6,9 +6,8 @@ import AuthContext from "./AuthContext";
 const Logout = ({ onClose }) => {
   const { setIsAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
-
   const handleLogout = () => {
-    fetch("/api/auth/logout", {
+    fetch("http://localhost:3500/api/auth/logout", {
       method: "POST",
     })
       .then((response) => response.json())

@@ -87,7 +87,6 @@ function Project() {
                         <Chip className="status" color={statusCheck(statusName)} size="small" label={statusName} />
                         {isEditing ? (
                             <TextField
-                            error={parseInt(inputNumber) < hoursLeft} 
                             id="outlined-number"
                             label="Update total hours"
                             type="number"
@@ -98,11 +97,8 @@ function Project() {
                                 shrink: true,
                             }}
                             inputProps={{
-                                min: hoursLeft 
+                                min: 0 
                             }}
-                            helperText={
-                                parseInt(inputNumber) < hoursLeft ? `Value cannot be smaller than hours left (${hoursLeft})` : ""
-                            }
                             />
                         ) : (
                             <Pencil className="edit" onClick={handleClick} />
@@ -111,7 +107,7 @@ function Project() {
                             <Stack
                                 direction="row"
                                 spacing={1}
-                                sx={{ justifyContent: "flex-end", marginLeft: 2 }}
+                                sx={{ justifyContent: "flex-end", marginLeft: 2}}
                             >
                                 <Button onClick={handleCancel} variant="outlined">
                                     Cancel
