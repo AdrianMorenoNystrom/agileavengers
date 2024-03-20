@@ -10,7 +10,6 @@ import getUserRoute from './people/getUser.mjs';
 import addTimereportsRoute from "./timereports/addTimereport.mjs";
 import getDatafromIdRoute from './people/getDataFromId.mjs';
 import getWeeklyTimeReportsRoute from './timereports/getWeeklyTimeReports.mjs';
-import addTimereportsRoute from "./timereports/addTimereport.mjs";
 import getTimereportsRoute from "./timereports/getTimereports.mjs";
 import showSingleProjectsRoute from "./projects/singleProject.mjs";
 import logoutRoute from "./auth/logout.mjs";

@@ -1,0 +1,16 @@
+@import "../../styles/variables.scss";
+
+.project-container {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: minmax(180px, auto);
+
+    .project-data {
+        // padding: 1em;
+    }
+
+    .project-divider {
+        color: black;
+    }
+}
