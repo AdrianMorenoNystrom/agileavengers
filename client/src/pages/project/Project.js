@@ -1,15 +1,10 @@
 import React, { useState } from 'react';
 import useFetchData from '../../components/UseFetchData';
-<<<<<<< HEAD
 import { Form, useParams } from 'react-router-dom'; 
-=======
-import { useParams } from 'react-router-dom';
->>>>>>> 5a975e336a7af56bb2aef1183b2cba38ca0855d9
 import dateFormatter from '../../components/DateFormatter';
 import GetProjectAvatar from '../../components/GetProjectAvatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import Chip from '@mui/material/Chip';
-<<<<<<< HEAD
 import ProjectChart from '../../components/ProjectChart'; 
 import '../../components/single/single.scss'
 import './project.scss'
@@ -19,14 +14,8 @@ import { TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import AlertMessage from '../../components/AlertMessage';
-=======
-import ProjectChart from '../../components/ProjectChart';
-import '../../components/single/single.scss';
-import './project.scss';
-import statusCheck from '../../components/statusCheck';
-import { ChevronRight } from 'lucide-react';
 import ProjectTimeLine from '../../components/ProjectTimeLine';
->>>>>>> 5a975e336a7af56bb2aef1183b2cba38ca0855d9
+import { ChevronRight } from 'lucide-react';
 
 function Project() {
     const { id } = useParams();
@@ -82,19 +71,14 @@ function Project() {
     const startDate = new Date(data.created_time);
     const endDate = new Date(properties?.Timespan?.date?.end);
     const leaderName = properties?.['Project Leader Name']?.rollup?.array?.[0]?.formula?.string || '';
-<<<<<<< HEAD
     const hoursLeft = properties?.['Hours Left']?.formula?.number || 0; 
     
-=======
-
->>>>>>> 5a975e336a7af56bb2aef1183b2cba38ca0855d9
     return (
         <div className='single'>
             <div className='project'>
                 <div className='project-heading'>
                     <div className='topInfo'>
                         <h1>{projectName}</h1>
-<<<<<<< HEAD
                         <AlertMessage
                             open={!!alertMessage.message}
                             onClose={() => setAlertMessage({})}
@@ -135,14 +119,10 @@ function Project() {
                                 </Button>
                             </Stack>
                         )}
-=======
-                        <Chip className="status" color={statusCheck(statusName)} size="small" label={statusName} />
->>>>>>> 5a975e336a7af56bb2aef1183b2cba38ca0855d9
                     </div>
                     <div className="project-info">
                         <div className='item'>
                             <div className='itemTitle'>Start date: </div>
-<<<<<<< HEAD
                             <div className='itemValue'>{dateFormatter.format(startDate)}</div>             
                         </div>
                         <div className='item'>
@@ -152,17 +132,6 @@ function Project() {
                         <div className='item'>
                             <div className='itemTitle'>Leader: </div>
                             <div className='itemValue'>{leaderName}</div>             
-=======
-                            <div className='itemValue'>{dateFormatter.format(startDate)}</div>
-                        </div>
-                        <div className='item'>
-                            <div className='itemTitle'>End date: </div>
-                            <div className='itemValue'>{dateFormatter.format(endDate) || ''}</div>
-                        </div>
-                        <div className='item'>
-                            <div className='itemTitle'>Leader: </div>
-                            <div className='itemValue'>{leaderName}</div>
->>>>>>> 5a975e336a7af56bb2aef1183b2cba38ca0855d9
                         </div>
                         <div className='item'>
                             <div className='itemTitle'>Team: </div>
@@ -170,11 +139,7 @@ function Project() {
                                 <AvatarGroup max={4}>
                                     <GetProjectAvatar />
                                 </AvatarGroup>
-<<<<<<< HEAD
                             </div>             
-=======
-                            </div>
->>>>>>> 5a975e336a7af56bb2aef1183b2cba38ca0855d9
                         </div>
                         <div className='item'>
                             <div className='itemTitle'>Project info</div>
@@ -216,13 +181,10 @@ function Project() {
 
                 <div className='project-content'>
                 </div>
-<<<<<<< HEAD
                 <div className='charts'>
                     <ProjectChart project={data} hoursLeft={hoursLeft} /> 
                 </div>
                 <div className='timeReports'></div>
-=======
->>>>>>> 5a975e336a7af56bb2aef1183b2cba38ca0855d9
             </div>
         </div>
     );
