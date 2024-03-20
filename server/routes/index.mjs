@@ -4,6 +4,9 @@ import statusRoute from "./auth/status.mjs";
 import peopleRoute from "./people/allPeople.mjs";
 import addPersonRoute from "./people/addPerson.mjs";
 import addProjectRoute from "./projects/addProject.mjs";
+
+import changeTimeRoute from './projects/changeTime.mjs'
+
 import projectsRoute from "./projects/allProjects.mjs";
 import showProjectsRoute from "./projects/activeProjects.mjs";
 import getUser from "./people/getUser.mjs";
@@ -11,6 +14,7 @@ import addTimereportsRoute from "./timereports/addTimereport.mjs";
 import getTimereportsRoute from "./timereports/getTimereports.mjs";
 import showSingleProjectsRoute from "./projects/singleProject.mjs";
 import logoutRoute from "./auth/logout.mjs";
+
 
 const app = express();
 
@@ -25,6 +29,7 @@ app.use(getUser);
 app.use(addTimereportsRoute);
 app.use(getTimereportsRoute);
 app.use(showSingleProjectsRoute);
+app.use(changeTimeRoute);
 app.use(logoutRoute);
 
 export default app;
