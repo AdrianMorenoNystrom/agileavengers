@@ -15,7 +15,7 @@ import Button from "@mui/material/Button";
 import AlertMessage from "../../components/AlertMessage";
 import dayjs from "dayjs";
 import "dayjs/locale/en-gb";
- 
+
 export default function Timereport() {
   const [projectId, setProjectId] = useState("");
   const [date, setDate] = useState(null);
@@ -26,7 +26,7 @@ export default function Timereport() {
   const [alertMessage, setAlertMessage] = useState({});
   const [selectedCategory, setSelectedCategory] = useState("");
   const [allCategories, setAllCategories] = useState([]);
- 
+
   const resetUserInput = () => {
     setProjectId("");
     setDate(null);
@@ -34,9 +34,9 @@ export default function Timereport() {
     setToTime(null);
     setHours(null);
     setSelectedCategory("");
-    setNote("")
+    setNote("");
   };
- 
+
   useEffect(() => {
     if (fromTime && toTime) {
       const differenceInMinutes = toTime.diff(fromTime, "minute");
@@ -49,9 +49,9 @@ export default function Timereport() {
       setHours(null);
     }
   }, [fromTime, toTime]);
- 
+
   const { data, isLoading, error } = useFetchData("/api/projects/active");
- 
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -65,11 +65,11 @@ export default function Timereport() {
     };
     fetchCategories();
   }, []);
- 
- 
+
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error fetching data: {error}</div>;
- 
+
   const isFormInvalid = () => {
     if (
       projectId === "" ||
@@ -77,30 +77,30 @@ export default function Timereport() {
       fromTime === null ||
       toTime === null ||
       hours === null ||
-      hours <= 0||
+      hours <= 0 ||
       selectedCategory === ""
-     
-      ) {
+
+    ) {
       const alertMessage = {
         severity: "error",
         message:
           "Failed to submit form! Please fill out all fields and ensure your work hours are accurate.",
       };
       setAlertMessage(alertMessage);
- 
+
       return true;
     }
- 
+
     return false;
   };
- 
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (isFormInvalid()) return;
- 
+
     try {
       const response = await fetch(
-        "http://localhost:3500/api/timereports/add",
+        "api/timereports/add",
         {
           method: "POST",
           headers: {
@@ -116,10 +116,10 @@ export default function Timereport() {
           credentials: "include",
         }
       );
- 
+
       const alertMessage = handleResponse(response.status);
       setAlertMessage(alertMessage);
- 
+
       if (response.status === 200) {
         resetUserInput();
       }
@@ -127,7 +127,7 @@ export default function Timereport() {
       console.error("Error: ", error.message);
     }
   };
- 
+
   const handleResponse = (status) => {
     if (status === 200) {
       return {
@@ -141,7 +141,7 @@ export default function Timereport() {
       };
     }
   };
- 
+
   return (
     <Container maxWidth="md">
       <Box component="form" onSubmit={handleSubmit} sx={{ minWidth: 120 }}>
@@ -254,4 +254,3 @@ export default function Timereport() {
     </Container>
   );
 }
- 
