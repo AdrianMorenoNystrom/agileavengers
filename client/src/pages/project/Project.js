@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import dateFormatter from '../../components/DateFormatter';
 import GetProjectAvatar from '../../components/GetProjectAvatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
-import Avatar from '@mui/material/Avatar';
 import Chip from '@mui/material/Chip';
 import { deepOrange, deepPurple } from '@mui/material/colors';
 import ProjectChart from '../../components/ProjectChart';
@@ -16,6 +15,8 @@ import ProjectTimeLine from '../../components/ProjectTimeLine';
 
 function Project() {
     const { id } = useParams();
+    console.log(id);
+
     const { data, isLoading, error } = useFetchData(`/api/projects/project/${id}`, true);
 
     if (isLoading) return <div>Loading...</div>;

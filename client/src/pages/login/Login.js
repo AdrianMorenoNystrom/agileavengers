@@ -50,7 +50,7 @@ export default function SignIn() {
     event.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3500/api/auth/login", {
+      const response = await fetch("/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -59,7 +59,6 @@ export default function SignIn() {
           email: email,
           password: password,
         }),
-
         credentials: "include",
       });
 
