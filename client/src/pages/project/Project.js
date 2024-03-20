@@ -179,12 +179,6 @@ function Project() {
                     <div className='charts'><ProjectChart project={data} /> </div>
                 </aside>
 
-                <div className='project-content'>
-                </div>
-                <div className='charts'>
-                    <ProjectChart project={data} hoursLeft={hoursLeft} /> 
-                </div>
-                <div className='timeReports'></div>
             </div>
         </div>
     );
