@@ -7,17 +7,24 @@ import routes from "./routes/index.mjs";
 
 const app = express();
 const randomSecret = crypto.randomBytes(20).toString("hex");
-const allowedOrigins = ["http://localhost:3000", "http://localhost:3500"]; // Dölj denna info?
+// const allowedOrigins = ["http://localhost:3000", "http://localhost:3500"];
+
+// app.use(
+//   cors({
+//     origin: function (origin, callback) {
+//       if (!origin || allowedOrigins.includes(origin)) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error("Not allowed by CORS"));
+//       }
+//     },
+//     credentials: true,
+//   })
+// );
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: "*",
     credentials: true,
   })
 );
@@ -29,7 +36,7 @@ app.use(
     secret: randomSecret,
     saveUninitialized: false,
     resave: false,
-    cookie: { maxAge: 60000 * 60 * 24 * 365 },
+    cookie: { maxAge: 60000 * 60 * 24 * 365, },
     name: "agile-cookie",
   })
 );

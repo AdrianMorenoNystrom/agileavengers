@@ -9,8 +9,10 @@ import changeTimeRoute from './projects/changeTime.mjs'
 
 import projectsRoute from "./projects/allProjects.mjs";
 import showProjectsRoute from "./projects/activeProjects.mjs";
-import getUser from "./people/getUser.mjs";
+import getUserRoute from './people/getUser.mjs';
 import addTimereportsRoute from "./timereports/addTimereport.mjs";
+import getDatafromIdRoute from './people/getDataFromId.mjs';
+import getWeeklyTimeReportsRoute from './timereports/getWeeklyTimeReports.mjs';
 import getTimereportsRoute from "./timereports/getTimereports.mjs";
 import showSingleProjectsRoute from "./projects/singleProject.mjs";
 import logoutRoute from "./auth/logout.mjs";
@@ -25,8 +27,10 @@ app.use(addPersonRoute);
 app.use(addProjectRoute);
 app.use(projectsRoute);
 app.use(showProjectsRoute);
-app.use(getUser);
+app.use(getUserRoute);
 app.use(addTimereportsRoute);
+app.use(getDatafromIdRoute);
+app.use(getWeeklyTimeReportsRoute);
 app.use(getTimereportsRoute);
 app.use(showSingleProjectsRoute);
 app.use(changeTimeRoute);

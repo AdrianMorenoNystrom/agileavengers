@@ -1,8 +1,14 @@
 @import "../../styles/variables.scss";
 
 .project {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: minmax(180px, auto);
 
     .project-heading {
+        grid-column: span 2;
+
         padding: 2em;
         background-color: $light-bg;
         margin-bottom: 3em;
@@ -38,14 +44,58 @@
         }
     }
 
-    .activities {
-        padding: 2em;
-        background-color: #ffd9da;
-        margin-bottom: 3em;
+    aside {
+        grid-column: span 1;
 
-        time {
-            font-size: 0.7em;
+        .activities {
+            position: relative;
+            padding: 2em;
+            background-color: #ffd9da;
+            margin-bottom: 3em;
+
+            .timeline-bottom {
+                display: flex;
+                align-items: center;
+                border-left: 1px solid $main-color;
+                padding-left: 15px;
+                font-size: 0.7em;
+
+            }
+
+            ul {
+                li {
+                    list-style-type: none;
+                    position: relative;
+                    width: 1px;
+                    background-color: $main-color;
+
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        left: 50%;
+                        top: 21px;
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 50%;
+                        background-color: $main-color;
+                        transform: translateX(-50%);
+                    }
+
+                    .activity {
+                        min-width: 200px;
+                        padding: 15px;
+
+                        time {
+                            font-size: 0.7em;
+                        }
+                    }
+                }
+            }
         }
+    }
+
+    .project-content {
+        grid-column: span 4;
     }
 
     .charts {
