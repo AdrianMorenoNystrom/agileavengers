@@ -35,7 +35,7 @@ function Project() {
 
     const handleSubmit = () => {
         console.log("Submitted number:", inputNumber);
-        fetch(`http://localhost:3500/api/projects/changeTime/${id}`, { 
+        fetch(`/api/projects/changeTime/${id}`, { 
             method: "POST",
             headers: {
               "Content-Type": "application/json",
