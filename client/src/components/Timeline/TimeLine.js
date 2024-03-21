@@ -1,9 +1,9 @@
 import React from 'react';
-import useFetchTimereports from './useFetchTimereports';
+import useFetchTimereports from '../useFetchTimereports';
 import { ChevronRight } from 'lucide-react';
  
-function ProjectTimeLine({ projectId }) {
-    const { timereports, isLoading, error } = useFetchTimereports(projectId);
+function TimeLine({ projectId, filterByUser }) {
+    const { timereports, isLoading, error } = useFetchTimereports(projectId, filterByUser);
     console.log(timereports);
  
     if (isLoading) {
@@ -39,5 +39,5 @@ function ProjectTimeLine({ projectId }) {
     );
 }
  
-export default ProjectTimeLine;
+export default TimeLine;
  

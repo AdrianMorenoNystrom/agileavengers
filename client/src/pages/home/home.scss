@@ -8,25 +8,38 @@
 
     .box {
         padding: 20px;
-        border-radius: 10px;
-        border: 1px solid $soft-bg;
+        border-radius: 5px;
+        border: 1px solid $border-color;
+        background-color: $light-bg;
+
     }
 
     .box1 {
         grid-column: span 2;
+        grid-row: span 3;
+
+        .css-1ex1afd-MuiTableCell-root-root {
+            font-size: 0.6rem;
+        }
+
+    }
+
+    .widgets {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+
+    .portrait {
+        grid-column: span 1;
         grid-row: span 2;
     }
 
-    .box2 {
+    .landscape {
         grid-column: span 2;
-        grid-row: span 2;
+        grid-row: span 1;
     }
 
-    .box3 {
-        grid-column: span 2;
-        grid-row: span 2;
-    }
-    .Details{
-       padding-top: 20px; 
+    .Details {
+        padding-top: 20px;
     }
 }
