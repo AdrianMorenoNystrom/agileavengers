@@ -128,7 +128,7 @@ function Project() {
                         <div className='item'>
                             <div className='itemTitle'>End date: </div>
                             <div className='itemValue'>{dateFormatter.format(endDate) || ''}</div>             
-                        </div>   
+                        </div>            
                         <div className='item'>
                             <div className='itemTitle'>Leader: </div>
                             <div className='itemValue'>{leaderName}</div>             
