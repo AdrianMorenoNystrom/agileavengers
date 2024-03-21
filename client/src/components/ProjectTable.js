@@ -123,22 +123,22 @@ export default function ProjectTable() {
                                 <div className='item-value'>{rows.find(row => row.projectId === selectedProjectId).startDate}</div>
                             </div>
                             <div className='item'>
-                                <div className='item-title'>End Date:</div>
+                                <div className='item-title'>End Date</div>
                                 <div className='item-value'>{rows.find(row => row.projectId === selectedProjectId).endDate}</div>
                             </div>
                             <div className='item'>
-                                <div className='item-title'>Total Hours:</div>
+                                <div className='item-title'>Total Hours</div>
                                 <div className='item-value'>Planned: {rows.find(row => row.projectId === selectedProjectId).hoursTotal}</div>
                                 <div className='item-value'>Worked: {rows.find(row => row.projectId === selectedProjectId).hoursWorked}</div>
                                 <div className='item-value'>Remaining: {rows.find(row => row.projectId === selectedProjectId).hoursLeft}</div>
                                 <div className='item-value'>Over Budget: {rows.find(row => row.projectId === selectedProjectId).hoursOverBudget}</div>
                             </div>
                             <div className='item'>
-                                <div className='item-title'>Project Leader:</div>
+                                <div className='item-title'>Project Leader</div>
                                 <div className='item-value'>{rows.find(row => row.projectId === selectedProjectId).projectLeader}</div>
                             </div>
                             <div className='item'>
-                                <div className='item-title'>Team:</div>
+                                <div className='item-title'>Team</div>
                                 <div className='item-value'>
                                     <ul>
                                         {rows
@@ -152,9 +152,7 @@ export default function ProjectTable() {
                             </div>
                         </Box>
                     </Box>
-                    <Box className='project-divider'>
-                        <Divider orientation="vertical" flexItem />
-                    </Box>
+                    <Divider orientation="vertical" flexItem />
                     <Box className='project-data'>
                         {<WeeklyReport projectId={selectedProjectId} />}
                     </Box>

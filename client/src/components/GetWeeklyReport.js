@@ -1,6 +1,5 @@
 import React from "react";
 import useFetchData from "./UseFetchData";
-import Box from '@mui/material/Box';
 import { BarChart } from "@mui/x-charts";
 import GetWeekNumber from '../pages/functions/GetWeekNumber';
 import '../pages/projects/projects.scss';

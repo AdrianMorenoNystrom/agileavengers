@@ -16,11 +16,11 @@ function Home() {
   return (
     <div className="home">
       <div className="box box1">
-       <h2>{projectStatusHeader}</h2>
+        <h2>{projectStatusHeader}</h2>
         <ActiveProjects onProjectSelect={setSelectedProject} />
         <div className="Details">
-        <h2>Project Details</h2>
-        </div>        
+          <h2>Project Details</h2>
+        </div>
         <ProjectChart project={selectedProject} />
       </div>
     </div>
