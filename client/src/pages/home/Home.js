@@ -4,7 +4,6 @@ import "../../components/Timeline/timeline.scss";
 import ActiveProjects from '../../components/ActiveProjects';
 import ProjectChart from "../../components/ProjectChart";
 import TotalHours from "../../components/widgets/TotalHours";
-import DonutChart from "../../components/DonutChart";
 import TimeLine from "../../components/Timeline/TimeLine";
 import WorkedHours from "../../components/widgets/WorkedHours";
 

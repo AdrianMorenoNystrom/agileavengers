@@ -42,6 +42,15 @@
                 time {
                     font-size: 0.7em;
                 }
+
+                .activity-details {
+                    display: inline-flex;
+                    align-items: center;
+
+                    * {
+                        margin-right: 5px;
+                    }
+                }
             }
         }
     }
