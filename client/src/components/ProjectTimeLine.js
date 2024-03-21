@@ -5,7 +5,6 @@ import { ChevronRight } from 'lucide-react';
 
 function ProjectTimeLine({ projectId }) {
     const { timereports, isLoading, error } = useFetchTimereports(projectId);
-    console.log(timereports);
 
     if (isLoading) {
         return <div>Loading...</div>;

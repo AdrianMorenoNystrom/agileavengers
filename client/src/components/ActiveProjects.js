@@ -55,7 +55,7 @@ export default function ActiveProjects({ onProjectSelect }) {
                     >
                         <TableCell>
                             <ExternalLink
-                                size={20}
+                                size={18}
                                 onClick={() => handleOpenButtonClick(project.id)}
                             />
                         </TableCell>

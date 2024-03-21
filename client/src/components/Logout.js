@@ -8,7 +8,7 @@ const Logout = ({ onClose }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    fetch("/api/auth/logout", {
+    fetch("http://localhost:3500/api/auth/logout", {
       method: "POST",
     })
       .then((response) => response.json())
