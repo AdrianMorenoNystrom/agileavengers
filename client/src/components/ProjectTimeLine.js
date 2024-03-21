@@ -1,24 +1,30 @@
-// ProjectTimeLine.js
 import React from 'react';
 import useFetchTimereports from './useFetchTimereports';
 import { ChevronRight } from 'lucide-react';
-
+ 
 function ProjectTimeLine({ projectId }) {
     const { timereports, isLoading, error } = useFetchTimereports(projectId);
-
+    console.log(timereports);
+ 
     if (isLoading) {
         return <div>Loading...</div>;
     }
-
+ 
     if (error) {
         return <div>Error: {error}</div>;
     }
-
+ 
+    // Sorterar aktiviteterna baserat på datum i fallande ordning
+    const sortedActivities = timereports.sort((a, b) => new Date(b.properties.Date.date.start) - new Date(a.properties.Date.date.start));
+ 
+    // Begränsar antalet aktiviteter till de 3 senaste
+    const latestActivities = sortedActivities.slice(0, 3);
+ 
     return (
         <div className='activities'>
             <h2>Latest activities</h2>
             <ul>
-                {timereports && timereports.map((timereport, index) => (
+                {latestActivities.map((timereport, index) => (
                     <li key={index}>
                         <div className='activity'>
                             <time className='date'>{timereport?.properties?.Date?.date?.start}</time>
@@ -32,5 +38,6 @@ function ProjectTimeLine({ projectId }) {
         </div>
     );
 }
-
+ 
 export default ProjectTimeLine;
+ 
