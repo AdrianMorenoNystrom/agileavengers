@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     DataGrid,
     GridToolbarContainer,
@@ -13,12 +13,13 @@ import useFetchData from './UseFetchData';
 import WeeklyReport from './GetWeeklyReport';
 import { Box, Container, Chip } from '@mui/material';
 import Divider from '@mui/material/Divider';
-import statusCheck from './statusCheck';
+import statusCheck from './functions/statusCheck';
 import '../pages/projects/projects.scss';
 
 export default function ProjectTable() {
     const { data, isLoading, error } = useFetchData('/api/projects');
-    const [showOnlyActiveProjects, setShowOnlyActiveProjects] = useState(false);
+    const [showOnlyUserProjects, setShowOnlyUserProjects] = useState(false);
+    const [userId, setUserId] = useState("");
     const [selectedProjectId, setSelectedProjectId] = useState(null);
 
     function CustomToolbar() {
@@ -50,8 +51,11 @@ export default function ProjectTable() {
         projectName: project?.properties?.Projectname?.title?.[0]?.text?.content || '',
         status: project?.properties?.Status?.select?.name || '',
         projectLeader: project?.properties?.['Project Leader Name']?.rollup?.array?.[0]?.formula?.string || '',
+        projectLeaderId: project?.properties?.['Project Leader']?.relation?.[0]?.id || '',
         teamMembers: project?.properties?.['Team Members']?.rollup?.array
             ?.map((teamMember) => teamMember?.formula?.string).join(', ') || '',
+        teamMemberId: project?.properties?.People?.relation
+            ?.map((teamMember) => teamMember?.id) || '',
         startDate: project?.properties?.Timespan?.date?.start || '',
         endDate: project?.properties?.Timespan?.date?.end || '',
         hoursTotal: project?.properties?.['Total Hours']?.number || 0,
@@ -60,9 +64,27 @@ export default function ProjectTable() {
         hoursOverBudget: project?.properties?.['Hours Over Budget']?.formula?.number || 0,
     }));
 
-    const filterRows = (data) => {
-        if (showOnlyActiveProjects) {
-            return data.filter(project => project.status === 'Active');
+    useEffect(() => {
+        const fetchUserId = async () => {
+            try {
+                const response = await fetch('/api/people/user');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const result = await response.json();
+                setUserId(result.message.id);
+            } catch (error) {
+                console.error("Error fetching categories: ", error);
+            }
+        };
+        fetchUserId();
+    }, []);
+
+    const filteredRows = (data) => {
+        if (showOnlyUserProjects) {
+            return data.filter(project => {
+                return project.projectLeaderId === userId || project.teamMemberId.includes(userId);
+            });
         } else {
             return data;
         }
@@ -82,10 +104,10 @@ export default function ProjectTable() {
                     cursor: 'pointer',
                     '& .MuiDataGrid-cell:hover': {
                         color: 'primary.main',
-                    },
+                    }
                 }}
-                key={showOnlyActiveProjects.toString()}
-                rows={filterRows(rows)}
+                key={showOnlyUserProjects.toString()}
+                rows={filteredRows(rows)}
                 columns={columns}
                 initialState={{
                     pagination: {
@@ -96,14 +118,14 @@ export default function ProjectTable() {
                 // checkboxSelection
                 slots={{ toolbar: CustomToolbar, getGridDateOperators }}
                 slotProps={{ toolbar: { showColumnSelector: false } }}
-                showOnlyActiveProjects={showOnlyActiveProjects}
+                showOnlyActiveProjects={showOnlyUserProjects}
                 onRowClick={handleProjectClick}
             />
             <FormControlLabel
-                checked={showOnlyActiveProjects}
-                onChange={(event) => setShowOnlyActiveProjects(event.target.checked)}
                 control={<Switch />}
-                label="Show Only Active Projects"
+                label="View Only Your Projects"
+                checked={showOnlyUserProjects}
+                onChange={(event) => setShowOnlyUserProjects(event.target.checked)}
             />
             {selectedProjectId && (
                 <Box className='project-container'>
