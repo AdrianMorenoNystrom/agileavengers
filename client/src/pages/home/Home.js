@@ -5,7 +5,7 @@ import ActiveProjects from '../../components/ActiveProjects';
 import ProjectChart from "../../components/ProjectChart";
 import TotalHours from "../../components/widgets/TotalHours";
 import DonutChart from "../../components/DonutChart";
-import ProjectTimeLine from "../../components/ProjectTimeLine";
+import TimeLine from "../../components/Timeline/TimeLine";
 import WorkedHours from "../../components/widgets/WorkedHours";
 
 
@@ -26,7 +26,7 @@ function Home() {
         <ProjectChart project={selectedProject} />
       </div>
       <div className="box widgets"><TotalHours /></div>
-      <div className="box portrait"><ProjectTimeLine projectId={selectedProject}/></div>
+      <div className="box portrait"><TimeLine /></div>
       <div className="box widgets">Data</div>
       <div className="box landscape"><WorkedHours /></div>
       

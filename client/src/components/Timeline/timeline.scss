@@ -2,8 +2,7 @@
 
 .activities {
     position: relative;
-    padding: 2em;
-    // background-color: #ffd9da;
+    padding: 0 2em;
     overflow: hidden;
 
     .timeline-bottom {
@@ -16,6 +15,8 @@
     }
 
     ul {
+        font-size: 0.75em;
+
         li {
             list-style-type: none;
             position: relative;
@@ -26,9 +27,9 @@
                 content: "";
                 position: absolute;
                 left: 50%;
-                top: 21px;
-                width: 10px;
-                height: 10px;
+                top: 20px;
+                width: 8px;
+                height: 8px;
                 border-radius: 50%;
                 background-color: $main-color;
                 transform: translateX(-50%);

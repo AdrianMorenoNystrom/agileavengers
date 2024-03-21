@@ -4,15 +4,11 @@ import { useParams } from 'react-router-dom';
 import dateFormatter from '../../components/DateFormatter';
 import GetProjectAvatar from '../../components/GetProjectAvatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
-import Avatar from '@mui/material/Avatar';
 import Chip from '@mui/material/Chip';
-import { deepOrange, deepPurple } from '@mui/material/colors';
-import ProjectChart from '../../components/ProjectChart';
 import '../../components/single/single.scss'
 import './project.scss'
 import statusCheck from '../../components/statusCheck';
-import { ChevronRight } from 'lucide-react';
-import ProjectTimeLine from '../../components/ProjectTimeLine';
+import TimeLine from '../../components/Timeline/TimeLine';
 import DonutChart from '../../components/DonutChart';
 
 function Project() {
@@ -69,7 +65,7 @@ function Project() {
                             </div>
                 </div>
                 <aside>
-                    <ProjectTimeLine project_id={id} />
+                <TimeLine projectId={id} />
                     <div className='charts'><DonutChart project={data} /> </div>
                 </aside>
  
