@@ -19,10 +19,11 @@ function Project() {
     console.log(id);
  
     const { data, isLoading, error } = useFetchData(`/api/projects/project/${id}`, true);
- 
-    if (isLoading) return <div>Laddar...</div>;
-    if (error) return <div>Fel vid hämtning av data: {error}</div>;
+
+    if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>{error}</div>;
     if (!data) return <div>No data available</div>;
+
     const properties = data.properties;
     const projectName = properties?.Projectname?.title[0]?.plain_text || '';
     const statusName = properties?.Status?.select?.name || '';

@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
+import AuthContext from './AuthContext';
 
 function useFetchData(url, isSingle) {
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const { setIsAuthenticated } = useContext(AuthContext);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -15,7 +17,8 @@ function useFetchData(url, isSingle) {
                 const response = await fetch(url);
 
                 if (response.status === 401) {
-                  navigate("/login");
+                    setIsAuthenticated(false);
+                    navigate("/login");
                 }
 
                 if (!response.ok) {
@@ -23,12 +26,11 @@ function useFetchData(url, isSingle) {
                 }
 
                 const body = await response.json();
-                
+
                 if (!isSingle) {
                     setData(body.message);
                 } else setData(body.data);
-                
-                
+
             } catch (error) {
                 console.error(error.message);
                 setError(`Error: ${error.message}`);
@@ -38,7 +40,7 @@ function useFetchData(url, isSingle) {
         };
 
         fetchData();
-    }, [url, isSingle, navigate]);
+    }, [url, setIsAuthenticated, isSingle, navigate]);
 
     return { data, isLoading, error };
 }

@@ -55,17 +55,19 @@ export default function Timereport() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch("/api/timereports");
-        const data = await response.json();
-        const uniqueCategories = [...new Set(data.map((item) => item.properties.Category.select.name))];
-        setAllCategories(uniqueCategories);
+        const response = await fetch('/api/tasks');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const result = await response.json();
+        const categories = result.message;
+        setAllCategories(categories);
       } catch (error) {
         console.error("Error fetching categories: ", error);
       }
     };
     fetchCategories();
   }, []);
-
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error fetching data: {error}</div>;
@@ -231,10 +233,11 @@ export default function Timereport() {
               value={selectedCategory}
               label="Category"
               onChange={(event) => setSelectedCategory(event.target.value)}
-              sx={{ marginBottom: 2 }}>
+              sx={{ marginBottom: 2 }}
+            >
               {allCategories.map((category) => (
-                <MenuItem key={category} value={category}>
-                  {category}
+                <MenuItem key={category.id} value={category.name}>
+                  {category.name}
                 </MenuItem>
               ))}
             </Select>

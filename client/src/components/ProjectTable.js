@@ -11,8 +11,10 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import useFetchData from './UseFetchData';
 import WeeklyReport from './GetWeeklyReport';
-import { Box, Container } from '@mui/material';
+import { Box, Container, Chip } from '@mui/material';
 import Divider from '@mui/material/Divider';
+import statusCheck from './statusCheck';
+import '../pages/projects/projects.scss';
 
 export default function ProjectTable() {
     const { data, isLoading, error } = useFetchData('/api/projects');
@@ -70,12 +72,11 @@ export default function ProjectTable() {
         setSelectedProjectId(projectId.row.projectId);
     };
 
-
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
 
     return (
-        <Container style={{ height: 430, width: '100%' }}>
+        <Container style={{ width: '100%' }}>
             <DataGrid
                 sx={{
                     cursor: 'pointer',
@@ -105,33 +106,56 @@ export default function ProjectTable() {
                 label="Show Only Active Projects"
             />
             {selectedProjectId && (
-                <Box sx={{ marginTop: '20px', display: 'flex', justifyContent: 'space-between' }}>
-                    <Box>
-                        <h2>{rows.find(row => row.projectId === selectedProjectId).projectName}</h2>
-                        <Box sx={{ display: 'flex' }}>
-                            <Box>
-                                <div>Hours Planned: {rows.find(row => row.projectId === selectedProjectId).hoursTotal}</div>
-                                <div>Hours Worked: {rows.find(row => row.projectId === selectedProjectId).hoursWorked}</div>
-                                <div>Hours Remaining: {rows.find(row => row.projectId === selectedProjectId).hoursLeft}</div>
-                                <div>Hours Over Budget: {rows.find(row => row.projectId === selectedProjectId).hoursOverBudget}</div>
-                            </Box>
-                            <Box sx={{ marginLeft: 5 }}>
-                                <div>Project Leader: {rows.find(row => row.projectId === selectedProjectId).projectLeader}</div>
-                                <div>
-                                    <ul>Team:
+                <Box className='project-container'>
+                    <Box className='project-data'>
+                        <Box className='project-title'>
+                            <h2>{rows.find(row => row.projectId === selectedProjectId).projectName}</h2>
+                            <Chip
+                                className="status"
+                                color={statusCheck(rows.find(row => row.projectId === selectedProjectId).status)}
+                                size="small"
+                                label={rows.find(row => row.projectId === selectedProjectId).status}
+                            />
+                        </Box>
+                        <Box className='project-info'>
+                            <div className='item'>
+                                <div className='item-title'>Start Date</div>
+                                <div className='item-value'>{rows.find(row => row.projectId === selectedProjectId).startDate}</div>
+                            </div>
+                            <div className='item'>
+                                <div className='item-title'>End Date</div>
+                                <div className='item-value'>{rows.find(row => row.projectId === selectedProjectId).endDate}</div>
+                            </div>
+                            <div className='item'>
+                                <div className='item-title'>Total Hours</div>
+                                <div className='item-value'>Planned: {rows.find(row => row.projectId === selectedProjectId).hoursTotal}</div>
+                                <div className='item-value'>Worked: {rows.find(row => row.projectId === selectedProjectId).hoursWorked}</div>
+                                <div className='item-value'>Remaining: {rows.find(row => row.projectId === selectedProjectId).hoursLeft}</div>
+                                <div className='item-value'>Over Budget: {rows.find(row => row.projectId === selectedProjectId).hoursOverBudget}</div>
+                            </div>
+                            <div className='item'>
+                                <div className='item-title'>Project Leader</div>
+                                <div className='item-value'>{rows.find(row => row.projectId === selectedProjectId).projectLeader}</div>
+                            </div>
+                            <div className='item'>
+                                <div className='item-title'>Team</div>
+                                <div className='item-value'>
+                                    <ul>
                                         {rows
                                             .find(row => row.projectId === selectedProjectId)
                                             .teamMembers.split(', ')
                                             .map((member, index) => (
-                                                <li style={{ listStyle: 'none' }} key={index}>{member}</li>
+                                                <li className='item-list-value' key={index}>{member}</li>
                                             ))}
                                     </ul>
                                 </div>
-                            </Box>
+                            </div>
                         </Box>
                     </Box>
                     <Divider orientation="vertical" flexItem />
-                    {<WeeklyReport projectId={selectedProjectId} />}
+                    <Box className='project-data'>
+                        {<WeeklyReport projectId={selectedProjectId} />}
+                    </Box>
                 </Box>
             )}
         </Container>

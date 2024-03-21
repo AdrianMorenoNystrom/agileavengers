@@ -7,31 +7,31 @@ import TableRow from '@mui/material/TableRow';
 import useFetchData from './UseFetchData';
 import { ExternalLink } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
- 
+
 export default function ActiveProjects({ onProjectSelect }) {
     const { data, isLoading, error } = useFetchData('/api/projects/active');
     const [selectedProjectId, setSelectedProjectId] = useState(null);
     const navigate = useNavigate();
- 
+
     useEffect(() => {
         if (data && data.length > 0) {
             onProjectSelect(data[0]);
             setSelectedProjectId(data[0].id);
         }
     }, [data, onProjectSelect]);
- 
-    if (isLoading) return <div>Laddar...</div>;
-    if (error) return <div>Fel vid hämtning av data: {error}</div>;
- 
+
+    if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>{error}</div>;
+
     const handleRowClick = (project) => {
         onProjectSelect(project);
         setSelectedProjectId(project.id);
     };
- 
+
     const handleOpenButtonClick = (projectId) => {
         navigate(`/projects/${projectId}`);
     };
- 
+
     return (
         <Table aria-label="active projects table">
             <TableHead>
