@@ -11,7 +11,6 @@
 
         padding: 2em;
         background-color: $light-bg;
-        margin-bottom: 3em;
 
         .topInfo {
             display: flex;
@@ -48,49 +47,8 @@
         grid-column: span 1;
 
         .activities {
-            position: relative;
-            padding: 2em;
             background-color: #ffd9da;
-            margin-bottom: 3em;
-
-            .timeline-bottom {
-                display: flex;
-                align-items: center;
-                border-left: 1px solid $main-color;
-                padding-left: 15px;
-                font-size: 0.7em;
-
-            }
-
-            ul {
-                li {
-                    list-style-type: none;
-                    position: relative;
-                    width: 1px;
-                    background-color: $main-color;
-
-                    &::after {
-                        content: "";
-                        position: absolute;
-                        left: 50%;
-                        top: 21px;
-                        width: 10px;
-                        height: 10px;
-                        border-radius: 50%;
-                        background-color: $main-color;
-                        transform: translateX(-50%);
-                    }
-
-                    .activity {
-                        min-width: 200px;
-                        padding: 15px;
-
-                        time {
-                            font-size: 0.7em;
-                        }
-                    }
-                }
-            }
+            padding: 2em;
         }
     }
 

@@ -4,15 +4,17 @@ import { useParams } from 'react-router-dom';
 import dateFormatter from '../../components/functions/dateFormatter';
 import GetProjectAvatar from '../../components/TeamAvatars';
 import AvatarGroup from '@mui/material/AvatarGroup';
-import Avatar from '@mui/material/Avatar';
 import Chip from '@mui/material/Chip';
-import { deepOrange, deepPurple } from '@mui/material/colors';
-import ProjectChart from '../../components/ProjectChart';
-import '../../components/single/single.scss';
-import './project.scss';
 import statusCheck from '../../components/functions/statusCheck';
+import '../../components/single/single.scss'
+import './project.scss'
+import statusCheck from '../../components/statusCheck';
+import TimeLine from '../../components/Timeline/TimeLine';
+import DonutChart from '../../components/DonutChart';
+
+// Remove?
+import { deepOrange, deepPurple } from '@mui/material/colors';
 import { ChevronRight } from 'lucide-react';
-import ProjectTimeLine from '../../components/ProjectTimeLine';
 
 function Project() {
     const { id } = useParams();
@@ -30,7 +32,7 @@ function Project() {
     const startDate = new Date(data.created_time);
     const endDate = new Date(properties?.Timespan?.date?.end);
     const leaderName = properties?.['Project Leader Name']?.rollup?.array?.[0]?.formula?.string || '';
-
+  
     return (
         <div className='single'>
             <div className='project'>
@@ -67,10 +69,9 @@ function Project() {
                     </div>
                 </div>
                 <aside>
-                    <ProjectTimeLine project_id={id} />
-                    <div className='charts'><ProjectChart project={data} /> </div>
+                <TimeLine projectId={id} />
+                    <div className='charts'><DonutChart project={data} /> </div>
                 </aside>
-
                 <div className='project-content'>
                 </div>
             </div>
