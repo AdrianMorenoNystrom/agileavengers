@@ -6,7 +6,7 @@ import { Rocket } from 'lucide-react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Logout from "../Logout";
-import GetAvatar from "../GetAvatar";
+import GetAvatar from "../UserAvatar";
 
 
 const Navbar = () => {
