@@ -5,7 +5,8 @@ import peopleRoute from "./people/allPeople.mjs";
 import addPersonRoute from "./people/addPerson.mjs";
 import addProjectRoute from "./projects/addProject.mjs";
 
-import changeTimeRoute from './projects/changeTime.mjs'
+import changeTimeRoute from './projects/changeTime.mjs';
+import changeDateRoute from './projects/changeDate.mjs';
 
 import projectsRoute from "./projects/allProjects.mjs";
 import showProjectsRoute from "./projects/activeProjects.mjs";
@@ -34,6 +35,7 @@ app.use(getWeeklyTimeReportsRoute);
 app.use(getTimereportsRoute);
 app.use(showSingleProjectsRoute);
 app.use(changeTimeRoute);
+app.use(changeDateRoute);
 app.use(logoutRoute);
 
 export default app;
