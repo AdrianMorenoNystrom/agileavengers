@@ -1,7 +1,7 @@
 import React from "react";
 import useFetchData from "./UseFetchData";
 import { BarChart } from "@mui/x-charts";
-import GetWeekNumber from '../pages/functions/GetWeekNumber';
+import getWeekNumber from './functions/getWeekNumber';
 import '../pages/projects/projects.scss';
 
 const WeeklyReport = ({ projectId }) => {
@@ -43,7 +43,7 @@ const WeeklyReport = ({ projectId }) => {
                         xAxis={[
                             {
                                 scaleType: 'band',
-                                data: [`Week ${GetWeekNumber(new Date()) - 1}`],
+                                data: [`Week ${getWeekNumber(new Date()) - 1}`],
                                 categoryGapRatio: 0.1,
                                 barGapRatio: 0.2
                             }
