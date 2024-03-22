@@ -14,13 +14,6 @@ const ProjectChart = ({ project }) => {
     ];
 
     return (
-        <div style={{ display: 'flex', alignItems: 'center', width: '100%', height: 'auto',  justifyContent: 'space-evenly',}}>
-            <div className='project-info'>
-            <span className='title'>{"Total Hours: "}</span>
-            <span style={{fontWeight:'bold'}}>{totalHours}</span>  
-
-            </div>
-            <div style={{width: '60%'}}>
             <ResponsiveChartContainer
                 series={[
                     {
@@ -57,8 +50,6 @@ const ProjectChart = ({ project }) => {
                       }}
                      />
             </ResponsiveChartContainer>
-            </div>
-        </div>
     );
 };
 
