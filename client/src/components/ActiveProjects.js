@@ -33,14 +33,14 @@ export default function ActiveProjects({ onProjectSelect }) {
     };
 
     return (
-        <Table aria-label="active projects table">
+        // <Table aria-label="active projects table">
+        <Table size="medium" aria-label="active projects tabel">
             <TableHead>
                 <TableRow>
                     <TableCell>Open</TableCell>
                     <TableCell>Project Name</TableCell>
-                    <TableCell align="right">Project Leader</TableCell>
-                    <TableCell align="right">Start Date</TableCell>
-                    <TableCell align="right">End Date</TableCell>
+                    <TableCell align="right">Leader</TableCell>
+                    <TableCell align="right">Deadline</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
@@ -64,9 +64,6 @@ export default function ActiveProjects({ onProjectSelect }) {
                         </TableCell>
                         <TableCell align="right">
                             {project?.properties?.['Project Leader Name']?.rollup?.array?.[0]?.formula?.string || "N/A"}
-                        </TableCell>
-                        <TableCell align="right">
-                            {project?.properties?.Timespan?.date?.start || "N/A"}
                         </TableCell>
                         <TableCell align="right">
                             {project?.properties?.Timespan?.date?.end || "N/A"}

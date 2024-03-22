@@ -21,8 +21,9 @@ function TimeLine({ projectId, filterByUser }) {
     const latestActivities = sortedActivities.slice(0, 3);
 
     return (
+        <>
+        <h4>Latest activities</h4>
         <div className='activities'>
-            <h2>Latest activities</h2>
             <ul>
                 {latestActivities.map((timereport, index) => (
                     <li key={index}>
@@ -44,6 +45,7 @@ function TimeLine({ projectId, filterByUser }) {
             </ul>
             <div className='timeline-bottom'>View all activity <ChevronRight size={14} /></div>
         </div>
+        </>
     );
 }
 

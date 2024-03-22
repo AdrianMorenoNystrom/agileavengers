@@ -3,9 +3,9 @@ import "./home.scss";
 import "../../components/Timeline/timeline.scss";
 import ActiveProjects from '../../components/ActiveProjects';
 import ProjectChart from "../../components/ProjectChart";
-import TotalHours from "../../components/widgets/TotalHours";
 import TimeLine from "../../components/Timeline/TimeLine";
 import WorkedHours from "../../components/widgets/WorkedHours";
+import DonutChart from "../../components/DonutChart";
 
 
 function Home() {
@@ -19,16 +19,15 @@ function Home() {
 
   return (
     <div className="home">
-      <div className="box box1">
-       <h2>{projectStatusHeader}</h2>
+      <div className="grid-item landscape">
+       <h4>{projectStatusHeader}</h4>
         <ActiveProjects onProjectSelect={setSelectedProject} />    
-        <ProjectChart project={selectedProject} />
       </div>
-      <div className="box widgets"><TotalHours /></div>
-      <div className="box portrait"><TimeLine /></div>
-      <div className="box widgets">Data</div>
-      <div className="box landscape"><WorkedHours /></div>
-      
+      <div className="grid-item box"><h1>Some stuff</h1></div>
+      <div className="grid-item box"><TimeLine /></div>
+      <div className="grid-item box"><DonutChart project={selectedProject} /></div>
+      <div className="grid-item box"><ProjectChart project={selectedProject} /></div>
+      <div className="grid-item landscape"><WorkedHours /></div>
     </div>
   );
 }
