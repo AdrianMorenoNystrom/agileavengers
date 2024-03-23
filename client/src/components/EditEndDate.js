@@ -24,8 +24,10 @@ function EditEndDate({ currentEndDate, handleCancel, submitEndDate }) {
             <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
                 <DatePicker
                     value={selectedDate}
+                    label="Edit end date"
                     onChange={handleDateChange}
                     renderInput={(params) => <TextField {...params} />}
+                    sx={{marginTop: 1}}
                 />
             </LocalizationProvider>
             <Stack direction="row" spacing={1} sx={{ marginTop: 1, marginBottom: 1 }}>

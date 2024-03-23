@@ -9,16 +9,15 @@ import ProjectChart from '../../components/ProjectChart';
 import '../../components/single/single.scss'
 import './project.scss'
 import statusCheck from '../../components/statusCheck';
-import { Pencil } from 'lucide-react';
-import { TextField } from '@mui/material';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
+import {Pencil } from 'lucide-react';
 import AlertMessage from '../../components/AlertMessage';
 import ProjectTimeLine from '../../components/ProjectTimeLine';
 import { ChevronRight } from 'lucide-react';
-import dayjs from 'dayjs';
 import EditHours from '../../components/EditHours';
 import EditEndDate from '../../components/EditEndDate';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
+
 
 function Project() {
     const { id } = useParams();
@@ -26,7 +25,8 @@ function Project() {
 
     const [isEditingHour, setIsEditingHour] = useState(false); 
     const [isEditingDate, setIsEditingDate] = useState(false); 
-    const[enddate, setEndDate] = useState('');
+    const [isEditingStatus, setIsEditingStatus] = useState(false);
+    const [setEndDate] = useState('');
     const [inputNumber, setInputNumber] = useState(''); 
     const [alertMessage, setAlertMessage] = useState({});   
 
@@ -46,6 +46,11 @@ function Project() {
     const handleDateCancel = () => {
         setIsEditingDate(false); 
     };
+
+    const handleStatusClick = () => {
+        setIsEditingStatus(prevState => !prevState); 
+    };
+
 
     const submitHours = () => {
         console.log("Submitted number:", inputNumber);
@@ -102,6 +107,34 @@ function Project() {
         });
     };
 
+    const submitStatus = (inputStatus) => {
+        console.log("New status selected:", inputStatus);
+        fetch(`/api/projects/changeStatus/${id}`, { 
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({inputStatus}),
+            credentials: "include",
+        })
+        .then(response => {
+            if (response.ok) {
+                setAlertMessage({
+                    message: "Status updated to: " + inputStatus,
+                    severity: "success"
+                });
+                setIsEditingStatus(false);
+            } else {
+                console.error('Failed to update status');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+        setIsEditingStatus(false);
+    };
+    
+
     const { data, isLoading, error } = useFetchData(`/api/projects/project/${id}`, true);
 
     if (isLoading) return <div>Laddar...</div>;
@@ -114,7 +147,15 @@ function Project() {
     const endDate = new Date(properties?.Timespan?.date?.end);
     const leaderName = properties?.['Project Leader Name']?.rollup?.array?.[0]?.formula?.string || '';
     const hoursTotal = properties?.['Total Hours']?.number || 0;
-    
+
+    const buttons = ["Active", "Next up", "Paused", "Done"]
+    .filter(status => status !== statusName) 
+    .map(status => (
+      <Button key={status} color={statusCheck(status)} onClick={() => submitStatus(status)}>
+        {status}
+      </Button>
+    ));
+
     return (
         <div className='single'>
             <div className='project'>
@@ -128,8 +169,15 @@ function Project() {
                             f
                             severity={alertMessage.severity || ""}
                         />
-                        <Chip className="status" color={statusCheck(statusName)} size="small" label={statusName} /><Pencil className="edit" size={12}/>
-
+                        <Chip className="status" color={statusCheck(statusName)} size="small" label={statusName} />
+                        <div>
+                        <Pencil className="edit" size={12} onClick={handleStatusClick}/>
+                        {isEditingStatus ? (
+                        <ButtonGroup size="small" aria-label="Small button group" sx={{marginLeft:2}}>
+                            {buttons}
+                        </ButtonGroup>
+                    ) : null}
+                    </div>
                     </div>
                     <div className="project-info">
                         <div className='item'>

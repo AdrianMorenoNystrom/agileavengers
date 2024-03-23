@@ -7,6 +7,7 @@ import addProjectRoute from "./projects/addProject.mjs";
 
 import changeTimeRoute from './projects/changeTime.mjs';
 import changeDateRoute from './projects/changeDate.mjs';
+import changeStatusRoute from './projects/changeStatus.mjs';
 
 import projectsRoute from "./projects/allProjects.mjs";
 import showProjectsRoute from "./projects/activeProjects.mjs";
@@ -36,6 +37,7 @@ app.use(getTimereportsRoute);
 app.use(showSingleProjectsRoute);
 app.use(changeTimeRoute);
 app.use(changeDateRoute);
+app.use(changeStatusRoute);
 app.use(logoutRoute);
 
 export default app;
