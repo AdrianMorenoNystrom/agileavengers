@@ -15,6 +15,7 @@ import getTimereportsRoute from "./timereports/getTimereports.mjs";
 import showSingleProjectsRoute from "./projects/singleProject.mjs";
 import logoutRoute from "./auth/logout.mjs";
 import getTasksRoute from "./tasks/getTasks.mjs";
+import GetUserSpecificProjects from "./projects/getprojectsforTimereport.mjs";
 
 const app = express();
 
@@ -34,5 +35,6 @@ app.use(getTimereportsRoute);
 app.use(showSingleProjectsRoute);
 app.use(logoutRoute);
 app.use(getTasksRoute);
+app.use(GetUserSpecificProjects);
 
 export default app;
