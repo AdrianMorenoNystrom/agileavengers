@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from "react";
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import useFetchData from "../../components/UseFetchData";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import TextField from "@mui/material/TextField";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-import { Container, Stack } from "@mui/material";
-import Button from "@mui/material/Button";
 import AlertMessage from "../../components/AlertMessage";
 import dayjs from "dayjs";
 import "dayjs/locale/en-gb";
+import { Container, Stack, Chip, Button } from "@mui/material";
+import statusCheck from '../../components/functions/statusCheck'; 
+
 
 export default function Timereport() {
   const [projectId, setProjectId] = useState("");
@@ -50,7 +47,7 @@ export default function Timereport() {
     }
   }, [fromTime, toTime]);
 
-  const { data, isLoading, error } = useFetchData("/api/projects/active");
+  const { data, isLoading, error } = useFetchData("/api/projects/user-specific");
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -164,21 +161,29 @@ export default function Timereport() {
           <Button type="submit" variant="contained">
             Submit
           </Button>
-        </Stack>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Project</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={projectId}
-            label="Project"
-            onChange={(event) => setProjectId(event.target.value)}
-            sx={{ marginBottom: 2 }}>
-            {data &&
-              data.map((item) => (
-                <MenuItem value={item.id} key={item.id}>
-                  {item?.properties?.Projectname?.title?.[0]?.text?.content}
-                </MenuItem>
+          </Stack>
+          <FormControl fullWidth>
+         <InputLabel id="project-select-label">Project</InputLabel>
+        <Select
+        labelId="project-select-label"
+        id="project-select"
+        value={projectId}
+        label="Project"
+        onChange={(event) => setProjectId(event.target.value)}
+        sx={{ marginBottom: 2 }}>
+       {data && data.map((item) => (
+        <MenuItem value={item.id} key={item.id}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+          <span style={{ marginRight: 8 }}>
+            {item?.properties?.Projectname?.title?.[0]?.text?.content}
+          </span>
+          <Chip
+            label={item?.properties?.Status?.select?.name}
+            color={statusCheck(item?.properties?.Status?.select?.name)}
+            size="small"
+          />
+        </Box>
+      </MenuItem>
               ))}
           </Select>
           <LocalizationProvider
