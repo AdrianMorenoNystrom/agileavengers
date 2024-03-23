@@ -214,7 +214,7 @@ function Project() {
                         <div className='item'>
                             <div className='itemTitle'>Team: </div>
                             <div className='itemValue'>
-                                <AvatarGroup max={4}>
+                                <AvatarGroup max={4} spacing={0}>
                                     <GetProjectAvatar />
                                 </AvatarGroup>
                             </div>             

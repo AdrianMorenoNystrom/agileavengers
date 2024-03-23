@@ -37,7 +37,7 @@ const GetAllProjectAvatars = ({ projectId }) => {
     const avatarInfoList = generateAvatarInfo(data);
     
     return (
-        <Stack direction="row" spacing={0.5}>
+        <Stack direction="row">
             {avatarInfoList.map(({ initials, bgColor,fullName }, index) => (
                 <Tooltip title={fullName}>
                     <Avatar key={index} sx={{ bgcolor: bgColor }}>

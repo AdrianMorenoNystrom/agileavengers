@@ -11,7 +11,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import useFetchData from './UseFetchData';
 import WeeklyReport from './GetWeeklyReport';
-import { Box, Container } from '@mui/material';
+import { AvatarGroup, Box, Container } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import GetAllProjectAvatars from './GetAllProjectAvatars';
 
