@@ -13,6 +13,7 @@ import useFetchData from './UseFetchData';
 import WeeklyReport from './GetWeeklyReport';
 import { Box, Container } from '@mui/material';
 import Divider from '@mui/material/Divider';
+import GetAllProjectAvatars from './GetAllProjectAvatars';
 
 export default function ProjectTable() {
     const { data, isLoading, error } = useFetchData('/api/projects');
@@ -57,6 +58,7 @@ export default function ProjectTable() {
         hoursLeft: project?.properties?.['Hours Left']?.formula?.number || 0,
         hoursOverBudget: project?.properties?.['Hours Over Budget']?.formula?.number || 0,
     }));
+
 
     const filterRows = (data) => {
         if (showOnlyActiveProjects) {
@@ -119,12 +121,7 @@ export default function ProjectTable() {
                                 <div>Project Leader: {rows.find(row => row.projectId === selectedProjectId).projectLeader}</div>
                                 <div>
                                     <ul>Team:
-                                        {rows
-                                            .find(row => row.projectId === selectedProjectId)
-                                            .teamMembers.split(', ')
-                                            .map((member, index) => (
-                                                <li style={{ listStyle: 'none' }} key={index}>{member}</li>
-                                            ))}
+                                        <GetAllProjectAvatars projectId={selectedProjectId} />
                                     </ul>
                                 </div>
                             </Box>

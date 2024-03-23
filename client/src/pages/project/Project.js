@@ -200,7 +200,7 @@ function Project() {
                             <div className='itemValue'>{leaderName}</div>             
                         </div>
                         <div className='item'>
-                    <div className='itemTitle'>Total hours:<Pencil className="edit" onClick={handleHourClick} size={12}/></div>
+                    <div className='itemTitle'>Total hours: <Pencil className="edit" onClick={handleHourClick} size={12}/></div>
                     <div className='itemValue'>{hoursTotal}</div>
                     {isEditingHour ? (
                         <EditHours

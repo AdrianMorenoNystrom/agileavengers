@@ -2,7 +2,6 @@ import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import useFetchData from './UseFetchData';
-import { useParams } from 'react-router-dom'; 
 import Tooltip from '@mui/material/Tooltip';
 
 function stringToColor(string) {
@@ -28,9 +27,8 @@ function generateAvatarInfo(data) {
     });
 }
 
-const GetAvatars = () => {
-    const { id } = useParams();
-    const { data, isLoading, error } = useFetchData(`/api/projects/project/${id}`,true);
+const GetAllProjectAvatars = ({ projectId }) => {
+    const { data, isLoading, error } = useFetchData(`/api/projects/project/${projectId}`, true);
 
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
@@ -39,8 +37,8 @@ const GetAvatars = () => {
     const avatarInfoList = generateAvatarInfo(data);
     
     return (
-        <Stack direction="row" spacing={2}>
-            {avatarInfoList.map(({ initials, bgColor, fullName}, index) => (
+        <Stack direction="row" spacing={0.5}>
+            {avatarInfoList.map(({ initials, bgColor,fullName }, index) => (
                 <Tooltip title={fullName}>
                     <Avatar key={index} sx={{ bgcolor: bgColor }}>
                     {initials}
@@ -51,4 +49,4 @@ const GetAvatars = () => {
     );
 };
 
-export default GetAvatars;
+export default GetAllProjectAvatars;
