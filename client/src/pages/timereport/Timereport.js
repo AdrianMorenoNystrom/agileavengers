@@ -10,7 +10,8 @@ import AlertMessage from "../../components/AlertMessage";
 import dayjs from "dayjs";
 import "dayjs/locale/en-gb";
 import { Container, Stack, Chip, Button } from "@mui/material";
-import statusCheck from '../../components/functions/statusCheck'; 
+import statusCheck from '../../components/functions/statusCheck';
+import { Autocomplete } from '@mui/material';
 
 
 export default function Timereport() {
@@ -162,30 +163,31 @@ export default function Timereport() {
             Submit
           </Button>
           </Stack>
-          <FormControl fullWidth>
-         <InputLabel id="project-select-label">Project</InputLabel>
-        <Select
-        labelId="project-select-label"
-        id="project-select"
-        value={projectId}
-        label="Project"
-        onChange={(event) => setProjectId(event.target.value)}
-        sx={{ marginBottom: 2 }}>
-       {data && data.map((item) => (
-        <MenuItem value={item.id} key={item.id}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+          <Autocomplete
+          id="project-autocomplete"
+          value={data.find(project => project.id === projectId) || null}
+          onChange={(event, newValue) => setProjectId(newValue ? newValue.id : '')}
+          options={data || []}
+          getOptionLabel={(option) => option?.properties?.Projectname?.title?.[0]?.text?.content || ''}
+          isOptionEqualToValue={(option, value) => option.id === value.id}
+        renderOption={(props, option) => (
+    <    MenuItem {...props} key={option.id} value={option.id}>
+      <  Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
           <span style={{ marginRight: 8 }}>
-            {item?.properties?.Projectname?.title?.[0]?.text?.content}
+          {option?.properties?.Projectname?.title?.[0]?.text?.content}
           </span>
-          <Chip
-            label={item?.properties?.Status?.select?.name}
-            color={statusCheck(item?.properties?.Status?.select?.name)}
-            size="small"
-          />
-        </Box>
-      </MenuItem>
-              ))}
-          </Select>
+         <Chip
+          label={option?.properties?.Status?.select?.name}
+          color={statusCheck(option?.properties?.Status?.select?.name)}
+          size="small"
+        />
+       </Box>
+     </MenuItem>
+     )}
+     renderInput={(params) => <TextField {...params} label="Project" />}
+     fullWidth
+      sx={{ marginBottom: 2 }}
+        />
           <LocalizationProvider
             dateAdapter={AdapterDayjs}
             adapterLocale="en-gb">
@@ -247,7 +249,7 @@ export default function Timereport() {
               ))}
             </Select>
           </FormControl>
-          <TextField
+          <TextField fullWidth
             value={note}
             onChange={(event) => setNote(event.target.value)}
             id="outlined-multiline-static"
@@ -257,8 +259,8 @@ export default function Timereport() {
             rows={4}
             sx={{ marginBottom: 2 }}
           />
-        </FormControl>
       </Box>
     </Container>
   );
 }
+
