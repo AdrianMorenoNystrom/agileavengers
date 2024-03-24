@@ -11,7 +11,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import useFetchData from './UseFetchData';
 import WeeklyReport from './GetWeeklyReport';
-import { AvatarGroup, Box, Container } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import GetAllProjectAvatars from './GetAllProjectAvatars';
 
@@ -30,11 +30,22 @@ export default function ProjectTable() {
         );
     }
 
+
     const columns = [
         { field: 'projectName', headerName: 'Project', width: 130, },
         { field: 'status', headerName: 'Status', width: 70 },
         { field: 'projectLeader', headerName: 'Project Leader', width: 130 },
-        { field: 'teamMembers', headerName: 'Team Members', width: 200 },
+        { 
+            field: 'teamMembers', 
+            headerName: 'Team Members', 
+            width: 200, 
+            renderCell: (params) => {
+                const projectId = params.row.projectId; 
+                return (
+                        <GetAllProjectAvatars projectId={projectId} max={3}/>
+                );
+            }
+        },
         { field: 'startDate', headerName: 'Start Date', width: 125 },
         { field: 'endDate', headerName: 'End Date', width: 125 },
         { field: 'hoursTotal', headerName: 'Total Hours Planned', width: 150, align: 'right' },
@@ -42,15 +53,14 @@ export default function ProjectTable() {
         { field: 'hoursLeft', headerName: 'Hours Remaining', width: 130, align: 'right' },
         { field: 'hoursOverBudget', headerName: 'Hours Over Budget', width: 135, align: 'right' },
     ];
-
+    
+    
     const rows = data && data.map((project, index) => ({
         id: index + 1,
         projectId: project?.id,
         projectName: project?.properties?.Projectname?.title?.[0]?.text?.content || '',
         status: project?.properties?.Status?.select?.name || '',
         projectLeader: project?.properties?.['Project Leader Name']?.rollup?.array?.[0]?.formula?.string || '',
-        teamMembers: project?.properties?.['Team Members']?.rollup?.array
-            ?.map((teamMember) => teamMember?.formula?.string).join(', ') || '',
         startDate: project?.properties?.Timespan?.date?.start || '',
         endDate: project?.properties?.Timespan?.date?.end || '',
         hoursTotal: project?.properties?.['Total Hours']?.number || 0,
@@ -121,7 +131,7 @@ export default function ProjectTable() {
                                 <div>Project Leader: {rows.find(row => row.projectId === selectedProjectId).projectLeader}</div>
                                 <div>
                                     <ul>Team:
-                                        <GetAllProjectAvatars projectId={selectedProjectId} />
+                                        <GetAllProjectAvatars projectId={selectedProjectId} max={10} spacing={'large'}/>
                                     </ul>
                                 </div>
                             </Box>

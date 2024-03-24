@@ -3,7 +3,7 @@ import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import useFetchData from './UseFetchData';
 import Tooltip from '@mui/material/Tooltip';
-
+import AvatarGroup from '@mui/material/AvatarGroup';
 function stringToColor(string) {
     let hash = 0;
     for (let i = 0; i < string.length; i += 1) {
@@ -27,7 +27,7 @@ function generateAvatarInfo(data) {
     });
 }
 
-const GetAllProjectAvatars = ({ projectId }) => {
+const GetAllProjectAvatars = ({ projectId, max, spacing }) => {
     const { data, isLoading, error } = useFetchData(`/api/projects/project/${projectId}`, true);
 
     if (isLoading) return <div>Loading...</div>;
@@ -35,17 +35,19 @@ const GetAllProjectAvatars = ({ projectId }) => {
     if (!data) return <div>No data available</div>;
 
     const avatarInfoList = generateAvatarInfo(data);
-    
+
+
+    const avatars = avatarInfoList.map(({ initials, bgColor, fullName }, index) => (
+        <Tooltip title={fullName} key={index}>
+            <Avatar sx={{ bgcolor: bgColor }}>{initials}</Avatar>
+        </Tooltip>
+    ));
+
+
     return (
-        <Stack direction="row">
-            {avatarInfoList.map(({ initials, bgColor,fullName }, index) => (
-                <Tooltip title={fullName}>
-                    <Avatar key={index} sx={{ bgcolor: bgColor }}>
-                    {initials}
-                </Avatar>
-                </Tooltip>
-            ))}
-        </Stack>
+        <AvatarGroup max={max} spacing={spacing}>
+            {avatars}
+        </AvatarGroup>
     );
 };
 
