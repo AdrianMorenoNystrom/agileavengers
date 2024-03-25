@@ -2,6 +2,7 @@ import React from 'react';
 import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer';
 import { PiePlot } from '@mui/x-charts/PieChart';
 import { ChartsLegend } from '@mui/x-charts/ChartsLegend';
+import { ChartsTooltip } from '@mui/x-charts/ChartsTooltip';
 
 const ProjectChart = ({ project }) => {
     const hoursWorked = project?.properties?.['Hours Worked']?.rollup?.number || 0;
@@ -31,6 +32,7 @@ const ProjectChart = ({ project }) => {
                 ]}
                 height={220}
             >
+                <ChartsTooltip trigger='item'/>
                 <PiePlot />
                 <ChartsLegend 
                     slotProps={{

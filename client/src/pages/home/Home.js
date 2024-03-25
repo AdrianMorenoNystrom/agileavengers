@@ -7,7 +7,6 @@ import TimeLine from "../../components/Timeline/TimeLine";
 import WorkedHours from "../../components/widgets/WorkedHours";
 import CategoryChart from "../../components/CategoryChart";
 
-
 function Home() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [isLoading, setIsLoading] = useState(true);

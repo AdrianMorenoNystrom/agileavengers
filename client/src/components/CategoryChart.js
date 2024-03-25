@@ -3,6 +3,8 @@ import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer
 import { PiePlot } from '@mui/x-charts/PieChart';
 import { ChartsLegend } from '@mui/x-charts/ChartsLegend';
 import useFetchTimereports from './useFetchTimereports.js';
+import { ChartsTooltip } from "@mui/x-charts/ChartsTooltip";
+
 
 const CategoryChart = ({ project }) => {
     const { timereports, isLoading, error } = useFetchTimereports(project?.id);
@@ -51,6 +53,7 @@ const CategoryChart = ({ project }) => {
                 ]}
                 height={220}
             >
+                <ChartsTooltip trigger='item'/>
                 <PiePlot />
                 <ChartsLegend
                     slotProps={{
