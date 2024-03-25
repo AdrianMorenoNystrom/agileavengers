@@ -1,20 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import useFetchData from "../../components/UseFetchData";
+import {
+  Box,
+  Select,
+  Container,
+  Stack,
+  Button,
+  TextField,
+  FormControl,
+  Autocomplete,
+  Chip,
+  InputLabel,
+  MenuItem,
+} from "@mui/material";
+import {
+  LocalizationProvider,
+  DatePicker,
+  TimePicker,
+} from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import TextField from "@mui/material/TextField";
-import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import useFetchData from "../../components/UseFetchData";
 import AlertMessage from "../../components/AlertMessage";
 import dayjs from "dayjs";
 import "dayjs/locale/en-gb";
 import axios from "axios";
+import statusCheck from "../../components/functions/statusCheck";
 
 export default function Timereport({ isUpdate }) {
   const { id } = useParams();
@@ -86,7 +96,9 @@ export default function Timereport({ isUpdate }) {
     }
   }, [fromTime, toTime]);
 
-  const { data, isLoading, error } = useFetchData("/api/projects/user-specific");
+  const { data, isLoading, error } = useFetchData(
+    "/api/projects/user-specific"
+  );
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -207,106 +219,126 @@ export default function Timereport({ isUpdate }) {
             {isUpdate ? "Update" : "Submit"}
           </Button>
         </Stack>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Project</InputLabel>
-          {isUpdate ? (
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={projectName}
-              label="Project"
-              disabled
-              sx={{ marginBottom: 2 }}>
-              <MenuItem value={projectName}>{projectName}</MenuItem>
-            </Select>
-          ) : (
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={projectId}
-              label="Project"
-              onChange={(event) => setProjectId(event.target.value)}
-              sx={{ marginBottom: 2 }}>
-              {data &&
-                data.map((item) => (
-                  <MenuItem value={item.id} key={item.id}>
-                    {item?.properties?.Projectname?.title?.[0]?.text?.content}
-                  </MenuItem>
-                ))}
-            </Select>
-          )}
-          <LocalizationProvider
-            dateAdapter={AdapterDayjs}
-            adapterLocale="en-gb">
-            <Stack
-              direction="row"
-              spacing={2}
-              justifyContent="space-between"
-              sx={{
-                marginBottom: 2,
-                "& > :not(style)": {
-                  flex: "1",
-                },
-              }}>
-              <DatePicker
-                value={date}
-                onChange={(newDate) => {
-                  if (newDate) {
-                    setDate(dayjs(newDate.$d).format("YYYY-MM-DD"));
-                  }
-                }}
-                label="Date"
-                sx={{ marginBottom: 2 }}
-                slotProps={{
-                  textField: {
-                    error: false,
-                  },
-                }}
-              />
-              <TimePicker
-                ampm={false}
-                value={fromTime}
-                onChange={(newFromTime) => setFromTime(newFromTime)}
-                label="From"
-                sx={{ marginBottom: 2 }}
-              />
-              <TimePicker
-                ampm={false}
-                value={toTime}
-                onChange={(newToTime) => setToTime(newToTime)}
-                label="To"
-                sx={{ marginBottom: 2 }}
-              />
-            </Stack>
-          </LocalizationProvider>
-          <FormControl fullWidth>
-            <InputLabel id="category-select-label">Category</InputLabel>
-            <Select
-              labelId="category-select-label"
-              id="category-select"
-              value={category}
-              label="Category"
-              onChange={(event) => setCategory(event.target.value)}
-              sx={{ marginBottom: 2 }}>
-              {allCategories.map((category) => (
-                <MenuItem key={category.id} value={category.name}>
-                  {category.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <TextField fullWidth
-            value={note}
-            onChange={(event) => setNote(event.target.value)}
-            id="outlined-multiline-static"
-            label="Note"
-            placeholder="Please tell us what you did"
-            multiline
-            rows={4}
+        {isUpdate ? (
+          <Select
+            fullWidth
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={projectName}
+            label="Project"
+            disabled
+            sx={{ marginBottom: 2 }}>
+            <MenuItem value={projectName}>{projectName}</MenuItem>
+          </Select>
+        ) : (
+          <Autocomplete
+            fullWidth
+            id="project-autocomplete"
+            value={data.find((project) => project.id === projectId) || null}
+            onChange={(event, newValue) =>
+              setProjectId(newValue ? newValue.id : "")
+            }
+            options={data || []}
+            getOptionLabel={(option) =>
+              option?.properties?.Projectname?.title?.[0]?.text?.content || ""
+            }
+            isOptionEqualToValue={(option, value) => option.id === value.id}
+            renderOption={(props, option) => (
+              <MenuItem {...props} key={option.id} value={option.id}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    width: "100%",
+                  }}>
+                  <span style={{ marginRight: 8 }}>
+                    {option?.properties?.Projectname?.title?.[0]?.text?.content}
+                  </span>
+                  <Chip
+                    label={option?.properties?.Status?.select?.name}
+                    color={statusCheck(
+                      option?.properties?.Status?.select?.name
+                    )}
+                    size="small"
+                  />
+                </Box>
+              </MenuItem>
+            )}
+            renderInput={(params) => <TextField {...params} label="Project" />}
             sx={{ marginBottom: 2 }}
           />
+        )}
+        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
+          <Stack
+            direction="row"
+            spacing={2}
+            justifyContent="space-between"
+            sx={{
+              marginBottom: 2,
+              "& > :not(style)": {
+                flex: "1",
+              },
+            }}>
+            <DatePicker
+              value={date}
+              onChange={(newDate) => {
+                if (newDate) {
+                  setDate(dayjs(newDate.$d).format("YYYY-MM-DD"));
+                }
+              }}
+              label="Date"
+              sx={{ marginBottom: 2 }}
+              slotProps={{
+                textField: {
+                  error: false,
+                },
+              }}
+            />
+            <TimePicker
+              ampm={false}
+              value={fromTime}
+              onChange={(newFromTime) => setFromTime(newFromTime)}
+              label="From"
+              sx={{ marginBottom: 2 }}
+            />
+            <TimePicker
+              ampm={false}
+              value={toTime}
+              onChange={(newToTime) => setToTime(newToTime)}
+              label="To"
+              sx={{ marginBottom: 2 }}
+            />
+          </Stack>
+        </LocalizationProvider>
+        <FormControl fullWidth>
+          <InputLabel id="category-select-label">Category</InputLabel>
+          <Select
+            labelId="category-select-label"
+            id="category-select"
+            value={category}
+            label="Category"
+            onChange={(event) => setCategory(event.target.value)}
+            sx={{ marginBottom: 2 }}>
+            {allCategories.map((category) => (
+              <MenuItem key={category.id} value={category.name}>
+                {category.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <TextField
+          fullWidth
+          value={note}
+          onChange={(event) => setNote(event.target.value)}
+          id="outlined-multiline-static"
+          label="Note"
+          placeholder="Please tell us what you did"
+          multiline
+          rows={4}
+          sx={{ marginBottom: 2 }}
+        />
       </Box>
     </Container>
   );
 }
-
