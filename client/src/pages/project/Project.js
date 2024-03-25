@@ -20,7 +20,7 @@ import AvatarGroup from '@mui/material/AvatarGroup';
 import '../../components/single/single.scss';
 import './project.scss';
 import TimeLine from '../../components/Timeline/TimeLine';
-import DonutChart from '../../components/DonutChart';
+import CategoryChart from '../../components/CategoryChart';
 
 function Project() {
     const { id } = useParams();
@@ -231,7 +231,7 @@ function Project() {
                 </div>
                 <aside>
                     <TimeLine projectId={id} />
-                    <div className='charts'><DonutChart project={data} /> </div>
+                    <div className='charts'><CategoryChart project={data} /> </div>
                 </aside>
                 <div className='project-content'>
                 </div>

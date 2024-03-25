@@ -38,7 +38,7 @@ export default function ActiveProjects({ onProjectSelect }) {
             <TableHead>
                 <TableRow>
                     <TableCell>Open</TableCell>
-                    <TableCell>Project Name</TableCell>
+                    <TableCell>Name</TableCell>
                     <TableCell align="right">Leader</TableCell>
                     <TableCell align="right">Deadline</TableCell>
                 </TableRow>
