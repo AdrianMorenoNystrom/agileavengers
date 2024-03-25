@@ -128,8 +128,7 @@ export default function Timereport({ isUpdate }) {
       toTime === null ||
       hours === null ||
       hours <= 0 ||
-      category === "" ||
-      note === ""
+      category === ""
     ) {
       const alertMessage = {
         severity: "error",
