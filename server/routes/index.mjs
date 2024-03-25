@@ -9,7 +9,6 @@ import changeTimeRoute from './projects/changeTime.mjs';
 import changeDateRoute from './projects/changeDate.mjs';
 import changeStatusRoute from './projects/changeStatus.mjs';
 
-import projectsRoute from "./projects/allProjects.mjs";
 import filteredProjectsRoute from "./projects/getFilteredProjects.mjs";
 import getAllProjectsRoute from "./projects/getAllProjects.mjs";
 import showProjectsRoute from "./projects/activeProjects.mjs";

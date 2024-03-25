@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import useFetchData from '../../components/UseFetchData';
 import { useParams } from 'react-router-dom'; 
-import dateFormatter from '../../components/DateFormatter';
-import GetProjectAvatar from '../../components/GetProjectAvatar';
+import dateFormatter from '../../components/functions/dateFormatter';
+import GetProjectAvatar from '../../components/TeamAvatars';
 import Chip from '@mui/material/Chip';
 import ProjectChart from '../../components/ProjectChart'; 
 import '../../components/single/single.scss'
 import './project.scss'
-import statusCheck from '../../components/statusCheck';
+import statusCheck from '../../components/functions/statusCheck';
 import {Pencil } from 'lucide-react';
 import AlertMessage from '../../components/AlertMessage';
-import ProjectTimeLine from '../../components/ProjectTimeLine';
+import ProjectTimeLine from '../../components/Timeline/TimeLine';
 import { ChevronRight } from 'lucide-react';
 import EditHours from '../../components/EditHours';
 import EditEndDate from '../../components/EditEndDate';

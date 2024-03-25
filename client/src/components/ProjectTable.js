@@ -173,7 +173,7 @@ export default function ProjectTable() {
                             <div className='item'>
                                 <div className='item-title'>Team</div>
                                 <div className='item-value'>
-                                    <ul>Team:
+                                    <ul>
                                         <GetAllProjectAvatars projectId={selectedProjectId} max={10} spacing={'large'}/>
                                     </ul>
                                 </div>

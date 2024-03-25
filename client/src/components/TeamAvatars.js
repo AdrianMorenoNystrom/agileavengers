@@ -2,10 +2,8 @@ import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import useFetchData from './UseFetchData';
-<<<<<<< HEAD:client/src/components/GetProjectAvatar.js
-import { useParams } from 'react-router-dom'; 
 import Tooltip from '@mui/material/Tooltip';
-
+import { useParams } from 'react-router-dom';
 function stringToColor(string) {
     let hash = 0;
     for (let i = 0; i < string.length; i += 1) {
@@ -18,10 +16,7 @@ function stringToColor(string) {
     }
     return color;
 }
-=======
-import { useParams } from 'react-router-dom';
-import stringToColor from './functions/stringToColor';
->>>>>>> 9b2ba1f2f8738837c7141f6a815c8bb23943fc79:client/src/components/TeamAvatars.js
+
 
 function generateAvatarInfo(data) {
     const teamMembers = data?.properties?.['Team Members']?.rollup?.array || [];
