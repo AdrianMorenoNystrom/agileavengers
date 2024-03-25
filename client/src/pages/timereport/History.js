@@ -10,17 +10,14 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import EditIcon from "@mui/icons-material/Edit";
 import useFetchTimeReport from "../../components/useFetchTimereports";
+import { formatTime } from "../../components/functions/timeFormatter";
 
 const columns = [
   { id: "projectName", label: "Project", minWidth: 200 },
-  { id: "hours", label: "Hours", minWidth: 100 },
+  { id: "time", label: "Time Logged", minWidth: 100 },
   { id: "date", label: "Date", minWidth: 170 },
   { id: "category", label: "Category", minWidth: 170 },
 ];
-
-function createData(projectId, projectName, hours, date, category, note) {
-  return { projectId, projectName, hours, date, category, note };
-}
 
 export default function TimeReportHistory() {
   const { timereports, isLoading, error } = useFetchTimeReport(undefined, true);
@@ -33,7 +30,7 @@ export default function TimeReportHistory() {
 
   const rows = timereports.map((timereport, index) => {
     const projectId = timereport.id;
-    const hours = timereport.properties.Hours.number;
+    const time = formatTime(timereport.properties.Hours.number);
     const date = timereport.properties.Date.date.start;
     const projectName =
       timereport.properties["Project Name"].rollup.array[0].title[0].text
@@ -43,7 +40,7 @@ export default function TimeReportHistory() {
       timereport.properties?.Note?.title[0]?.text.content ||
       "No note available";
 
-    return createData(projectId, projectName, hours, date, category, note);
+    return { projectId, projectName, time, date, category, note };
   });
 
   const handleChangePage = (event, newPage) => {
@@ -103,7 +100,7 @@ export default function TimeReportHistory() {
                     )}
                   </TableCell>
 
-                  <TableCell>{row.hours}</TableCell>
+                  <TableCell>{row.time}</TableCell>
                   <TableCell>{row.date}</TableCell>
                   <TableCell>{row.category}</TableCell>
                 </TableRow>
