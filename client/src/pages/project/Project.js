@@ -230,7 +230,7 @@ function Project() {
                     </div>
                 </div>
                 <aside>
-                    <TimeLine projectId={id} />
+                    <div className='grid-item box'><TimeLine projectId={id} /></div>
                     <div className='charts'><CategoryChart project={data} /> </div>
                 </aside>
                 <div className='project-content'>
