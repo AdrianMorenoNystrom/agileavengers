@@ -159,7 +159,6 @@ export default function Timereport({ isUpdate }) {
           projectId,
           date: formattedDate,
           hours: hours,
-          note: note,
           category: category,
           fromTime: fromTime,
           toTime: toTime,

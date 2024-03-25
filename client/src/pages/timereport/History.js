@@ -38,8 +38,10 @@ export default function TimeReportHistory() {
     const projectName =
       timereport.properties["Project Name"].rollup.array[0].title[0].text
         .content;
-    const category = timereport.properties.Category.select.name;
-    const note = timereport.properties.Note.title[0].text.content;
+    const category = timereport?.properties?.Category?.select?.name;
+    const note =
+      timereport.properties?.Note?.title[0]?.text.content ||
+      "No note available";
 
     return createData(projectId, projectName, hours, date, category, note);
   });
