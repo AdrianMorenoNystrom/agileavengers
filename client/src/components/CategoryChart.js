@@ -49,7 +49,7 @@ const CategoryChart = ({ project }) => {
                         endAngle: 360,
                     }
                 ]}
-                height={250}
+                height={220}
             >
                 <PiePlot />
                 <ChartsLegend

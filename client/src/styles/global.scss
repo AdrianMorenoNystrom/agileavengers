@@ -24,15 +24,22 @@ p {
 
 }
 
+.grid-item {
+    padding: 20px;
+    border-radius: $rounded;
+    // border: 1px solid $border-color;
+    background-color: $light-bg;
+}
+
 .container {
     display: flex;
     height: 100vh;
 }
 
 .menuContainer {
-    width: 250px;
+    width: 200px;
     padding: 5px 20px;
-    border-right: 2px solid $border-color;
+    // border-right: 2px solid $border-color;
 
     @include lg {
         width: max-content;
@@ -51,4 +58,10 @@ table {
 
 h2 {
     margin-bottom: 1em;
+}
+
+h4 {
+    margin-bottom: 1em;
+    color: #b0b0b0;
+    font-weight: 200;
 }

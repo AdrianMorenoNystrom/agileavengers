@@ -23,6 +23,9 @@ export default function ActiveProjects({ onProjectSelect }) {
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
 
+    // Slice the data array to get only the first 3 projects
+    const slicedData = data.slice(0, 3);
+
     const handleRowClick = (project) => {
         onProjectSelect(project);
         setSelectedProjectId(project.id);
@@ -44,7 +47,7 @@ export default function ActiveProjects({ onProjectSelect }) {
                 </TableRow>
             </TableHead>
             <TableBody>
-                {data && data.map((project) => (
+                {slicedData.map((project) => (
                     <TableRow
                         key={project.id}
                         onClick={() => handleRowClick(project)}
