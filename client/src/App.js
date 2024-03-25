@@ -13,6 +13,7 @@ import Navbar from './components/navbar/Navbar';
 import Menu from './components/menu/Menu';
 import PrivateRoutes from './components/PrivateRoutes';
 import AuthProvider from './components/AuthProvider';
+import CreateAccount from './pages/CreateAccount-page';
 import Projects from './pages/projects/Projects';
 import Project from './pages/project/Project';
 
@@ -43,6 +44,7 @@ function App() {
                         <Route path="/projects/:id" element={<Project />} />
                         <Route path="/users" element={<Users />} />
                         <Route path="/users/:id" element={<User />} />
+                        <Route path="/adduser" element={<CreateAccount />} />
                         <Route path="/timereport" element={<Timereport />} />
                         <Route
                           path="/timereport/edit/:id"

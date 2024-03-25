@@ -11,7 +11,6 @@ const router = express.Router();
 router.post("/api/projects/add", jsonParser, async (request, response) => {
   if (!request.session.user) return response.sendStatus(401);
 
-  // Lägger bara till Projektnamn och timmar som test till en början.
   const projectName = request.body.projectName;
   const hours = request.body.hours;
   const status = request.body.status;
@@ -51,6 +50,7 @@ router.post("/api/projects/add", jsonParser, async (request, response) => {
     response.sendStatus(200);
   } catch (error) {
     console.log(error);
+    response.status(500).send(error.message); 
   }
 });
 

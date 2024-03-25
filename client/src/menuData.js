@@ -43,4 +43,16 @@ export const menuData = [
       },
     ],
   },
+    {
+        id:3,
+        title:"admin",
+        listItems: [
+            {
+                id:1,
+                title:"Add User",
+                url: "/adduser",
+                icon:"SmilePlus"
+            },
+        ],
+    },
 ];
