@@ -1,0 +1,57 @@
+@import "../../styles/variables.scss";
+
+.activities {
+    position: relative;
+    padding: 0 2em;
+    overflow: hidden;
+
+    .timeline-bottom {
+        display: flex;
+        align-items: center;
+        border-left: 1px solid $main-color;
+        padding-left: 15px;
+        font-size: 0.7em;
+
+    }
+
+    ul {
+        font-size: 0.75em;
+
+        li {
+            list-style-type: none;
+            position: relative;
+            width: 1px;
+            background-color: $main-color;
+
+            &::after {
+                content: "";
+                position: absolute;
+                left: 50%;
+                top: 20px;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background-color: $main-color;
+                transform: translateX(-50%);
+            }
+
+            .activity {
+                min-width: 200px;
+                padding: 15px 0 15px 15px;
+
+                time {
+                    font-size: 0.7em;
+                }
+
+                .activity-details {
+                    display: inline-flex;
+                    align-items: center;
+
+                    * {
+                        margin-right: 5px;
+                    }
+                }
+            }
+        }
+    }
+}

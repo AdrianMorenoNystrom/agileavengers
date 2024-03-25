@@ -6,29 +6,34 @@ dotenv.config();
 
 const router = express.Router();
 
-/*
-Route to get all timereports associated with a project or user, depending if
-project_id is included or not.
-*/
 router.get("/api/timereports", async (request, response) => {
   if (!request.session.user) return response.sendStatus(401);
 
   try {
-    const { project_id } = request.body;
-    const filter =
-      project_id !== undefined
-        ? {
-            property: "Project",
-            relation: {
-              contains: project_id,
-            },
-          }
-        : {
-            property: "Person",
-            relation: {
-              contains: request.session.user.id,
-            },
-          };
+    const { project_id, filter_by_user } = request.query;
+    console.log(project_id,filter_by_user);
+    let filter;
+
+    switch (true) {
+      case project_id !== undefined:
+        filter = {
+          property: "Project",
+          relation: {
+            contains: project_id,
+          },
+        };
+        break;
+      case filter_by_user && filter_by_user.toLowerCase() === 'true':
+        filter = {
+          property: "Person",
+          relation: {
+            contains: request.session.user.id,
+          },
+        };
+        break;
+      default:
+        break;
+    }
 
     const database_id = process.env.NOTION_DATABASE_ID_TIMEREPORTS;
     const result = await notion.databases.query({

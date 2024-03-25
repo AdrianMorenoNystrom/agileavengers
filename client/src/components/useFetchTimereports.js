@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function useFetchTimereports(projectId) {
+function useFetchTimereports(projectId, filterByUser) {
     const [timereports, setTimereports] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -10,11 +10,11 @@ function useFetchTimereports(projectId) {
         const fetchTimereports = async () => {
             setIsLoading(true);
             try {
-                const response = await axios.get('/api/timereports', {
-                    params: {
-                        project_id: projectId
-                    }
-                });
+                const params = { project_id: projectId };
+                if (filterByUser !== undefined) {
+                    params.filter_by_user = filterByUser ? 'true' : 'false';
+                }
+                const response = await axios.get('/api/timereports', { params });
 
                 if (response.status === 401) {
                     throw new Error('Unauthorized');
@@ -30,7 +30,7 @@ function useFetchTimereports(projectId) {
         };
 
         fetchTimereports();
-    }, [projectId]);
+    }, [projectId, filterByUser]);
 
     return { timereports, isLoading, error };
 }

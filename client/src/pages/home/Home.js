@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import "./home.scss";
+import "../../components/Timeline/timeline.scss";
 import ActiveProjects from '../../components/ActiveProjects';
 import ProjectChart from "../../components/ProjectChart";
-import DataTable from "../../components/datatable/DataTable";
+import TimeLine from "../../components/Timeline/TimeLine";
+import WorkedHours from "../../components/widgets/WorkedHours";
+import DonutChart from "../../components/DonutChart";
+
 
 function Home() {
   const [selectedProject, setSelectedProject] = useState(null);
@@ -15,14 +19,15 @@ function Home() {
 
   return (
     <div className="home">
-      <div className="box box1">
-       <h2>{projectStatusHeader}</h2>
-        <ActiveProjects onProjectSelect={setSelectedProject} />
-        <div className="Details">
-        <h2>Project Details</h2>
-        </div>        
-        <ProjectChart project={selectedProject} />
+      <div className="grid-item landscape">
+       <h4>{projectStatusHeader}</h4>
+        <ActiveProjects onProjectSelect={setSelectedProject} />    
       </div>
+      <div className="grid-item box"><h1>Some stuff</h1></div>
+      <div className="grid-item box"><TimeLine /></div>
+      <div className="grid-item box"><DonutChart project={selectedProject} /></div>
+      <div className="grid-item box"><ProjectChart project={selectedProject} /></div>
+      <div className="grid-item landscape"><WorkedHours /></div>
     </div>
   );
 }

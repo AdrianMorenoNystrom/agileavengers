@@ -7,40 +7,40 @@ import TableRow from '@mui/material/TableRow';
 import useFetchData from './UseFetchData';
 import { ExternalLink } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
- 
+
 export default function ActiveProjects({ onProjectSelect }) {
     const { data, isLoading, error } = useFetchData('/api/projects/active');
     const [selectedProjectId, setSelectedProjectId] = useState(null);
     const navigate = useNavigate();
- 
+
     useEffect(() => {
         if (data && data.length > 0) {
             onProjectSelect(data[0]);
             setSelectedProjectId(data[0].id);
         }
     }, [data, onProjectSelect]);
- 
-    if (isLoading) return <div>Laddar...</div>;
-    if (error) return <div>Fel vid hämtning av data: {error}</div>;
- 
+
+    if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>{error}</div>;
+
     const handleRowClick = (project) => {
         onProjectSelect(project);
         setSelectedProjectId(project.id);
     };
- 
+
     const handleOpenButtonClick = (projectId) => {
         navigate(`/projects/${projectId}`);
     };
- 
+
     return (
-        <Table aria-label="active projects table">
+        // <Table aria-label="active projects table">
+        <Table size="medium" aria-label="active projects tabel">
             <TableHead>
                 <TableRow>
                     <TableCell>Open</TableCell>
                     <TableCell>Project Name</TableCell>
-                    <TableCell align="right">Project Leader</TableCell>
-                    <TableCell align="right">Start Date</TableCell>
-                    <TableCell align="right">End Date</TableCell>
+                    <TableCell align="right">Leader</TableCell>
+                    <TableCell align="right">Deadline</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
@@ -55,7 +55,7 @@ export default function ActiveProjects({ onProjectSelect }) {
                     >
                         <TableCell>
                             <ExternalLink
-                                size={20}
+                                size={18}
                                 onClick={() => handleOpenButtonClick(project.id)}
                             />
                         </TableCell>
@@ -64,9 +64,6 @@ export default function ActiveProjects({ onProjectSelect }) {
                         </TableCell>
                         <TableCell align="right">
                             {project?.properties?.['Project Leader Name']?.rollup?.array?.[0]?.formula?.string || "N/A"}
-                        </TableCell>
-                        <TableCell align="right">
-                            {project?.properties?.Timespan?.date?.start || "N/A"}
                         </TableCell>
                         <TableCell align="right">
                             {project?.properties?.Timespan?.date?.end || "N/A"}

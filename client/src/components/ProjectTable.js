@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     DataGrid,
     GridToolbarContainer,
@@ -11,13 +11,16 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import useFetchData from './UseFetchData';
 import WeeklyReport from './GetWeeklyReport';
-import { Box, Container } from '@mui/material';
+import { Box, Container, Chip } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import GetAllProjectAvatars from './GetAllProjectAvatars';
+import statusCheck from './functions/statusCheck';
+import '../pages/projects/projects.scss';
 
 export default function ProjectTable() {
     const { data, isLoading, error } = useFetchData('/api/projects');
-    const [showOnlyActiveProjects, setShowOnlyActiveProjects] = useState(false);
+    const [showOnlyUserProjects, setShowOnlyUserProjects] = useState(false);
+    const [userId, setUserId] = useState("");
     const [selectedProjectId, setSelectedProjectId] = useState(null);
 
     function CustomToolbar() {
@@ -61,6 +64,9 @@ export default function ProjectTable() {
         projectName: project?.properties?.Projectname?.title?.[0]?.text?.content || '',
         status: project?.properties?.Status?.select?.name || '',
         projectLeader: project?.properties?.['Project Leader Name']?.rollup?.array?.[0]?.formula?.string || '',
+        projectLeaderId: project?.properties?.['Project Leader']?.relation?.[0]?.id || '',
+        teamMemberId: project?.properties?.People?.relation
+            ?.map((teamMember) => teamMember?.id) || '',
         startDate: project?.properties?.Timespan?.date?.start || '',
         endDate: project?.properties?.Timespan?.date?.end || '',
         hoursTotal: project?.properties?.['Total Hours']?.number || 0,
@@ -69,10 +75,27 @@ export default function ProjectTable() {
         hoursOverBudget: project?.properties?.['Hours Over Budget']?.formula?.number || 0,
     }));
 
+    useEffect(() => {
+        const fetchUserId = async () => {
+            try {
+                const response = await fetch('/api/people/user');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const result = await response.json();
+                setUserId(result.message.id);
+            } catch (error) {
+                console.error("Error fetching categories: ", error);
+            }
+        };
+        fetchUserId();
+    }, []);
 
-    const filterRows = (data) => {
-        if (showOnlyActiveProjects) {
-            return data.filter(project => project.status === 'Active');
+    const filteredRows = (data) => {
+        if (showOnlyUserProjects) {
+            return data.filter(project => {
+                return project.projectLeaderId === userId || project.teamMemberId.includes(userId);
+            });
         } else {
             return data;
         }
@@ -82,21 +105,20 @@ export default function ProjectTable() {
         setSelectedProjectId(projectId.row.projectId);
     };
 
-
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
 
     return (
-        <Container style={{ height: 430, width: '100%' }}>
+        <Container style={{ width: '100%' }}>
             <DataGrid
                 sx={{
                     cursor: 'pointer',
                     '& .MuiDataGrid-cell:hover': {
                         color: 'primary.main',
-                    },
+                    }
                 }}
-                key={showOnlyActiveProjects.toString()}
-                rows={filterRows(rows)}
+                key={showOnlyUserProjects.toString()}
+                rows={filteredRows(rows)}
                 columns={columns}
                 initialState={{
                     pagination: {
@@ -107,38 +129,61 @@ export default function ProjectTable() {
                 // checkboxSelection
                 slots={{ toolbar: CustomToolbar, getGridDateOperators }}
                 slotProps={{ toolbar: { showColumnSelector: false } }}
-                showOnlyActiveProjects={showOnlyActiveProjects}
+                showOnlyActiveProjects={showOnlyUserProjects}
                 onRowClick={handleProjectClick}
             />
             <FormControlLabel
-                checked={showOnlyActiveProjects}
-                onChange={(event) => setShowOnlyActiveProjects(event.target.checked)}
                 control={<Switch />}
-                label="Show Only Active Projects"
+                label="View Only Your Projects"
+                checked={showOnlyUserProjects}
+                onChange={(event) => setShowOnlyUserProjects(event.target.checked)}
             />
             {selectedProjectId && (
-                <Box sx={{ marginTop: '20px', display: 'flex', justifyContent: 'space-between' }}>
-                    <Box>
-                        <h2>{rows.find(row => row.projectId === selectedProjectId).projectName}</h2>
-                        <Box sx={{ display: 'flex' }}>
-                            <Box>
-                                <div>Hours Planned: {rows.find(row => row.projectId === selectedProjectId).hoursTotal}</div>
-                                <div>Hours Worked: {rows.find(row => row.projectId === selectedProjectId).hoursWorked}</div>
-                                <div>Hours Remaining: {rows.find(row => row.projectId === selectedProjectId).hoursLeft}</div>
-                                <div>Hours Over Budget: {rows.find(row => row.projectId === selectedProjectId).hoursOverBudget}</div>
-                            </Box>
-                            <Box sx={{ marginLeft: 5 }}>
-                                <div>Project Leader: {rows.find(row => row.projectId === selectedProjectId).projectLeader}</div>
-                                <div>
+                <Box className='project-container'>
+                    <Box className='project-data'>
+                        <Box className='project-title'>
+                            <h2>{rows.find(row => row.projectId === selectedProjectId).projectName}</h2>
+                            <Chip
+                                className="status"
+                                color={statusCheck(rows.find(row => row.projectId === selectedProjectId).status)}
+                                size="small"
+                                label={rows.find(row => row.projectId === selectedProjectId).status}
+                            />
+                        </Box>
+                        <Box className='project-info'>
+                            <div className='item'>
+                                <div className='item-title'>Start Date</div>
+                                <div className='item-value'>{rows.find(row => row.projectId === selectedProjectId).startDate}</div>
+                            </div>
+                            <div className='item'>
+                                <div className='item-title'>End Date</div>
+                                <div className='item-value'>{rows.find(row => row.projectId === selectedProjectId).endDate}</div>
+                            </div>
+                            <div className='item'>
+                                <div className='item-title'>Total Hours</div>
+                                <div className='item-value'>Planned: {rows.find(row => row.projectId === selectedProjectId).hoursTotal}</div>
+                                <div className='item-value'>Worked: {rows.find(row => row.projectId === selectedProjectId).hoursWorked}</div>
+                                <div className='item-value'>Remaining: {rows.find(row => row.projectId === selectedProjectId).hoursLeft}</div>
+                                <div className='item-value'>Over Budget: {rows.find(row => row.projectId === selectedProjectId).hoursOverBudget}</div>
+                            </div>
+                            <div className='item'>
+                                <div className='item-title'>Project Leader</div>
+                                <div className='item-value'>{rows.find(row => row.projectId === selectedProjectId).projectLeader}</div>
+                            </div>
+                            <div className='item'>
+                                <div className='item-title'>Team</div>
+                                <div className='item-value'>
                                     <ul>Team:
                                         <GetAllProjectAvatars projectId={selectedProjectId} max={10} spacing={'large'}/>
                                     </ul>
                                 </div>
-                            </Box>
+                            </div>
                         </Box>
                     </Box>
                     <Divider orientation="vertical" flexItem />
-                    {<WeeklyReport projectId={selectedProjectId} />}
+                    <Box className='project-data'>
+                        {<WeeklyReport projectId={selectedProjectId} />}
+                    </Box>
                 </Box>
             )}
         </Container>

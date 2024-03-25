@@ -3,24 +3,26 @@ import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer
 import { PiePlot } from '@mui/x-charts/PieChart';
 import { ChartsLegend } from '@mui/x-charts/ChartsLegend';
 
-const ProjectChart = ({ project }) => {
+const DonutChart = ({ project }) => {
     const hoursWorked = project?.properties?.['Hours Worked']?.rollup?.number || 0;
     const hoursLeft = project?.properties?.['Hours Left']?.formula?.number || 0;
     const totalHours = hoursWorked + hoursLeft;
   
     const seriesData = [
-        { id: 2, value: hoursWorked, label: 'Hours Worked', percentage: (hoursWorked / totalHours * 100).toFixed(0) },
-        { id: 3, value: hoursLeft, label: 'Hours Left', percentage: (hoursLeft / totalHours * 100).toFixed(0) },
+        { id: 2, value: hoursWorked, label: 'Coding', percentage: (hoursWorked / totalHours * 100).toFixed(0) },
+        { id: 3, value: hoursLeft, label: 'Design', percentage: (hoursLeft / totalHours * 100).toFixed(0) },
+        { id: 4, value: hoursLeft, label: 'Meetings', percentage: (hoursLeft / totalHours * 100).toFixed(0) },
+
     ];
 
     return (
+            <div style={{width: '100%'}}>
             <ResponsiveChartContainer
                 series={[
                     {
                         type: 'pie',
                         data: seriesData,
                         highlightScope: { faded: 'global', highlighted: 'item' },
-                        // faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
                         innerRadius: '60%',
                         outerRadius: '100%',
                         paddingAngle: 2,
@@ -50,7 +52,8 @@ const ProjectChart = ({ project }) => {
                       }}
                      />
             </ResponsiveChartContainer>
+            </div>
     );
 };
 
-export default ProjectChart;
+export default DonutChart;

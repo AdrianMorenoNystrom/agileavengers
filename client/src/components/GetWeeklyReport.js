@@ -1,8 +1,8 @@
 import React from "react";
 import useFetchData from "./UseFetchData";
-import Box from '@mui/material/Box';
 import { BarChart } from "@mui/x-charts";
-import GetWeekNumber from '../pages/functions/GetWeekNumber';
+import getWeekNumber from './functions/getWeekNumber';
+import '../pages/projects/projects.scss';
 
 const WeeklyReport = ({ projectId }) => {
     const { data, isLoading, error } = useFetchData('/api/timereports/weekly');
@@ -32,16 +32,18 @@ const WeeklyReport = ({ projectId }) => {
     });
 
     return (
-        <Box component={'section'}>
+        <>
             {totalHours !== 0 ? (
-                <Box sx={{ flexGrow: 1, display: "flex", flexDirection: 'column' }}>
-                    <h4>Hours Reported Last Week</h4>
+                <div className="project-graph">
+                    <div className="project-title">
+                        <h4>Hours Reported Last Week</h4>
+                    </div>
                     <BarChart
                         margin={{ top: 50, bottom: 50, left: 50, right: 200 }}
                         xAxis={[
                             {
                                 scaleType: 'band',
-                                data: [`Week ${GetWeekNumber(new Date()) - 1}`],
+                                data: [`Week ${getWeekNumber(new Date()) - 1}`],
                                 categoryGapRatio: 0.1,
                                 barGapRatio: 0.2
                             }
@@ -60,13 +62,13 @@ const WeeklyReport = ({ projectId }) => {
                         }}
                         tooltip={{ trigger: 'item' }}
                     />
-                </Box>
+                </div>
             ) : (
-                <Box sx={{ flexGrow: 1, display: "flex", flexDirection: 'column' }}>
+                <div className="project-title">
                     <h4>This project has no hours reported for last week.</h4>
-                </Box>
+                </div>
             )}
-        </Box>
+        </>
     );
 };
 

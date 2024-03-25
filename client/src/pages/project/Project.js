@@ -3,7 +3,6 @@ import useFetchData from '../../components/UseFetchData';
 import { useParams } from 'react-router-dom'; 
 import dateFormatter from '../../components/DateFormatter';
 import GetProjectAvatar from '../../components/GetProjectAvatar';
-import AvatarGroup from '@mui/material/AvatarGroup';
 import Chip from '@mui/material/Chip';
 import ProjectChart from '../../components/ProjectChart'; 
 import '../../components/single/single.scss'
@@ -17,7 +16,11 @@ import EditHours from '../../components/EditHours';
 import EditEndDate from '../../components/EditEndDate';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
-
+import AvatarGroup from '@mui/material/AvatarGroup';
+import '../../components/single/single.scss';
+import './project.scss';
+import TimeLine from '../../components/Timeline/TimeLine';
+import DonutChart from '../../components/DonutChart';
 
 function Project() {
     const { id } = useParams();
@@ -137,9 +140,10 @@ function Project() {
 
     const { data, isLoading, error } = useFetchData(`/api/projects/project/${id}`, true);
 
-    if (isLoading) return <div>Laddar...</div>;
-    if (error) return <div>Fel vid hämtning av data: {error}</div>;
+    if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>{error}</div>;
     if (!data) return <div>No data available</div>;
+
     const properties = data.properties;
     const projectName = properties?.Projectname?.title[0]?.plain_text || '';
     const statusName = properties?.Status?.select?.name || '';
@@ -226,37 +230,11 @@ function Project() {
                     </div>
                 </div>
                 <aside>
-                    <ProjectTimeLine project_id={id} />
-                    <div className='activities'>
-                        <h2>Latest activities</h2>
-                        <ul>
-                            <li>
-                                <div className='activity'>
-                                    <time className='date'>20 minutes ago</time>
-                                    <p className=''>Olof worked 5 hours</p>
-                                    <p className='activity-tag'>coding</p>
-                                </div>
-                            </li>
-                            <li>
-                                <div className='activity'>
-                                    <time className='date'>20 minutes ago</time>
-                                    <p className=''>Olof worked 5 hours</p>
-                                    <p className='activity-tag'>coding</p>
-                                </div>
-                            </li>
-                            <li>
-                                <div className='activity'>
-                                    <time className='date'>20 minutes ago</time>
-                                    <p className=''>Olof worked 5 hours</p>
-                                    <p className='activity-tag'>coding</p>
-                                </div>
-                            </li>
-                        </ul>
-                        <div className='timeline-bottom'>View all activity <ChevronRight size={14} /></div>
-                    </div>
-                    <div className='charts'><ProjectChart project={data} /> </div>
+                    <TimeLine projectId={id} />
+                    <div className='charts'><DonutChart project={data} /> </div>
                 </aside>
-
+                <div className='project-content'>
+                </div>
             </div>
         </div>
     );
