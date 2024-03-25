@@ -16,6 +16,7 @@ import Divider from '@mui/material/Divider';
 import GetAllProjectAvatars from './GetAllProjectAvatars';
 import statusCheck from './functions/statusCheck';
 import '../pages/projects/projects.scss';
+import { formatTime } from './functions/timeFormatter';
 
 export default function ProjectTable() {
     const { data, isLoading, error } = useFetchData('/api/projects');
@@ -69,10 +70,10 @@ export default function ProjectTable() {
             ?.map((teamMember) => teamMember?.id) || '',
         startDate: project?.properties?.Timespan?.date?.start || '',
         endDate: project?.properties?.Timespan?.date?.end || '',
-        hoursTotal: project?.properties?.['Total Hours']?.number || 0,
-        hoursWorked: project?.properties?.['Hours Worked']?.rollup?.number || 0,
-        hoursLeft: project?.properties?.['Hours Left']?.formula?.number || 0,
-        hoursOverBudget: project?.properties?.['Hours Over Budget']?.formula?.number || 0,
+        hoursTotal: formatTime(project?.properties?.['Total Hours']?.number || 0, true),
+        hoursWorked: formatTime(project?.properties?.['Hours Worked']?.rollup?.number || 0, true),
+        hoursLeft: formatTime(project?.properties?.['Hours Left']?.formula?.number || 0, true),
+        hoursOverBudget: formatTime(project?.properties?.['Hours Over Budget']?.formula?.number || 0, true),
     }));
 
     useEffect(() => {
