@@ -6,15 +6,23 @@ import ProjectChart from "../../components/ProjectChart";
 import TimeLine from "../../components/Timeline/TimeLine";
 import WorkedHours from "../../components/widgets/WorkedHours";
 import CategoryChart from "../../components/CategoryChart";
+import { Chip } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate(); 
+
 
   // Added this because CategoryChart needs to wait for its proper projectId.
   useEffect(() => {
     setIsLoading(!selectedProject);
   }, [selectedProject]);
+
+  const handleClick = () => {
+    navigate(`/projects/`);
+  };
 
   const projectStatusHeader = selectedProject
     ? selectedProject.properties.Status.select.name === "Done"
@@ -25,7 +33,10 @@ function Home() {
   return (
     <div className="home">
       <div className="grid-item landscape">
-        <h4>{projectStatusHeader}</h4>
+        <div className="box-headers">
+          <h4>{projectStatusHeader}</h4>
+          <Chip label="See all" variant="outlined" onClick={handleClick} />
+        </div>
         <ActiveProjects onProjectSelect={setSelectedProject} />
       </div>
       <div className="grid-item box"><h1>Some stuff</h1></div>
@@ -36,7 +47,6 @@ function Home() {
           <CategoryChart project={selectedProject} /></div>
       )}
       <div className="grid-item box charts">
-        <h4>Project hours</h4>
         <ProjectChart project={selectedProject} /></div>
       <div className="grid-item landscape"><WorkedHours /></div>
     </div>

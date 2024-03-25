@@ -31,4 +31,9 @@
             margin: 0;
         }
     }
+
+    .box-headers {
+        display: flex;
+        justify-content: space-between;
+    }
 }

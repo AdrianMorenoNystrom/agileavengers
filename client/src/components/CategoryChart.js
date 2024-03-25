@@ -36,7 +36,7 @@ const CategoryChart = ({ project }) => {
     }));
     console.log(project?.id)
     return (
-        <div style={{ width: '100%' }}>
+        <>
             <ResponsiveChartContainer
                 series={[
                     {
@@ -66,13 +66,13 @@ const CategoryChart = ({ project }) => {
                             markGap: 5,
                             itemGap: 10,
                             labelStyle: {
-                                fontSize: 14,
+                                fontSize: 10,
                             },
                         },
                     }}
                 />
             </ResponsiveChartContainer>
-        </div>
+        </>
     );
 };
 

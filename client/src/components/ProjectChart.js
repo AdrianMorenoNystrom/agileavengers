@@ -15,6 +15,11 @@ const ProjectChart = ({ project }) => {
     ];
 
     return (
+        <>
+        <div className='box-headers'>
+        <h4>Project hours</h4>
+        <h4>Total: {totalHours}</h4>
+        </div>
             <ResponsiveChartContainer
                 series={[
                     {
@@ -45,13 +50,14 @@ const ProjectChart = ({ project }) => {
                           markGap: 5,
                           itemGap: 10,
                           labelStyle: {
-                            fontSize: 14,
+                            fontSize: 10,
                           },
 
                         },
                       }}
                      />
             </ResponsiveChartContainer>
+        </>
     );
 };
 
