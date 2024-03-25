@@ -36,7 +36,7 @@ function Home() {
           <h4>Logged work</h4>
           <CategoryChart project={selectedProject} /></div>
       )}
-      <div className="grid-item box">
+      <div className="grid-item box charts">
         <h4>Project hours</h4>
         <ProjectChart project={selectedProject} /></div>
       <div className="grid-item landscape"><WorkedHours /></div>
