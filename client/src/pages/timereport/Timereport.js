@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -15,17 +16,54 @@ import Button from "@mui/material/Button";
 import AlertMessage from "../../components/AlertMessage";
 import dayjs from "dayjs";
 import "dayjs/locale/en-gb";
+import axios from "axios";
 
-export default function Timereport() {
+export default function Timereport({ isUpdate }) {
+  const { id } = useParams();
+  const [timereportData, setTimereportData] = useState(null);
+
+  useEffect(() => {
+    if (isUpdate) {
+      const fetchData = async () => {
+        try {
+          const params = { time_report_id: id };
+          const response = await axios.get("/api/timereports", { params });
+          setTimereportData(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
+      fetchData();
+    }
+  }, [isUpdate, id]);
+
   const [projectId, setProjectId] = useState("");
+  const [projectName, setProjectName] = useState("");
   const [date, setDate] = useState(null);
   const [fromTime, setFromTime] = useState(null);
   const [toTime, setToTime] = useState(null);
   const [hours, setHours] = useState(null);
   const [note, setNote] = useState("");
   const [alertMessage, setAlertMessage] = useState({});
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [category, setCategory] = useState("");
   const [allCategories, setAllCategories] = useState([]);
+
+  useEffect(() => {
+    if (timereportData) {
+      setProjectId(timereportData.data.id);
+      setProjectName(
+        timereportData.data.properties["Project Name"].rollup.array[0].title[0]
+          .text.content
+      );
+      setDate(dayjs(timereportData.data.properties.Date.date.start));
+      setFromTime(dayjs(timereportData.data.properties.From.date.start));
+      setToTime(dayjs(timereportData.data.properties.To.date.start));
+      setCategory(timereportData.data.properties.Category.select.name);
+      setNote(timereportData.data.properties.Note.title[0].text.content);
+      setHours(timereportData.data.properties.Hours.number);
+    }
+  }, [timereportData]);
 
   const resetUserInput = () => {
     setProjectId("");
@@ -33,7 +71,7 @@ export default function Timereport() {
     setFromTime(null);
     setToTime(null);
     setHours(null);
-    setSelectedCategory("");
+    setCategory("");
     setNote("");
   };
 
@@ -55,9 +93,9 @@ export default function Timereport() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch('/api/tasks');
+        const response = await fetch("/api/tasks");
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         const result = await response.json();
         const categories = result.message;
@@ -80,8 +118,8 @@ export default function Timereport() {
       toTime === null ||
       hours === null ||
       hours <= 0 ||
-      selectedCategory === ""
-
+      category === "" ||
+      note === ""
     ) {
       const alertMessage = {
         severity: "error",
@@ -99,25 +137,26 @@ export default function Timereport() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (isFormInvalid()) return;
+    const formattedDate = dayjs(date).format("YYYY-MM-DD");
 
     try {
-      const response = await fetch(
-        "api/timereports/add",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            projectId,
-            date: date,
-            hours: hours,
-            note: note,
-            category: selectedCategory
-          }),
-          credentials: "include",
-        }
-      );
+      const response = await fetch("../../api/timereports/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          projectId,
+          date: formattedDate,
+          hours: hours,
+          note: note,
+          category: category,
+          fromTime: fromTime,
+          toTime: toTime,
+          isUpdate: isUpdate,
+        }),
+        credentials: "include",
+      });
 
       const alertMessage = handleResponse(response.status);
       setAlertMessage(alertMessage);
@@ -134,9 +173,14 @@ export default function Timereport() {
     if (status === 200) {
       return {
         severity: "success",
+        message: `Your time report on ${projectName} has been updated!`,
+      };
+    } else if (status === 201)
+      return {
+        severity: "success",
         message: "Your time report has successfully been submitted!",
       };
-    } else {
+    else {
       return {
         severity: "error",
         message: "Oh no! An unexpected error occurred during form submission.",
@@ -162,25 +206,37 @@ export default function Timereport() {
             Reset
           </Button>
           <Button type="submit" variant="contained">
-            Submit
+            {isUpdate ? "Update" : "Submit"}
           </Button>
         </Stack>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Project</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={projectId}
-            label="Project"
-            onChange={(event) => setProjectId(event.target.value)}
-            sx={{ marginBottom: 2 }}>
-            {data &&
-              data.map((item) => (
-                <MenuItem value={item.id} key={item.id}>
-                  {item?.properties?.Projectname?.title?.[0]?.text?.content}
-                </MenuItem>
-              ))}
-          </Select>
+          {isUpdate ? (
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={projectName}
+              label="Project"
+              disabled
+              sx={{ marginBottom: 2 }}>
+              <MenuItem value={projectName}>{projectName}</MenuItem>
+            </Select>
+          ) : (
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={projectId}
+              label="Project"
+              onChange={(event) => setProjectId(event.target.value)}
+              sx={{ marginBottom: 2 }}>
+              {data &&
+                data.map((item) => (
+                  <MenuItem value={item.id} key={item.id}>
+                    {item?.properties?.Projectname?.title?.[0]?.text?.content}
+                  </MenuItem>
+                ))}
+            </Select>
+          )}
           <LocalizationProvider
             dateAdapter={AdapterDayjs}
             adapterLocale="en-gb">
@@ -230,11 +286,10 @@ export default function Timereport() {
             <Select
               labelId="category-select-label"
               id="category-select"
-              value={selectedCategory}
+              value={category}
               label="Category"
-              onChange={(event) => setSelectedCategory(event.target.value)}
-              sx={{ marginBottom: 2 }}
-            >
+              onChange={(event) => setCategory(event.target.value)}
+              sx={{ marginBottom: 2 }}>
               {allCategories.map((category) => (
                 <MenuItem key={category.id} value={category.name}>
                   {category.name}

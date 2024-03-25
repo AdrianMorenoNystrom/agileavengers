@@ -8,6 +8,7 @@ import Page404 from './pages/Page404';
 import Users from './pages/users/Users';
 import User from './pages/user/User';
 import Timereport from "./pages/timereport/Timereport";
+import TimereportHistory from "./pages/timereport/History";
 import Navbar from './components/navbar/Navbar';
 import Menu from './components/menu/Menu';
 import PrivateRoutes from './components/PrivateRoutes';
@@ -43,6 +44,14 @@ function App() {
                         <Route path="/users" element={<Users />} />
                         <Route path="/users/:id" element={<User />} />
                         <Route path="/timereport" element={<Timereport />} />
+                        <Route
+                          path="/timereport/edit/:id"
+                          element={<Timereport isUpdate={true} />}
+                        />
+                        <Route
+                          path="/timereports/history"
+                          element={<TimereportHistory isUpdate={false} />}
+                        />
                         <Route path="*" element={<Page404 />} />
                     </Route>
                     <Route path="/login" element={<Login />} />
