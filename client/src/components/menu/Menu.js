@@ -6,6 +6,8 @@ import { LayoutDashboard } from 'lucide-react';
 import { NotepadText } from 'lucide-react';
 import { Users } from 'lucide-react';
 import { CalendarCheck } from 'lucide-react';
+import { SmilePlus } from 'lucide-react';
+
 
 
 const Menu = () => {
@@ -20,6 +22,7 @@ const Menu = () => {
               {listItem.title === "Projects" && <NotepadText size={20}/>}
               {listItem.title === "Users" && <Users size={20}/>}
               {listItem.title === "Report time" && <CalendarCheck size={20}/>}
+              {listItem.title === "Add User" && <SmilePlus  size={20}/>}
               <span className="listItemTitle">{listItem.title}</span>
             </Link>
           ))}

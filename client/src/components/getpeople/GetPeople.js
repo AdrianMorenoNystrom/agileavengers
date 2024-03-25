@@ -3,8 +3,8 @@ import useFetchData from '../UseFetchData';
 // import { User, Clock } from 'lucide-react';
 import './getpeople.scss';
 
-export default function GetPeopleNew() {
-    const { data } = useFetchData("/api/people");
+export default function GetPeople() {
+    const { data } = useFetchData('api/people');
 
     // Temporary slice to show only 5 entries, 
     // pagination should be implemented instead
@@ -22,7 +22,7 @@ export default function GetPeopleNew() {
                 <tbody>
                     {filteredItems.map((page) => (
                         <tr key={page.id}>
-                            <td>{page?.properties?.Name?.title?.[0]?.text?.content}</td>
+                            <td>{page?.properties?.['First Name']?.title?.[0]?.text?.content} {page?.properties?.['Last Name']?.rich_text?.[0]?.text?.content}</td>
                             <td>{page?.properties?.['Total hours']?.rollup?.number}</td>
                         </tr>
                     ))}
