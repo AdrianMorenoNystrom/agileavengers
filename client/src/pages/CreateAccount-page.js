@@ -14,7 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
 import SubmitToNotion from '../components/SubmitUser';
-import NameFieldValidation from './functions/NameValidation';
+import NameFieldValidation from '../components/functions/NameValidation';
 import Copyright from '../components/Copyright';
 import CircularProgress from '@mui/material/CircularProgress';
 import AlertMessage from '../components/AlertMessage';

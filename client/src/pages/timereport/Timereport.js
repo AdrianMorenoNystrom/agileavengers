@@ -11,8 +11,6 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import TextField from "@mui/material/TextField";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-import { Container, Stack } from "@mui/material";
-import Button from "@mui/material/Button";
 import AlertMessage from "../../components/AlertMessage";
 import dayjs from "dayjs";
 import "dayjs/locale/en-gb";
@@ -88,7 +86,7 @@ export default function Timereport({ isUpdate }) {
     }
   }, [fromTime, toTime]);
 
-  const { data, isLoading, error } = useFetchData("/api/projects/active");
+  const { data, isLoading, error } = useFetchData("/api/projects/user-specific");
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -297,7 +295,7 @@ export default function Timereport({ isUpdate }) {
               ))}
             </Select>
           </FormControl>
-          <TextField
+          <TextField fullWidth
             value={note}
             onChange={(event) => setNote(event.target.value)}
             id="outlined-multiline-static"
@@ -307,8 +305,8 @@ export default function Timereport({ isUpdate }) {
             rows={4}
             sx={{ marginBottom: 2 }}
           />
-        </FormControl>
       </Box>
     </Container>
   );
 }
+

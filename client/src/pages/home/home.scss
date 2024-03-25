@@ -6,7 +6,13 @@
     grid-template-columns: repeat(4, 1fr);
     grid-auto-rows: minmax(180px, auto);
 
-    .box {
+    h4 {
+        margin-bottom: 1em;
+        color: #b0b0b0;
+        font-weight: 200;
+    }
+
+    .grid-item {
         padding: 20px;
         border-radius: 5px;
         border: 1px solid $border-color;
@@ -14,17 +20,7 @@
 
     }
 
-    .box1 {
-        grid-column: span 2;
-        grid-row: span 3;
-
-        .css-1ex1afd-MuiTableCell-root-root {
-            font-size: 0.6rem;
-        }
-
-    }
-
-    .widgets {
+    .box {
         grid-column: span 1;
         grid-row: span 1;
     }
