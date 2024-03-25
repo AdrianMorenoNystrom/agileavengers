@@ -89,7 +89,7 @@ export default function Timereport({ isUpdate }) {
       const hours = Math.floor(differenceInMinutes / 60);
       const minutes = differenceInMinutes % 60;
       let decimalTime = hours + minutes / 60;
-      decimalTime = parseFloat(decimalTime.toFixed(2));
+      decimalTime = parseFloat(decimalTime.toFixed(1));
       setHours(decimalTime);
     } else {
       setHours(null);
