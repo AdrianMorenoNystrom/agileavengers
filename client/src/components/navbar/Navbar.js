@@ -1,25 +1,24 @@
 import React, { useState } from "react";
 import "./navbar.scss";
-import { Settings } from 'lucide-react';
-import { Bell } from 'lucide-react';
-import { Rocket } from 'lucide-react';
+import { Settings, Rocket } from 'lucide-react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Logout from "../Logout";
-import GetAvatar from "../GetAvatar";
-
-
+import GetAvatar from "../UserAvatar";
+import NotificationMessage from "../Notification";
+ 
+ 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
-
+ 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
+ 
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+ 
   return (
     <div className="navbar">
       <div className="logo">
@@ -27,10 +26,7 @@ const Navbar = () => {
         <span>Agile Avengers</span>
       </div>
       <div className="icons">
-        <div className="notification">
-          <Bell className="icons" size={20} />
-          <span>1</span>
-        </div>
+        <NotificationMessage />
         <Settings className="icon" size={20} />
         <div className="user" onClick={handleClick}>
           <GetAvatar />
@@ -52,5 +48,6 @@ const Navbar = () => {
     </div>
   );
 };
-
+ 
 export default Navbar;
+ 

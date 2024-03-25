@@ -6,11 +6,13 @@ dotenv.config();
 
 const router = express.Router();
 
-router.get("/api/projects", async (request, response) => {
+router.get("/api/user/projects", async (request, response) => {
   if (!request.session.user) return response.sendStatus(401);
 
   const userId = request.session.user.id;
   const databaseId = process.env.NOTION_DATABASE_ID_PROJECTS;
+
+  console.log('User ID: ', userId);
 
   try {
     const result = await notion.databases.query({

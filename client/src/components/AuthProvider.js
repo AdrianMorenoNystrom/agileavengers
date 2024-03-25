@@ -19,7 +19,6 @@ const AuthProvider = ({ children }) => {
     const contextValue = {
         isAuthenticated,
         setIsAuthenticated,
-
     };
 
     return (

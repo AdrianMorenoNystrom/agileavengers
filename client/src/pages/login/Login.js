@@ -16,17 +16,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AlertMessage from '../../components/AlertMessage';
 import AuthContext from '../../components/AuthContext';
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" underline='none'>Agile Avengers</Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import Copyright from '../../components/Copyright';
 
 const defaultTheme = createTheme();
 
@@ -50,7 +40,7 @@ export default function SignIn() {
     event.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3500/api/auth/login", {
+      const response = await fetch("/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -59,7 +49,6 @@ export default function SignIn() {
           email: email,
           password: password,
         }),
-
         credentials: "include",
       });
 

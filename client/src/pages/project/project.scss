@@ -1,11 +1,16 @@
 @import "../../styles/variables.scss";
 
 .project {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: minmax(180px, auto);
 
     .project-heading {
+        grid-column: span 2;
+
         padding: 2em;
         background-color: $light-bg;
-        margin-bottom: 3em;
 
         .topInfo {
             display: flex;
@@ -38,14 +43,17 @@
         }
     }
 
-    .activities {
-        padding: 2em;
-        background-color: #ffd9da;
-        margin-bottom: 3em;
+    aside {
+        grid-column: span 1;
 
-        time {
-            font-size: 0.7em;
+        .activities {
+            background-color: #ffd9da;
+            padding: 2em;
         }
+    }
+
+    .project-content {
+        grid-column: span 4;
     }
 
     .charts {

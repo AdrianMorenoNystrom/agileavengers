@@ -11,7 +11,7 @@ router.post("/api/timereports/add", async (request, response) => {
 
   try {
     const {
-      body: { projectId, date, hours, note },
+      body: { projectId, date, hours, note, category },
     } = request;
 
     const userId = request.session.user.id;
@@ -22,6 +22,7 @@ router.post("/api/timereports/add", async (request, response) => {
       Project: { type: "relation", relation: [{ id: projectId }] },
       Person: { type: "relation", relation: [{ id: userId }] },
       Note: { type: "title", title: [{ text: { content: note } }] },
+      Category: { type: "select", select: { name: category } }, // Add category property
     };
     const newPage = {
       parent: { database_id: process.env.NOTION_DATABASE_ID_TIMEREPORTS },

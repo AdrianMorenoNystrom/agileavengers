@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from "react";
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import useFetchData from "../../components/UseFetchData";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import TextField from "@mui/material/TextField";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-import { Container, Stack } from "@mui/material";
-import Button from "@mui/material/Button";
 import AlertMessage from "../../components/AlertMessage";
 import dayjs from "dayjs";
 import "dayjs/locale/en-gb";
+import { Container, Stack, Chip, Button } from "@mui/material";
+import statusCheck from '../../components/functions/statusCheck';
+import { Autocomplete } from '@mui/material';
+
 
 export default function Timereport() {
   const [projectId, setProjectId] = useState("");
@@ -24,6 +22,8 @@ export default function Timereport() {
   const [hours, setHours] = useState(null);
   const [note, setNote] = useState("");
   const [alertMessage, setAlertMessage] = useState({});
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [allCategories, setAllCategories] = useState([]);
 
   const resetUserInput = () => {
     setProjectId("");
@@ -31,6 +31,7 @@ export default function Timereport() {
     setFromTime(null);
     setToTime(null);
     setHours(null);
+    setSelectedCategory("");
     setNote("");
   };
 
@@ -47,7 +48,24 @@ export default function Timereport() {
     }
   }, [fromTime, toTime]);
 
-  const { data, isLoading, error } = useFetchData("/api/projects/active");
+  const { data, isLoading, error } = useFetchData("/api/projects/user-specific");
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch('/api/tasks');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const result = await response.json();
+        const categories = result.message;
+        setAllCategories(categories);
+      } catch (error) {
+        console.error("Error fetching categories: ", error);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error fetching data: {error}</div>;
@@ -59,8 +77,9 @@ export default function Timereport() {
       fromTime === null ||
       toTime === null ||
       hours === null ||
-      note === "" ||
-      hours <= 0
+      hours <= 0 ||
+      selectedCategory === ""
+
     ) {
       const alertMessage = {
         severity: "error",
@@ -81,7 +100,7 @@ export default function Timereport() {
 
     try {
       const response = await fetch(
-        "http://localhost:3500/api/timereports/add",
+        "api/timereports/add",
         {
           method: "POST",
           headers: {
@@ -92,6 +111,7 @@ export default function Timereport() {
             date: date,
             hours: hours,
             note: note,
+            category: selectedCategory
           }),
           credentials: "include",
         }
@@ -142,23 +162,32 @@ export default function Timereport() {
           <Button type="submit" variant="contained">
             Submit
           </Button>
-        </Stack>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Project</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={projectId}
-            label="Project"
-            onChange={(event) => setProjectId(event.target.value)}
-            sx={{ marginBottom: 2 }}>
-            {data &&
-              data.map((item) => (
-                <MenuItem value={item.id} key={item.id}>
-                  {item?.properties?.Projectname?.title?.[0]?.text?.content}
-                </MenuItem>
-              ))}
-          </Select>
+          </Stack>
+          <Autocomplete
+          id="project-autocomplete"
+          value={data.find(project => project.id === projectId) || null}
+          onChange={(event, newValue) => setProjectId(newValue ? newValue.id : '')}
+          options={data || []}
+          getOptionLabel={(option) => option?.properties?.Projectname?.title?.[0]?.text?.content || ''}
+          isOptionEqualToValue={(option, value) => option.id === value.id}
+        renderOption={(props, option) => (
+    <    MenuItem {...props} key={option.id} value={option.id}>
+      <  Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+          <span style={{ marginRight: 8 }}>
+          {option?.properties?.Projectname?.title?.[0]?.text?.content}
+          </span>
+         <Chip
+          label={option?.properties?.Status?.select?.name}
+          color={statusCheck(option?.properties?.Status?.select?.name)}
+          size="small"
+        />
+       </Box>
+     </MenuItem>
+     )}
+     renderInput={(params) => <TextField {...params} label="Project" />}
+     fullWidth
+      sx={{ marginBottom: 2 }}
+        />
           <LocalizationProvider
             dateAdapter={AdapterDayjs}
             adapterLocale="en-gb">
@@ -173,10 +202,12 @@ export default function Timereport() {
                 },
               }}>
               <DatePicker
-                value="{date}"
-                onChange={(newDate) =>
-                  setDate(dayjs(newDate.$d).format("YYYY-MM-DD"))
-                }
+                value={date}
+                onChange={(newDate) => {
+                  if (newDate) {
+                    setDate(dayjs(newDate.$d).format("YYYY-MM-DD"));
+                  }
+                }}
                 label="Date"
                 sx={{ marginBottom: 2 }}
                 slotProps={{
@@ -184,7 +215,6 @@ export default function Timereport() {
                     error: false,
                   },
                 }}
-                key={date ? "selected" : "null"}
               />
               <TimePicker
                 ampm={false}
@@ -202,7 +232,24 @@ export default function Timereport() {
               />
             </Stack>
           </LocalizationProvider>
-          <TextField
+          <FormControl fullWidth>
+            <InputLabel id="category-select-label">Category</InputLabel>
+            <Select
+              labelId="category-select-label"
+              id="category-select"
+              value={selectedCategory}
+              label="Category"
+              onChange={(event) => setSelectedCategory(event.target.value)}
+              sx={{ marginBottom: 2 }}
+            >
+              {allCategories.map((category) => (
+                <MenuItem key={category.id} value={category.name}>
+                  {category.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <TextField fullWidth
             value={note}
             onChange={(event) => setNote(event.target.value)}
             id="outlined-multiline-static"
@@ -212,8 +259,8 @@ export default function Timereport() {
             rows={4}
             sx={{ marginBottom: 2 }}
           />
-        </FormControl>
       </Box>
     </Container>
   );
 }
+
