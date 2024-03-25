@@ -1,6 +1,7 @@
 import React from 'react';
 import useFetchTimereports from '../useFetchTimereports';
 import { ChevronRight, MoveRight } from 'lucide-react';
+import { formatTime } from '../functions/timeFormatter';
 
 function TimeLine({ projectId, filterByUser }) {
     const { timereports, isLoading, error } = useFetchTimereports(projectId, filterByUser);
@@ -29,7 +30,7 @@ function TimeLine({ projectId, filterByUser }) {
                     <li key={index}>
                         <div className='activity'>
                             <time className='date'>{timereport?.properties?.Date?.date?.start}</time>
-                            <p className=''>{timereport?.properties?.Name?.rollup?.array[0]?.formula?.string} worked {timereport.properties.Hours?.number} hrs</p>
+                            <p className=''>{timereport?.properties?.Name?.rollup?.array[0]?.formula?.string} worked {formatTime(timereport.properties.Hours?.number)}</p>
                             <div className='activity-details'>
                                 <span className='activity-tag'>{timereport?.properties?.Category?.select?.name}</span>
                                 {!projectId && (
