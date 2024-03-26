@@ -2,11 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './menu.scss';
 import { menuData } from '../../menuData';
-import { LayoutDashboard } from 'lucide-react'; 
-import { NotepadText } from 'lucide-react';
-import { Users } from 'lucide-react';
-import { CalendarCheck } from 'lucide-react';
-import { SmilePlus } from 'lucide-react';
+import { LayoutDashboard, NotepadText, 
+  Users, CalendarCheck, SmilePlus, 
+  History } from 'lucide-react'; 
+
+
 
 
 
@@ -21,7 +21,8 @@ const Menu = () => {
               {listItem.title === "Dashboard" && <LayoutDashboard size={20}/>}
               {listItem.title === "Projects" && <NotepadText size={20}/>}
               {listItem.title === "Users" && <Users size={20}/>}
-              {listItem.title === "Report time" && <CalendarCheck size={20}/>}
+              {listItem.title === "Report Time" && <CalendarCheck size={20}/>}
+              {listItem.title === "History" && <History size={20}/>}
               {listItem.title === "Add User" && <SmilePlus  size={20}/>}
               <span className="listItemTitle">{listItem.title}</span>
             </Link>
