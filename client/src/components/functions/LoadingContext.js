@@ -1,53 +1,47 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
-import CircularProgress from '@mui/material/CircularProgress';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import CircularProgress, {
+  circularProgressClasses,
+} from '@mui/material/CircularProgress';
 
-function CircularProgressWithLabel(props) {
+function CircularProgressbar(props) {
   return (
-    <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-      <CircularProgress variant="determinate" {...props} />
-      <Box
+    <Box sx={{ position: 'relative' }}>
+      <CircularProgress
+        variant="determinate"
         sx={{
-          top: 0,
-          left: 0,
-          bottom: 0,
-          right: 0,
-          position: 'absolute',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+          color: (theme) =>
+            theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
         }}
-      >
-        <Typography variant="caption" component="div" color="text.secondary">
-          {`${Math.round(props.value)}%`}
-        </Typography>
-      </Box>
+        size={35}
+        thickness={4}
+        {...props}
+        value={100}
+      />
+      <CircularProgress
+        variant="indeterminate"
+        disableShrink
+        sx={{
+          color: (theme) => (theme.palette.mode === 'light' ? '#1a90ff' : '#308fe8'),
+          animationDuration: '550ms',
+          position: 'absolute',
+          left: 0,
+          [`& .${circularProgressClasses.circle}`]: {
+            strokeLinecap: 'round',
+          },
+        }}
+        size={35}
+        thickness={4}
+        {...props}
+      />
     </Box>
   );
 }
-
-CircularProgressWithLabel.propTypes = {
-  /**
-   * The value of the progress indicator for the determinate variant.
-   * Value between 0 and 100.
-   * @default 0
-   */
-  value: PropTypes.number.isRequired,
-};
-
-export default function CircularWithValueLabel() {
-  const [progress, setProgress] = React.useState(10);
-
-  React.useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 10));
-    }, 800);
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
-
-  return <CircularProgressWithLabel value={progress} />;
+export default function CustomizedProgressBars() {
+  return (
+    <Stack spacing={2} sx={{ flexGrow: 1 }}>
+      <CircularProgressbar />
+    </Stack>
+  );
 }

@@ -28,7 +28,7 @@ function Home() {
     ? selectedProject.properties.Status.select.name === "Done"
       ? "Most Recently Finished Project"
       : "Active Projects"
-    : "Loading...";
+    : "";
 
   return (
     <div className="home">
