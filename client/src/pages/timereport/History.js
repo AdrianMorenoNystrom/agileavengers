@@ -12,7 +12,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import useFetchTimeReport from "../../components/useFetchTimereports";
 import { formatTime } from "../../components/functions/timeFormatter";
 import { Typography } from "@mui/material";
-import LoadingContext from '../../components/functions/LoadingContext'
+import PageLoadingContext from '../../components/functions/PageLoadingContext'
 
 export default function TimeReportHistory({ isAllHistory }) {
   const { timereports, isLoading, error } = useFetchTimeReport(
@@ -28,7 +28,7 @@ export default function TimeReportHistory({ isAllHistory }) {
     setPage(0);
   }, [isAllHistory]);
 
-  if (isLoading) return <LoadingContext/>;
+  if (isLoading) return <PageLoadingContext/>;
   if (error) return <div>{error}</div>;
 
   let columns = [
