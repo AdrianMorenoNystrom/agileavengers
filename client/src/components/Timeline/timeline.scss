@@ -1,9 +1,26 @@
 @import "../../styles/variables.scss";
+@import "../../styles/responsive.scss";
+
+@include xl {}
+
+@include md {}
+
+
+.add-margin {
+  margin-bottom: 1em;
+}
 
 .activities {
   position: relative;
-  padding: 0 2em;
   overflow: hidden;
+  padding: 0 1em;
+
+  @include md {
+    padding: 0 0.5em;
+
+  }
+
+
 
   .timeline-bottom {
     display: flex;

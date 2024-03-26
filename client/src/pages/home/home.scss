@@ -1,10 +1,23 @@
 @import '../../styles/variables.scss';
+@import '../../styles/responsive.scss';
 
 .home {
     display: grid;
     gap: 20px;
     grid-template-columns: repeat(4, 1fr);
     grid-auto-rows: minmax(180px, auto);
+
+    @include xl {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @include md {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include sm {
+        grid-template-columns: repeat(1, 1fr);
+    }
 
 
     .box {
@@ -20,20 +33,20 @@
     .landscape {
         grid-column: span 2;
         grid-row: span 1;
+
+        @include md {
+            grid-column: span 1;
+        }
+
     }
 
     .Details {
         padding-top: 20px;
     }
 
-    .charts {
-        h4 {
-            margin: 0;
-        }
-    }
-
     .box-headers {
         display: flex;
         justify-content: space-between;
+        align-items: center;
     }
 }

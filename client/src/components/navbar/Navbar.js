@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./navbar.scss";
-import { Settings, Rocket } from 'lucide-react';
+import { Rocket } from 'lucide-react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Logout from "../Logout";
@@ -27,7 +27,6 @@ const Navbar = () => {
       </div>
       <div className="icons">
         <NotificationMessage />
-        <Settings className="icon" size={20} />
         <div className="user" onClick={handleClick}>
           <GetAvatar />
         </div>

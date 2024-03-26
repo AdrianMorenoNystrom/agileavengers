@@ -1,6 +1,7 @@
 @import "./variables.scss";
 @import "./responsive.scss";
 
+
 * {
     margin: 0;
     padding: 0;
@@ -18,10 +19,9 @@ p {
 }
 
 .main {
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
     background-color: $main-bg;
     color: $main-color;
-
 }
 
 .grid-item {
@@ -61,7 +61,6 @@ h2 {
 }
 
 h4 {
-    margin-bottom: 1em;
     color: #b0b0b0;
     font-weight: 200;
 }
