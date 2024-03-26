@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -11,6 +11,7 @@ import TableRow from "@mui/material/TableRow";
 import EditIcon from "@mui/icons-material/Edit";
 import useFetchTimeReport from "../../components/useFetchTimereports";
 import { formatTime } from "../../components/functions/timeFormatter";
+import { Typography } from "@mui/material";
 
 const columns = [
   { id: "projectName", label: "Project", minWidth: 200 },
@@ -19,11 +20,19 @@ const columns = [
   { id: "category", label: "Category", minWidth: 170 },
 ];
 
-export default function TimeReportHistory() {
-  const { timereports, isLoading, error } = useFetchTimeReport(undefined, true);
+export default function TimeReportHistory({ isAllHistory }) {
+  const { timereports, isLoading, error } = useFetchTimeReport(
+    undefined,
+    isAllHistory ? false : true
+  );
+
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [hoveredRow, setHoveredRow] = useState(null);
+
+  useEffect(() => {
+    setPage(0);
+  }, [isAllHistory]);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
@@ -54,6 +63,9 @@ export default function TimeReportHistory() {
 
   return (
     <Fragment>
+      <Typography variant="h2" mb={2}>
+        {isAllHistory ? "All Time Reports" : "Your Time Reports"}
+      </Typography>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -83,7 +95,7 @@ export default function TimeReportHistory() {
                     }}>
                     <strong>{row.projectName}</strong>
                     <br />
-                    {hoveredRow === index ? (
+                    {!isAllHistory && hoveredRow === index ? (
                       <Link to={`../timereport/edit/${row.projectId}`}>
                         <EditIcon style={{ fontSize: 22 }} />
                       </Link>

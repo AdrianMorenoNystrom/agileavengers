@@ -41,31 +41,35 @@ function App() {
     };
 
     return (
-        <Router>
-            <AuthProvider>
-                <Routes>
-                    <Route element={<PrivateRoutes element={<Layout />} />}>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/projects" element={<Projects />} />
-                        <Route path="/projects/:id" element={<Project />} />
-                        <Route path="/users" element={<Users />} />
-                        <Route path="/users/:id" element={<User />} />
-                        <Route path="/adduser" element={<CreateAccount />} />
-                        <Route path="/timereport" element={<Timereport />} />
-                        <Route
-                          path="/timereport/edit/:id"
-                          element={<Timereport isUpdate={true} />}
-                        />
-                        <Route
-                          path="/timereports/history"
-                          element={<TimereportHistory isUpdate={false} />}
-                        />
-                        <Route path="*" element={<Page404 />} />
-                    </Route>
-                    <Route path="/login" element={<Login />} />
-                </Routes>
-            </AuthProvider>
-        </Router>
+      <Router>
+        <AuthProvider>
+          <Routes>
+            <Route element={<PrivateRoutes element={<Layout />} />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/projects/:id" element={<Project />} />
+              <Route path="/users" element={<Users />} />
+              <Route path="/users/:id" element={<User />} />
+              <Route path="/adduser" element={<CreateAccount />} />
+              <Route path="/timereport" element={<Timereport />} />
+              <Route
+                path="/timereport/edit/:id"
+                element={<Timereport isUpdate={true} />}
+              />
+              <Route
+                path="/timereports/history"
+                element={<TimereportHistory />}
+              />
+              <Route
+                path="/timereports/all-history"
+                element={<TimereportHistory isAllHistory={true} />}
+              />
+              <Route path="*" element={<Page404 />} />
+            </Route>
+            <Route path="/login" element={<Login />} />
+          </Routes>
+        </AuthProvider>
+      </Router>
     );
 }
 

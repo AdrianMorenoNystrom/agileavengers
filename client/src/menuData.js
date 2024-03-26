@@ -9,19 +9,16 @@ export const menuData = [
         id: 1,
         title: "Dashboard",
         url: "/",
-        icon: "LayoutDashboard",
       },
       {
         id: 2,
         title: "Projects",
         url: "/projects",
-        icon: "NotepadText",
       },
       {
         id: 3,
         title: "Users",
         url: "",
-        icon: "users",
       },
     ],
   },
@@ -33,26 +30,28 @@ export const menuData = [
         id: 1,
         title: "Report Time",
         url: "/timereport",
-        icon: "calendar-clock",
       },
       {
         id: 2,
-        title: "History",
+        title: "My History",
         url: "/timereports/history",
-        icon: "History",
+      },
+      {
+        id: 3,
+        title: "All History",
+        url: "/timereports/all-history",
       },
     ],
   },
-    {
-        id:3,
-        title:"admin",
-        listItems: [
-            {
-                id:1,
-                title:"Add User",
-                url: "/adduser",
-                icon:"SmilePlus"
-            },
-        ],
-    },
+  {
+    id: 3,
+    title: "admin",
+    listItems: [
+      {
+        id: 1,
+        title: "Add User",
+        url: "/adduser",
+      },
+    ],
+  },
 ];
