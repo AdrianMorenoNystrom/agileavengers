@@ -14,14 +14,14 @@ export const menuData = [
         id: 2,
         title: "user",
         listItems: [
-            {
-                id: 1,
-                title: "Create",
-                icon: "circle-plus"
-            },
+          {
+            id: 1,
+            title: "Create",
+            icon: "circle-plus"
+          },
         ],
-    },
-];
+      },
+      {
         title: "Projects",
         url: "/projects",
       },
