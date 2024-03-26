@@ -13,8 +13,10 @@ import useFetchData from './UseFetchData';
 import WeeklyReport from './GetWeeklyReport';
 import { Box, Container, Chip } from '@mui/material';
 import Divider from '@mui/material/Divider';
+import GetAllProjectAvatars from './GetAllProjectAvatars';
 import statusCheck from './functions/statusCheck';
 import '../pages/projects/projects.scss';
+import { formatTime } from './functions/timeFormatter';
 
 export default function ProjectTable() {
     const { data, isLoading, error } = useFetchData('/api/projects');
@@ -32,11 +34,22 @@ export default function ProjectTable() {
         );
     }
 
+
     const columns = [
         { field: 'projectName', headerName: 'Project', width: 130, },
         { field: 'status', headerName: 'Status', width: 70 },
         { field: 'projectLeader', headerName: 'Project Leader', width: 130 },
-        { field: 'teamMembers', headerName: 'Team Members', width: 200 },
+        { 
+            field: 'teamMembers', 
+            headerName: 'Team Members', 
+            width: 200, 
+            renderCell: (params) => {
+                const projectId = params.row.projectId; 
+                return (
+                        <GetAllProjectAvatars projectId={projectId} max={3}/>
+                );
+            }
+        },
         { field: 'startDate', headerName: 'Start Date', width: 125 },
         { field: 'endDate', headerName: 'End Date', width: 125 },
         { field: 'hoursTotal', headerName: 'Total Hours Planned', width: 150, align: 'right' },
@@ -44,7 +57,8 @@ export default function ProjectTable() {
         { field: 'hoursLeft', headerName: 'Hours Remaining', width: 130, align: 'right' },
         { field: 'hoursOverBudget', headerName: 'Hours Over Budget', width: 135, align: 'right' },
     ];
-
+    
+    
     const rows = data && data.map((project, index) => ({
         id: index + 1,
         projectId: project?.id,
@@ -52,16 +66,14 @@ export default function ProjectTable() {
         status: project?.properties?.Status?.select?.name || '',
         projectLeader: project?.properties?.['Project Leader Name']?.rollup?.array?.[0]?.formula?.string || '',
         projectLeaderId: project?.properties?.['Project Leader']?.relation?.[0]?.id || '',
-        teamMembers: project?.properties?.['Team Members']?.rollup?.array
-            ?.map((teamMember) => teamMember?.formula?.string).join(', ') || '',
         teamMemberId: project?.properties?.People?.relation
             ?.map((teamMember) => teamMember?.id) || '',
         startDate: project?.properties?.Timespan?.date?.start || '',
         endDate: project?.properties?.Timespan?.date?.end || '',
-        hoursTotal: project?.properties?.['Total Hours']?.number || 0,
-        hoursWorked: project?.properties?.['Hours Worked']?.rollup?.number || 0,
-        hoursLeft: project?.properties?.['Hours Left']?.formula?.number || 0,
-        hoursOverBudget: project?.properties?.['Hours Over Budget']?.formula?.number || 0,
+        hoursTotal: formatTime(project?.properties?.['Total Hours']?.number || 0, true),
+        hoursWorked: formatTime(project?.properties?.['Hours Worked']?.rollup?.number || 0, true),
+        hoursLeft: formatTime(project?.properties?.['Hours Left']?.formula?.number || 0, true),
+        hoursOverBudget: formatTime(project?.properties?.['Hours Over Budget']?.formula?.number || 0, true),
     }));
 
     useEffect(() => {
@@ -163,12 +175,7 @@ export default function ProjectTable() {
                                 <div className='item-title'>Team</div>
                                 <div className='item-value'>
                                     <ul>
-                                        {rows
-                                            .find(row => row.projectId === selectedProjectId)
-                                            .teamMembers.split(', ')
-                                            .map((member, index) => (
-                                                <li className='item-list-value' key={index}>{member}</li>
-                                            ))}
+                                        <GetAllProjectAvatars projectId={selectedProjectId} max={10} spacing={'large'}/>
                                     </ul>
                                 </div>
                             </div>

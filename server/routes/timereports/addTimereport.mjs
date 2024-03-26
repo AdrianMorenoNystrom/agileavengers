@@ -10,9 +10,21 @@ router.post("/api/timereports/add", async (request, response) => {
   if (!request.session.user) return response.sendStatus(401);
 
   try {
-    const {
-      body: { projectId, date, hours, note, category },
+    let {
+      body: {
+        projectId,
+        date,
+        hours,
+        note,
+        category,
+        toTime,
+        fromTime,
+        isUpdate,
+      },
     } = request;
+
+    fromTime = new Date(fromTime);
+    toTime = new Date(toTime);
 
     const userId = request.session.user.id;
 
@@ -23,15 +35,29 @@ router.post("/api/timereports/add", async (request, response) => {
       Person: { type: "relation", relation: [{ id: userId }] },
       Note: { type: "title", title: [{ text: { content: note } }] },
       Category: { type: "select", select: { name: category } }, // Add category property
-    };
-    const newPage = {
-      parent: { database_id: process.env.NOTION_DATABASE_ID_TIMEREPORTS },
-      properties: properties,
+      From: { type: "date", date: { start: fromTime, end: null } },
+      To: { type: "date", date: { start: toTime, end: null } },
     };
 
-    const createdPage = await notion.pages.create(newPage);
+    if (isUpdate) {
+      // Update already existing page
+      delete properties.Project;
 
-    return response.status(200).send();
+      await notion.pages.update({
+        page_id: projectId,
+        properties: properties,
+      });
+
+      return response.status(200).send();
+    } else {
+      // Create new page
+      await notion.pages.create({
+        parent: { database_id: process.env.NOTION_DATABASE_ID_TIMEREPORTS },
+        properties: properties,
+      });
+
+      return response.status(201).send();
+    }
   } catch (error) {
     console.error(error);
     return response.status(500).json({ error: "Internal Server Error" });

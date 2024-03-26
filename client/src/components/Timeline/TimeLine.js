@@ -1,9 +1,11 @@
 import React from 'react';
 import useFetchTimereports from '../useFetchTimereports';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, MoveRight } from 'lucide-react';
+import { formatTime } from '../functions/timeFormatter';
 
 function TimeLine({ projectId, filterByUser }) {
     const { timereports, isLoading, error } = useFetchTimereports(projectId, filterByUser);
+    console.log(timereports);
 
     if (isLoading) {
         return <div>Loading...</div>;
@@ -20,21 +22,32 @@ function TimeLine({ projectId, filterByUser }) {
     const latestActivities = sortedActivities.slice(0, 3);
 
     return (
+        <>
+        <h4 className='box-headers add-margin'>Latest activities</h4>
         <div className='activities'>
-            <h2>Latest activities</h2>
             <ul>
                 {latestActivities.map((timereport, index) => (
                     <li key={index}>
                         <div className='activity'>
                             <time className='date'>{timereport?.properties?.Date?.date?.start}</time>
-                            <p className=''>{timereport?.properties?.Name?.rollup?.array[0]?.formula?.string} worked {timereport.properties.Hours?.number} hours</p>
-                            <p className='activity-tag'>{timereport?.properties?.Category?.select?.name}</p>
+                            <p className=''>{timereport?.properties?.Name?.rollup?.array[0]?.formula?.string} worked {formatTime(timereport.properties.Hours?.number)}</p>
+                            <div className='activity-details'>
+                                <span className='activity-tag'>{timereport?.properties?.Category?.select?.name}</span>
+                                {!projectId && (
+                                    <>
+                                        <MoveRight size={12}/> 
+                                        <span className='project-name'>{timereport?.properties?.['Project Name']?.rollup?.array[0]?.title[0]?.text?.content}</span>
+                                    </>
+                                )}
+                            </div>
                         </div>
                     </li>
                 ))}
             </ul>
-            <div className='timeline-bottom'>View all activity <ChevronRight size={14} /></div>
+            {/* Change the link to see ALL timereports not just your own. */}
+            <div className='timeline-bottom'><a href='/timereports/history'>View all activity <ChevronRight size={14} /></a></div>
         </div>
+        </>
     );
 }
 

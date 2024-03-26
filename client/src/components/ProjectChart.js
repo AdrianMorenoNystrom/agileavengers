@@ -2,6 +2,7 @@ import React from 'react';
 import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer';
 import { PiePlot } from '@mui/x-charts/PieChart';
 import { ChartsLegend } from '@mui/x-charts/ChartsLegend';
+import { ChartsTooltip } from '@mui/x-charts/ChartsTooltip';
 
 const ProjectChart = ({ project }) => {
     const hoursWorked = project?.properties?.['Hours Worked']?.rollup?.number || 0;
@@ -14,13 +15,11 @@ const ProjectChart = ({ project }) => {
     ];
 
     return (
-        <div style={{ display: 'flex', alignItems: 'center', width: '100%', height: 'auto',  justifyContent: 'space-evenly',}}>
-            <div className='project-info'>
-            <span className='title'>{"Total Hours: "}</span>
-            <span style={{fontWeight:'bold'}}>{totalHours}</span>  
-
-            </div>
-            <div style={{width: '60%'}}>
+        <>
+        <div className='box-headers'>
+        <h4>Project hours</h4>
+        <h4>Total: {totalHours}</h4>
+        </div>
             <ResponsiveChartContainer
                 series={[
                     {
@@ -36,8 +35,9 @@ const ProjectChart = ({ project }) => {
                         endAngle: 360,
                     }
                 ]}
-                height={250}
+                height={220}
             >
+                <ChartsTooltip trigger='item'/>
                 <PiePlot />
                 <ChartsLegend 
                     slotProps={{
@@ -50,15 +50,14 @@ const ProjectChart = ({ project }) => {
                           markGap: 5,
                           itemGap: 10,
                           labelStyle: {
-                            fontSize: 14,
+                            fontSize: 10,
                           },
 
                         },
                       }}
                      />
             </ResponsiveChartContainer>
-            </div>
-        </div>
+        </>
     );
 };
 

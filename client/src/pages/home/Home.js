@@ -1,16 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./home.scss";
 import "../../components/Timeline/timeline.scss";
 import ActiveProjects from '../../components/ActiveProjects';
 import ProjectChart from "../../components/ProjectChart";
-import TotalHours from "../../components/widgets/TotalHours";
-import DonutChart from "../../components/DonutChart";
 import TimeLine from "../../components/Timeline/TimeLine";
 import WorkedHours from "../../components/widgets/WorkedHours";
-
+import CategoryChart from "../../components/CategoryChart";
+import { Chip } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [selectedProject, setSelectedProject] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate(); 
+
+
+  // Added this because CategoryChart needs to wait for its proper projectId.
+  useEffect(() => {
+    setIsLoading(!selectedProject);
+  }, [selectedProject]);
+
+  const handleClick = () => {
+    navigate(`/projects/`);
+  };
 
   const projectStatusHeader = selectedProject
     ? selectedProject.properties.Status.select.name === "Done"
@@ -20,16 +32,23 @@ function Home() {
 
   return (
     <div className="home">
-      <div className="box box1">
-       <h2>{projectStatusHeader}</h2>
-        <ActiveProjects onProjectSelect={setSelectedProject} />    
-        <ProjectChart project={selectedProject} />
+      <div className="grid-item landscape">
+        <div className="box-headers">
+          <h4>{projectStatusHeader}</h4>
+          <Chip label="See all" variant="outlined" onClick={handleClick} />
+        </div>
+        <ActiveProjects onProjectSelect={setSelectedProject} />
       </div>
-      <div className="box widgets"><TotalHours /></div>
-      <div className="box portrait"><TimeLine /></div>
-      <div className="box widgets">Data</div>
-      <div className="box landscape"><WorkedHours /></div>
-      
+      <div className="grid-item box"><TimeLine /></div>
+      <div className="grid-item box"><h1>Some stuff</h1></div>
+      {selectedProject && !isLoading && (
+        <div className="grid-item box charts">
+          <h4>Logged work</h4>
+          <CategoryChart project={selectedProject} /></div>
+      )}
+      <div className="grid-item box charts">
+        <ProjectChart project={selectedProject} /></div>
+      <div className="grid-item landscape"><WorkedHours /></div>
     </div>
   );
 }

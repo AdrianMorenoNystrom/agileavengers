@@ -8,49 +8,69 @@ import Page404 from './pages/Page404';
 import Users from './pages/users/Users';
 import User from './pages/user/User';
 import Timereport from "./pages/timereport/Timereport";
+import TimereportHistory from "./pages/timereport/History";
 import Navbar from './components/navbar/Navbar';
 import Menu from './components/menu/Menu';
 import PrivateRoutes from './components/PrivateRoutes';
 import AuthProvider from './components/AuthProvider';
+import CreateAccount from './pages/CreateAccount-page';
 import Projects from './pages/projects/Projects';
 import Project from './pages/project/Project';
 import NewProject from './pages/new project/NewProject';
+import '@fontsource-variable/inter';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './styles/theme';
 
 function App() {
     const Layout = () => {
         return (
-            <div className="main">
-                <Navbar />
-                <div className="container">
-                    <div className="menuContainer">
-                        <Menu />
-                    </div>
-                    <div className="contentContainer">
-                        <Outlet />
+            <ThemeProvider theme={theme}>
+                <div className="main">
+                    <Navbar />
+                    <div className="container">
+                        <div className="menuContainer">
+                            <Menu />
+                        </div>
+                        <div className="contentContainer">
+                            <Outlet />
+                        </div>
                     </div>
                 </div>
-            </div>
+            </ThemeProvider>
         );
     };
 
     return (
-        <Router>
-            <AuthProvider>
-                <Routes>
-                    <Route element={<PrivateRoutes element={<Layout />} />}>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/projects" element={<Projects />} />
-                        <Route path="/projects/:id" element={<Project />} />
-                        <Route path="/users" element={<Users />} />
-                        <Route path="/users/:id" element={<User />} />
-                        <Route path="/new/timereport" element={<Timereport />} />
-                        <Route path='/new/project' element={<NewProject />} />
-                        <Route path="*" element={<Page404 />} />
-                    </Route>
-                    <Route path="/login" element={<Login />} />
-                </Routes>
-            </AuthProvider>
-        </Router>
+      <Router>
+        <AuthProvider>
+          <Routes>
+            <Route element={<PrivateRoutes element={<Layout />} />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/projects/:id" element={<Project />} />
+              <Route path="/users" element={<Users />} />
+              <Route path="/users/:id" element={<User />} />
+              <Route path="/adduser" element={<CreateAccount />} />
+              <Route path="/new/timereport" element={<Timereport />} />
+              <Route path='/new/project' element={<NewProject />} />           
+              <Route
+                path="/timereport/edit/:id"
+                element={<Timereport isUpdate={true} />}
+              />
+              <Route
+                path="/timereports/history"
+                element={<TimereportHistory />}
+              />
+              <Route
+                path="/timereports/all-history"
+                element={<TimereportHistory isAllHistory={true} />}
+              />
+              <Route path="*" element={<Page404 />} />
+            </Route>
+            <Route path="/login" element={<Login />} />
+          </Routes>
+        </AuthProvider>
+      </Router>
     );
 }
 

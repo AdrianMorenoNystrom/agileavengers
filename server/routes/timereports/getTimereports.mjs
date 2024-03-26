@@ -10,7 +10,9 @@ router.get("/api/timereports", async (request, response) => {
   if (!request.session.user) return response.sendStatus(401);
 
   try {
-    const { project_id, filter_by_user } = request.query;
+    const { project_id, time_report_id, filter_by_user } = request.query;
+    console.log(project_id, filter_by_user, time_report_id);
+
     let filter;
 
     switch (true) {
@@ -22,7 +24,7 @@ router.get("/api/timereports", async (request, response) => {
           },
         };
         break;
-      case filter_by_user && filter_by_user.toLowerCase() === 'true':
+      case filter_by_user && filter_by_user.toLowerCase() === "true":
         filter = {
           property: "Person",
           relation: {
@@ -30,6 +32,12 @@ router.get("/api/timereports", async (request, response) => {
           },
         };
         break;
+      case time_report_id !== undefined:
+        console.log("timereportid found");
+        const result = await notion.pages.retrieve({ page_id: time_report_id });
+        response.json({ data: result });
+        
+        return response.status(200).send();
       default:
         break;
     }

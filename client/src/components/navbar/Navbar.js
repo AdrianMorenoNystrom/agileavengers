@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import "./navbar.scss";
-import { Settings, Rocket } from 'lucide-react';
+import { Rocket } from 'lucide-react';
 import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import Logout from "../Logout";
 import GetAvatar from "../UserAvatar";
 import NotificationMessage from "../Notification";
@@ -27,7 +26,6 @@ const Navbar = () => {
       </div>
       <div className="icons">
         <NotificationMessage />
-        <Settings className="icon" size={20} />
         <div className="user" onClick={handleClick}>
           <GetAvatar />
         </div>
@@ -40,8 +38,6 @@ const Navbar = () => {
             'aria-labelledby': 'basic-button',
           }}
         >
-          <MenuItem onClick={handleClose}>Profile</MenuItem>
-          <MenuItem onClick={handleClose}>My account</MenuItem>
           <Logout onClose={handleClose} />
         </Menu>
       </div>

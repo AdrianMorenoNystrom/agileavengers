@@ -8,7 +8,7 @@
 
     .project-heading {
         grid-column: span 2;
-
+        border-radius: $rounded;
         padding: 2em;
         background-color: $light-bg;
 
@@ -47,8 +47,9 @@
         grid-column: span 1;
 
         .activities {
-            background-color: #ffd9da;
-            padding: 2em;
+            background-color: $light-bg;
+            padding: 0 1em;
+            border-radius: $rounded;
         }
     }
 

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Menu as CreateMenu, MenuItem } from '@mui/material';
 import './menu.scss';
 import { menuData } from '../../menuData';
-import { LayoutDashboard, NotepadText, Users, CalendarCheck, SquarePlus, ClipboardList } from 'lucide-react';
+import { LayoutDashboard, NotepadText, Users, CalendarCheck, SmilePlus, History, FileClock, SquarePlus, ClipboardList } from 'lucide-react';
 
 const Menu = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -32,6 +32,8 @@ const Menu = () => {
                   {listItem.title === "Dashboard" && <LayoutDashboard size={20} />}
                   {listItem.title === "Projects" && <NotepadText size={20} />}
                   {listItem.title === "Users" && <Users size={20} />}
+                  {listItem.title === "My History" && <History size={20} />}
+                  {listItem.title === "All History" && <FileClock size={20} />}
                   <span className="listItemTitle">{listItem.title}</span>
                 </Link>
               )}
@@ -52,6 +54,11 @@ const Menu = () => {
                 <MenuItem onClick={handleClose}>
                   <Link to="/new/project">
                     <div className="menu-list-item"><ClipboardList size={18} /> New Project</div>
+                  </Link>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <Link to="/adduser">
+                    <div className="menu-list-item"><SmilePlus size={18} /> New User</div>
                   </Link>
                 </MenuItem>
               </CreateMenu>

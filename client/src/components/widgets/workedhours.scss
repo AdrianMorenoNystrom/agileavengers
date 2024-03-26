@@ -1,0 +1,22 @@
+.worked-hours {
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 3em;
+
+    .widget-titles {
+        display: flex;
+        justify-content: space-around;
+        font-size: 0.7em;
+        text-transform: uppercase;
+    }
+
+    .widget-result {
+        text-align: center;
+        font-weight: 600;
+        font-size: 4em;
+        line-height: 1.2;
+    }
+
+}

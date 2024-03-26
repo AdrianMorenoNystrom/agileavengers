@@ -1,11 +1,9 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import PersonAddOutlinedIcon from '@mui/icons-material/PersonAddOutlined';
@@ -14,16 +12,19 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
 import SubmitToNotion from '../components/SubmitUser';
-import NameFieldValidation from '../components/functions/NameValidation';
-import Copyright from '../components/Copyright';
+import FirstNameFieldValidation from '../components/functions/FirstNameValidation';
+import LastNameFieldValidation from '../components/functions/LastNameValidation';
 import CircularProgress from '@mui/material/CircularProgress';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import AlertMessage from '../components/AlertMessage';
 
 const defaultTheme = createTheme();
 
 export default function CreateAccount() {
 
-  const navigate = useNavigate();
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   const [invalidAccountMessage, setInvalidAccountMessage] = useState(false);
@@ -35,33 +36,35 @@ export default function CreateAccount() {
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
-      const data = new FormData(event.currentTarget);
-      const fullName = data.get('fullName');
+      const data = new FormData(event.target);
+      const firstName = data.get('firstname');
+      const lastName = data.get('lastname');
       const email = data.get('email');
       const password = data.get('password');
+      const role = data.get('role');
 
       // To do, check valid email? 
 
-      if (!fullName || !email || !password) {
+      if (!firstName || !lastName || !email || !password || !role) {
         setInvalidAccountMessage(true);
         return;
       }
 
-      SubmitToNotion(fullName, email, password);
+      SubmitToNotion(firstName,lastName, email, password, role);
 
       // Loading animation and the order it comes in can be changed for a better user experience.
 
       setShowLoading(true);
 
-      event.target.reset();
+
       setTimeout(() => {
         setShowSuccessAlert(true);
         setShowLoading(false);
-      }, 2000);
+        event.target.reset();
+      }, 1000);
 
       setTimeout(() => {
         setShowSuccessAlert(false);
-        navigate('/login');
       }, 5000);
 
 
@@ -87,7 +90,7 @@ export default function CreateAccount() {
           </Avatar>
 
           <Typography component="h1" variant="h5">
-            Create Account
+            Add User
           </Typography>
 
           {showLoading && (
@@ -95,7 +98,7 @@ export default function CreateAccount() {
           )}
 
           {showSuccessAlert && (
-            <Alert severity="success">Account successfully created!</Alert>
+            <Alert severity="success">User successfully added!</Alert>
           )}
 
           <AlertMessage
@@ -109,7 +112,14 @@ export default function CreateAccount() {
             <Grid container rowSpacing={3}>
 
               <Grid item xs={12}>
-                <NameFieldValidation />
+
+                <FirstNameFieldValidation />
+
+              </Grid>
+              <Grid item xs={12}>
+
+                <LastNameFieldValidation />
+                
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -134,23 +144,34 @@ export default function CreateAccount() {
                   id="password"
                 />
               </Grid>
-
+              <Grid item xs={12}>
+              <FormControl fullWidth>
+              <InputLabel id="selectrole">Role</InputLabel>
+              <Select
+                labelId="selectrole"
+                id="role"
+                label="Role"
+                name="role"
+                defaultValue={''}
+              >
+                <MenuItem value="User">User</MenuItem>
+                <MenuItem value="Admin">Admin</MenuItem>
+                <MenuItem value="Owner">Owner</MenuItem>
+              </Select>
+              </FormControl>
+              </Grid>
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Create Account
+                Add user to database
               </Button>
               <Grid item></Grid>
-              <Link href="/Login" variant="body2">
-                Do you already have an account? Sign in here!
-              </Link>
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
   );

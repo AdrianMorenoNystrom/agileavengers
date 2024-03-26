@@ -1,31 +1,16 @@
 // Array of menu items
 
 export const menuData = [
-    {
+  {
+    id: 1,
+    title: "main",
+    listItems: [
+      {
         id: 1,
-        title: "main",
-        listItems: [
-            {
-                id: 1,
-                title: "Dashboard",
-                url: "/",
-                icon: "LayoutDashboard"
-            },
-            {
-                id: 2,
-                title: "Projects",
-                url: "/projects",
-                icon: "NotepadText"
-            },
-            {
-                id: 3,
-                title: "Users",
-                url: "/people",
-                icon: "users"
-            },
-        ],
-    },
-    {
+        title: "Dashboard",
+        url: "/",
+      },
+      {
         id: 2,
         title: "user",
         listItems: [
@@ -36,4 +21,31 @@ export const menuData = [
             },
         ],
     },
+];
+        title: "Projects",
+        url: "/projects",
+      },
+      {
+        id: 3,
+        title: "Users",
+        url: "",
+      },
+    ],
+  },
+  {
+    id: 2,
+    title: "Time Reports",
+    listItems: [
+      {
+        id: 1,
+        title: "My History",
+        url: "/timereports/history",
+      },
+      {
+        id: 2,
+        title: "All History",
+        url: "/timereports/all-history",
+      },
+    ],
+  },
 ];

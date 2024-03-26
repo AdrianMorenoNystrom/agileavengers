@@ -23,6 +23,9 @@ export default function ActiveProjects({ onProjectSelect }) {
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
 
+    // Slice the data array to get only the first 3 projects
+    const slicedData = data.slice(0, 3);
+
     const handleRowClick = (project) => {
         onProjectSelect(project);
         setSelectedProjectId(project.id);
@@ -33,18 +36,18 @@ export default function ActiveProjects({ onProjectSelect }) {
     };
 
     return (
-        <Table aria-label="active projects table">
+        // <Table aria-label="active projects table">
+        <Table size="medium" aria-label="active projects tabel">
             <TableHead>
                 <TableRow>
                     <TableCell>Open</TableCell>
-                    <TableCell>Project Name</TableCell>
-                    <TableCell align="right">Project Leader</TableCell>
-                    <TableCell align="right">Start Date</TableCell>
-                    <TableCell align="right">End Date</TableCell>
+                    <TableCell>Project</TableCell>
+                    <TableCell align="right">Leader</TableCell>
+                    <TableCell align="right">Deadline</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
-                {data && data.map((project) => (
+                {slicedData.map((project) => (
                     <TableRow
                         key={project.id}
                         onClick={() => handleRowClick(project)}
@@ -64,9 +67,6 @@ export default function ActiveProjects({ onProjectSelect }) {
                         </TableCell>
                         <TableCell align="right">
                             {project?.properties?.['Project Leader Name']?.rollup?.array?.[0]?.formula?.string || "N/A"}
-                        </TableCell>
-                        <TableCell align="right">
-                            {project?.properties?.Timespan?.date?.start || "N/A"}
                         </TableCell>
                         <TableCell align="right">
                             {project?.properties?.Timespan?.date?.end || "N/A"}
