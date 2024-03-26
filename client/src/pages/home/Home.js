@@ -43,7 +43,6 @@ function Home() {
       <div className="grid-item box"><h1>Some stuff</h1></div>
       {selectedProject && !isLoading && (
         <div className="grid-item box charts">
-          <h4>Logged work</h4>
           <CategoryChart project={selectedProject} /></div>
       )}
       <div className="grid-item box charts">

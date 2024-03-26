@@ -7,9 +7,8 @@
     grid-auto-rows: minmax(180px, auto);
 
     .project-heading {
-        grid-column: span 2;
         border-radius: $rounded;
-        padding: 2em;
+        padding: 1.5em;
         background-color: $light-bg;
 
         .topInfo {
@@ -32,7 +31,7 @@
 
                 .itemTitle {
                     margin: 0.5em 0;
-                    font-size: small;
+                    font-size: 0.75em;
                     font-weight: 600;
                 }
 
@@ -43,14 +42,10 @@
         }
     }
 
-    aside {
-        grid-column: span 1;
-
-        .activities {
-            background-color: $light-bg;
-            padding: 0 1em;
-            border-radius: $rounded;
-        }
+    .activities {
+        background-color: $light-bg;
+        padding: 0 1em;
+        border-radius: $rounded;
     }
 
     .project-content {

@@ -21,6 +21,7 @@ import '../../components/single/single.scss';
 import './project.scss';
 import TimeLine from '../../components/Timeline/TimeLine';
 import CategoryChart from '../../components/CategoryChart';
+import WeeklyReport from '../../components/GetWeeklyReport';
 
 function Project() {
     const { id } = useParams();
@@ -151,6 +152,8 @@ function Project() {
     const endDate = new Date(properties?.Timespan?.date?.end);
     const leaderName = properties?.['Project Leader Name']?.rollup?.array?.[0]?.formula?.string || '';
     const hoursTotal = properties?.['Total Hours']?.number || 0;
+    const description = properties?.Description?.rich_text?.[0]?.plain_text || '';
+    console.log(description);
 
     const buttons = ["Active", "Next up", "Paused", "Done"]
     .filter(status => status !== statusName) 
@@ -163,7 +166,7 @@ function Project() {
     return (
         <div className='single'>
             <div className='project'>
-                <div className='project-heading'>
+                <div className='grid-item landscape project-heading'>
                     <div className='topInfo'>
                         <h1>{projectName}</h1>
                         <AlertMessage
@@ -225,16 +228,16 @@ function Project() {
                         </div>
                         <div className='item'>
                             <div className='itemTitle'>Project info</div>
-                            <p className='itemValue'>This is a very important and exciting project where we will do very good stuff for many people and eat lotsa cake.</p>
+                            {<p className='itemValue'>{description}</p>}
                         </div>
                     </div>
                 </div>
-                <aside>
-                    <div className='grid-item box'><TimeLine projectId={id} /></div>
-                    <div className='charts'><CategoryChart project={data} /> </div>
-                </aside>
-                <div className='project-content'>
+                <div className='grid-item box'><TimeLine projectId={id} /></div>
+                <div className='grid-item box'>
+                <WeeklyReport projectId={id} />
                 </div>
+                <div className='grid-item box charts'><CategoryChart project={data} /> </div>
+                <div className='grid-item box charts'><ProjectChart project={data} /></div>               
             </div>
         </div>
     );
