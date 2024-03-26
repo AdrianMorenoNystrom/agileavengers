@@ -31,6 +31,31 @@ p {
     background-color: $light-bg;
 }
 
+.box {
+    grid-column: span 1;
+    grid-row: span 1;
+}
+
+.portrait {
+    grid-column: span 1;
+    grid-row: span 2;
+}
+
+.landscape {
+    grid-column: span 2;
+    grid-row: span 1;
+
+    @include md {
+        grid-column: span 1;
+    }
+}
+
+.box-headers {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .container {
     display: flex;
     height: 100vh;

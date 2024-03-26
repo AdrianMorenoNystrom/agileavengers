@@ -34,9 +34,9 @@ const CategoryChart = ({ project }) => {
         label: category,
         percentage: ((hoursByCategory[category] / hoursWorked) * 100).toFixed(0),
     }));
-    console.log(project?.id)
     return (
         <>
+        <h4>Logged work</h4>
             <ResponsiveChartContainer
                 series={[
                     {
