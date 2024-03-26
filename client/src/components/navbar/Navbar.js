@@ -40,8 +40,6 @@ const Navbar = () => {
             'aria-labelledby': 'basic-button',
           }}
         >
-          <MenuItem onClick={handleClose}>Profile</MenuItem>
-          <MenuItem onClick={handleClose}>My account</MenuItem>
           <Logout onClose={handleClose} />
         </Menu>
       </div>

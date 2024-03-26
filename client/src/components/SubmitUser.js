@@ -1,6 +1,6 @@
 
 function SubmitToNotion(firstName,lastName, email, password,role) {
-    fetch("http://localhost:3500/api/people/add", {
+    fetch("http://localhost:3000/api/people/add", {
       method: "post",
       headers: {
         Accept: "application/json",
