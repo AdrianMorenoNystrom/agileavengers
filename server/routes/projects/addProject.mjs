@@ -1,29 +1,25 @@
 import express from "express";
 import dotenv from "dotenv";
 import notion from "../../notion.mjs";
-import bodyParser from "body-parser";
 
 dotenv.config();
 
-const jsonParser = bodyParser.json();
 const router = express.Router();
 
-router.post("/api/projects/add", jsonParser, async (request, response) => {
+router.post("/api/projects/add", async (request, response) => {
   if (!request.session.user) return response.sendStatus(401);
 
-  const projectName = request.body.projectName;
-  const hours = request.body.hours;
-  const status = request.body.status;
-  const projectStart = request.body.projectStart;
-  const projectEnd = request.body.projectEnd;
   const databaseId = process.env.NOTION_DATABASE_ID_PROJECTS;
+  const {
+    body: { projectName, startDate, endDate, status, hours, projectLeaderId, teamMembersId, description }
+  } = request;
+
   try {
-    const result = await notion.pages.create({
+    const teamMembersRelation = teamMembersId.map(teamMemberId => ({ id: teamMemberId }));
+
+    const newProject = await notion.pages.create({
       parent: { database_id: databaseId },
       properties: {
-        "Total Hours": {
-          number: parseFloat(hours),
-        },
         Projectname: {
           title: [
             {
@@ -33,24 +29,46 @@ router.post("/api/projects/add", jsonParser, async (request, response) => {
             },
           ],
         },
+        Timespan: {
+          date: {
+            start: startDate,
+            end: endDate,
+          },
+        },
         Status: {
           select: {
             name: status,
           },
         },
-        Timespan: {
-          date: {
-            start: projectStart,
-            end: projectEnd,
-          },
+        "Total Hours": {
+          number: parseFloat(hours),
+        },
+        "Project Leader": {
+          relation: [
+            {
+              id: projectLeaderId,
+            },
+          ],
+        },
+        People: {
+          relation: teamMembersRelation,
+        },
+        Description: {
+          rich_text: [
+            {
+              text: {
+                content: description,
+              },
+            },
+          ],
         },
       },
     });
-    console.log(result);
-    response.sendStatus(200);
+
+    return response.status(200).send();
   } catch (error) {
-    console.log(error);
-    response.status(500).send(error.message); 
+    console.error(error);
+    return response.status(500).json({ error: "Internal Server Error" });
   }
 });
 

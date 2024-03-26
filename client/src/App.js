@@ -16,10 +16,10 @@ import AuthProvider from './components/AuthProvider';
 import CreateAccount from './pages/CreateAccount-page';
 import Projects from './pages/projects/Projects';
 import Project from './pages/project/Project';
+import NewProject from './pages/new project/NewProject';
 import '@fontsource-variable/inter';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './styles/theme';
-
 
 function App() {
     const Layout = () => {
@@ -51,7 +51,8 @@ function App() {
               <Route path="/users" element={<Users />} />
               <Route path="/users/:id" element={<User />} />
               <Route path="/adduser" element={<CreateAccount />} />
-              <Route path="/timereport" element={<Timereport />} />
+              <Route path="/new/timereport" element={<Timereport />} />
+              <Route path='/new/project' element={<NewProject />} />           
               <Route
                 path="/timereport/edit/:id"
                 element={<Timereport isUpdate={true} />}

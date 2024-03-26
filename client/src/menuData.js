@@ -12,6 +12,16 @@ export const menuData = [
       },
       {
         id: 2,
+        title: "user",
+        listItems: [
+            {
+                id: 1,
+                title: "Create",
+                icon: "circle-plus"
+            },
+        ],
+    },
+];
         title: "Projects",
         url: "/projects",
       },
@@ -28,29 +38,13 @@ export const menuData = [
     listItems: [
       {
         id: 1,
-        title: "Report Time",
-        url: "/timereport",
-      },
-      {
-        id: 2,
         title: "My History",
         url: "/timereports/history",
       },
       {
-        id: 3,
+        id: 2,
         title: "All History",
         url: "/timereports/all-history",
-      },
-    ],
-  },
-  {
-    id: 3,
-    title: "admin",
-    listItems: [
-      {
-        id: 1,
-        title: "Add User",
-        url: "/adduser",
       },
     ],
   },
