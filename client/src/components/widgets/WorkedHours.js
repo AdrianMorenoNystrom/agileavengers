@@ -2,6 +2,7 @@ import './workedhours.scss';
 import useFetchTimereports from '../useFetchTimereports';
 import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
+import LoadingContext from '../../components/functions/LoadingContext'
 
 function WorkedHours() {
   const { timereports, isLoading, error } = useFetchTimereports();
@@ -46,7 +47,7 @@ function WorkedHours() {
   }, [isLoading, error, timereports]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return  <LoadingContext/>;
   }
 
   if (error) {

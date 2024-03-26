@@ -4,11 +4,12 @@ import { BarChart } from "@mui/x-charts";
 import getWeekNumber from "./functions/getWeekNumber";
 import "../pages/projects/projects.scss";
 import { formatTime } from "./functions/timeFormatter";
+import LoadingContext from './functions/LoadingContext'
 
 const WeeklyReport = ({ projectId }) => {
   const { data, isLoading, error } = useFetchData("/api/timereports/weekly");
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LoadingContext/>;
   if (error) return <div>{error}</div>;
 
   const selectedProject = data.filter(

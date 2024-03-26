@@ -7,6 +7,7 @@ import TableRow from '@mui/material/TableRow';
 import useFetchData from './UseFetchData';
 import { ExternalLink } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import LoadingContext from './functions/LoadingContext'
 
 export default function ActiveProjects({ onProjectSelect }) {
     const { data, isLoading, error } = useFetchData('/api/projects/active');
@@ -20,7 +21,7 @@ export default function ActiveProjects({ onProjectSelect }) {
         }
     }, [data, onProjectSelect]);
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <LoadingContext/>;
     if (error) return <div>{error}</div>;
 
     // Slice the data array to get only the first 3 projects

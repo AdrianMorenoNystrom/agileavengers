@@ -22,6 +22,7 @@ import './project.scss';
 import TimeLine from '../../components/Timeline/TimeLine';
 import CategoryChart from '../../components/CategoryChart';
 import WeeklyReport from '../../components/GetWeeklyReport';
+import LoadingContext from '../../components/functions/LoadingContext';
 
 function Project() {
     const { id } = useParams();
@@ -141,7 +142,7 @@ function Project() {
 
     const { data, isLoading, error } = useFetchData(`/api/projects/project/${id}`, true);
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <LoadingContext/>;
     if (error) return <div>{error}</div>;
     if (!data) return <div>No data available</div>;
 

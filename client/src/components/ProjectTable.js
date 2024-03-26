@@ -17,6 +17,7 @@ import GetAllProjectAvatars from './GetAllProjectAvatars';
 import statusCheck from './functions/statusCheck';
 import '../pages/projects/projects.scss';
 import { formatTime } from './functions/timeFormatter';
+import LoadingContext from './functions/LoadingContext'
 
 export default function ProjectTable() {
     const { data, isLoading, error } = useFetchData('/api/projects');
@@ -106,7 +107,7 @@ export default function ProjectTable() {
         setSelectedProjectId(projectId.row.projectId);
     };
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <LoadingContext/>;
     if (error) return <div>{error}</div>;
 
     return (
