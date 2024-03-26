@@ -4,6 +4,7 @@ import { PiePlot } from '@mui/x-charts/PieChart';
 import { ChartsLegend } from '@mui/x-charts/ChartsLegend';
 import useFetchTimereports from './useFetchTimereports.js';
 import { ChartsTooltip } from "@mui/x-charts/ChartsTooltip";
+import LoadingContext from '.././components/functions/LoadingContext.js'
 
 
 const CategoryChart = ({ project }) => {
@@ -12,7 +13,7 @@ const CategoryChart = ({ project }) => {
     const hoursWorked = project?.properties?.['Hours Worked']?.rollup?.number || 0;
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return  <LoadingContext/>;
     }
 
     if (error) {

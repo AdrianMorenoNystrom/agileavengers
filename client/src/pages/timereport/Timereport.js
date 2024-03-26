@@ -25,6 +25,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/en-gb";
 import axios from "axios";
 import statusCheck from "../../components/functions/statusCheck";
+import LoadingContext from '../../components/functions/LoadingContext'
 
 export default function Timereport({ isUpdate }) {
   const { id } = useParams();
@@ -117,7 +118,7 @@ export default function Timereport({ isUpdate }) {
     fetchCategories();
   }, []);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LoadingContext/>;
   if (error) return <div>Error fetching data: {error}</div>;
 
   const isFormInvalid = () => {
