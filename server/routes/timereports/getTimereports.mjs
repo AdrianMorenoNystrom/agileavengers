@@ -11,7 +11,6 @@ router.get("/api/timereports", async (request, response) => {
 
   try {
     const { project_id, filter_by_user } = request.query;
-    console.log(project_id,filter_by_user);
     let filter;
 
     switch (true) {

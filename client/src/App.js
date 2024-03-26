@@ -14,6 +14,7 @@ import PrivateRoutes from './components/PrivateRoutes';
 import AuthProvider from './components/AuthProvider';
 import Projects from './pages/projects/Projects';
 import Project from './pages/project/Project';
+import NewProject from './pages/new project/NewProject';
 
 function App() {
     const Layout = () => {
@@ -42,7 +43,8 @@ function App() {
                         <Route path="/projects/:id" element={<Project />} />
                         <Route path="/users" element={<Users />} />
                         <Route path="/users/:id" element={<User />} />
-                        <Route path="/timereport" element={<Timereport />} />
+                        <Route path="/new/timereport" element={<Timereport />} />
+                        <Route path='/new/project' element={<NewProject />} />
                         <Route path="*" element={<Page404 />} />
                     </Route>
                     <Route path="/login" element={<Login />} />

@@ -101,8 +101,7 @@ export default function Timereport() {
     if (isFormInvalid()) return;
 
     try {
-      const response = await fetch(
-        "api/timereports/add",
+      const response = await fetch("../../../api/timereports/add",
         {
           method: "POST",
           headers: {

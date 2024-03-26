@@ -31,10 +31,9 @@ export const menuData = [
         listItems: [
             {
                 id: 1,
-                title: "Report time",
-                url: "/timereport",
-                icon: "calendar-check"
+                title: "Create",
+                icon: "circle-plus"
             },
         ],
     },
-]
+];
