@@ -50,7 +50,7 @@ export default function CreateAccount() {
         return;
       }
 
-      SubmitToNotion(firstName,lastName, email, password, role);
+      SubmitToNotion(firstName, lastName, email, password, role);
 
       // Loading animation and the order it comes in can be changed for a better user experience.
 
@@ -90,7 +90,7 @@ export default function CreateAccount() {
           </Avatar>
 
           <Typography component="h1" variant="h5">
-            Add User
+            New User
           </Typography>
 
           {showLoading && (
@@ -119,7 +119,7 @@ export default function CreateAccount() {
               <Grid item xs={12}>
 
                 <LastNameFieldValidation />
-                
+
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -145,20 +145,20 @@ export default function CreateAccount() {
                 />
               </Grid>
               <Grid item xs={12}>
-              <FormControl fullWidth>
-              <InputLabel id="selectrole">Role</InputLabel>
-              <Select
-                labelId="selectrole"
-                id="role"
-                label="Role"
-                name="role"
-                defaultValue={''}
-              >
-                <MenuItem value="User">User</MenuItem>
-                <MenuItem value="Admin">Admin</MenuItem>
-                <MenuItem value="Owner">Owner</MenuItem>
-              </Select>
-              </FormControl>
+                <FormControl fullWidth>
+                  <InputLabel id="selectrole">Role</InputLabel>
+                  <Select
+                    labelId="selectrole"
+                    id="role"
+                    label="Role"
+                    name="role"
+                    defaultValue={''}
+                  >
+                    <MenuItem value="User">User</MenuItem>
+                    <MenuItem value="Admin">Admin</MenuItem>
+                    <MenuItem value="Owner">Owner</MenuItem>
+                  </Select>
+                </FormControl>
               </Grid>
               <Button
                 type="submit"
@@ -166,7 +166,7 @@ export default function CreateAccount() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Add user to database
+                Add new user
               </Button>
               <Grid item></Grid>
             </Grid>
