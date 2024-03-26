@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./navbar.scss";
 import { Rocket } from 'lucide-react';
 import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import Logout from "../Logout";
 import GetAvatar from "../UserAvatar";
 import NotificationMessage from "../Notification";

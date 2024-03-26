@@ -33,8 +33,8 @@ export default function TimeReportHistory({ isAllHistory }) {
   let columns = [
     { id: "projectName", label: "Project", minWidth: 200 },
     { id: "time", label: "Time Logged", minWidth: 80 },
-    { id: "date", label: "Date", minWidth: 70 },
     { id: "category", label: "Category", minWidth: 120 },
+    { id: "date", label: "Date", minWidth: 70 },
   ];
 
   if (isAllHistory) {
