@@ -25,6 +25,7 @@
             gap: 10px;
             padding: 10px;
             border-radius: 5px;
+            cursor: pointer;
 
             &:hover {
                 background-color: $light-bg;
@@ -35,6 +36,19 @@
                     display: none;
                 }
             }
+
+            .unfold-item {
+                margin-left: auto;
+            }
         }
     }
+}
+
+.menu-list-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 0.8em;
 }

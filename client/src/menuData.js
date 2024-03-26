@@ -9,19 +9,26 @@ export const menuData = [
         id: 1,
         title: "Dashboard",
         url: "/",
-        icon: "LayoutDashboard",
       },
       {
         id: 2,
+        title: "user",
+        listItems: [
+          {
+            id: 1,
+            title: "Create",
+            icon: "circle-plus"
+          },
+        ],
+      },
+      {
         title: "Projects",
         url: "/projects",
-        icon: "NotepadText",
       },
       {
         id: 3,
         title: "Users",
         url: "",
-        icon: "users",
       },
     ],
   },
@@ -31,28 +38,14 @@ export const menuData = [
     listItems: [
       {
         id: 1,
-        title: "Report Time",
-        url: "/timereport",
-        icon: "calendar-clock",
+        title: "My History",
+        url: "/timereports/history",
       },
       {
         id: 2,
-        title: "History",
-        url: "/timereports/history",
-        icon: "History",
+        title: "All History",
+        url: "/timereports/all-history",
       },
     ],
   },
-    {
-        id:3,
-        title:"admin",
-        listItems: [
-            {
-                id:1,
-                title:"Add User",
-                url: "/adduser",
-                icon:"SmilePlus"
-            },
-        ],
-    },
 ];
