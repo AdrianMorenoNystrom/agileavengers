@@ -38,7 +38,6 @@ function CircularProgressbar(props) {
     </Box>
   );
 }
-
 export default function CustomizedProgressBars() {
   return (
     <Stack spacing={2} sx={{ flexGrow: 1 }}>
