@@ -16,21 +16,27 @@ import AuthProvider from './components/AuthProvider';
 import CreateAccount from './pages/CreateAccount-page';
 import Projects from './pages/projects/Projects';
 import Project from './pages/project/Project';
+import '@fontsource-variable/inter';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './styles/theme';
+
 
 function App() {
     const Layout = () => {
         return (
-            <div className="main">
-                <Navbar />
-                <div className="container">
-                    <div className="menuContainer">
-                        <Menu />
-                    </div>
-                    <div className="contentContainer">
-                        <Outlet />
+            <ThemeProvider theme={theme}>
+                <div className="main">
+                    <Navbar />
+                    <div className="container">
+                        <div className="menuContainer">
+                            <Menu />
+                        </div>
+                        <div className="contentContainer">
+                            <Outlet />
+                        </div>
                     </div>
                 </div>
-            </div>
+            </ThemeProvider>
         );
     };
 
