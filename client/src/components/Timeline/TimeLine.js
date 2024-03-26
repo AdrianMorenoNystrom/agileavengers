@@ -23,7 +23,7 @@ function TimeLine({ projectId, filterByUser }) {
 
     return (
         <>
-        <h4>Latest activities</h4>
+        <h4 className='box-headers add-margin'>Latest activities</h4>
         <div className='activities'>
             <ul>
                 {latestActivities.map((timereport, index) => (

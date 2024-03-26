@@ -26,14 +26,9 @@
         padding-top: 20px;
     }
 
-    .charts {
-        h4 {
-            margin: 0;
-        }
-    }
-
     .box-headers {
         display: flex;
         justify-content: space-between;
+        align-items: center;
     }
 }
