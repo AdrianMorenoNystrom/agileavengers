@@ -13,13 +13,6 @@ import useFetchTimeReport from "../../components/useFetchTimereports";
 import { formatTime } from "../../components/functions/timeFormatter";
 import { Typography } from "@mui/material";
 
-const columns = [
-  { id: "projectName", label: "Project", minWidth: 200 },
-  { id: "time", label: "Time Logged", minWidth: 100 },
-  { id: "date", label: "Date", minWidth: 170 },
-  { id: "category", label: "Category", minWidth: 170 },
-];
-
 export default function TimeReportHistory({ isAllHistory }) {
   const { timereports, isLoading, error } = useFetchTimeReport(
     undefined,
@@ -37,6 +30,23 @@ export default function TimeReportHistory({ isAllHistory }) {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 
+  let columns = [
+    { id: "projectName", label: "Project", minWidth: 200 },
+    { id: "time", label: "Time Logged", minWidth: 80 },
+    { id: "date", label: "Date", minWidth: 70 },
+    { id: "category", label: "Category", minWidth: 120 },
+  ];
+
+  if (isAllHistory) {
+    columns = [
+      { id: "projectName", label: "Project", minWidth: 200 },
+      { id: "time", label: "Time Logged", minWidth: 80 },
+      { id: "user", label: "By", minWidth: 150 },
+      { id: "category", label: "Category", minWidth: 120 },
+      { id: "date", label: "Date", minWidth: 70 },
+    ];
+  }
+
   const rows = timereports.map((timereport, index) => {
     const projectId = timereport.id;
     const time = formatTime(timereport.properties.Hours.number);
@@ -49,7 +59,11 @@ export default function TimeReportHistory({ isAllHistory }) {
       timereport.properties?.Note?.title[0]?.text.content ||
       "No note available";
 
-    return { projectId, projectName, time, date, category, note };
+    const name = isAllHistory
+      ? timereport.properties.Name.rollup.array[0].formula.string
+      : "";
+
+    return { projectId, projectName, time, date, category, note, name };
   });
 
   const handleChangePage = (event, newPage) => {
@@ -111,10 +125,10 @@ export default function TimeReportHistory({ isAllHistory }) {
                       </span>
                     )}
                   </TableCell>
-
                   <TableCell>{row.time}</TableCell>
-                  <TableCell>{row.date}</TableCell>
+                  {isAllHistory && <TableCell>{row.name}</TableCell>}
                   <TableCell>{row.category}</TableCell>
+                  <TableCell>{row.date}</TableCell>
                 </TableRow>
               ))}
           </TableBody>
