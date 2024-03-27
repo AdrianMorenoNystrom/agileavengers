@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from 'react';
 import "./navbar.scss";
 import { Rocket } from 'lucide-react';
 import Menu from '@mui/material/Menu';

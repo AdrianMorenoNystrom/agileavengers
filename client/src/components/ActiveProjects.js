@@ -7,7 +7,8 @@ import TableRow from '@mui/material/TableRow';
 import { useMediaQuery } from '@mui/material';
 import { ExternalLink } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import LoadingContext from './functions/LoadingContext'
+import LoadingContext from './functions/LoadingContext';
+import useFetchData from './UseFetchData';
 
 export default function ActiveProjects({ onProjectSelect }) {
     const { data, isLoading, error } = useFetchData('/api/projects/active');
