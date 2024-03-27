@@ -1,17 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import useFetchData from '../../components/UseFetchData';
-import { useParams } from 'react-router-dom'; 
+import { useParams } from 'react-router-dom';
 import dateFormatter from '../../components/functions/dateFormatter';
 import GetProjectAvatar from '../../components/TeamAvatars';
 import Chip from '@mui/material/Chip';
-import ProjectChart from '../../components/ProjectChart'; 
-import '../../components/single/single.scss'
-import './project.scss'
+import ProjectChart from '../../components/ProjectChart';
+import '../../components/single/single.scss';
+import './project.scss';
 import statusCheck from '../../components/functions/statusCheck';
-import {Pencil } from 'lucide-react';
+import { Pencil } from 'lucide-react';
 import AlertMessage from '../../components/AlertMessage';
-import ProjectTimeLine from '../../components/Timeline/TimeLine';
-import { ChevronRight } from 'lucide-react';
 import EditHours from '../../components/EditHours';
 import EditEndDate from '../../components/EditEndDate';
 import Button from '@mui/material/Button';
@@ -26,143 +24,167 @@ import PageLoadingContext from '../../components/functions/PageLoadingContext';
 
 function Project() {
     const { id } = useParams();
-    console.log(id);
 
-    const [isEditingHour, setIsEditingHour] = useState(false); 
-    const [isEditingDate, setIsEditingDate] = useState(false); 
+    const [isEditingHour, setIsEditingHour] = useState(false);
+    const [isEditingDate, setIsEditingDate] = useState(false);
     const [isEditingStatus, setIsEditingStatus] = useState(false);
-    const [setEndDate] = useState('');
-    const [inputNumber, setInputNumber] = useState(''); 
-    const [alertMessage, setAlertMessage] = useState({});   
-
+    const [endDate, setEndDate] = useState('');
+    const [inputNumber, setInputNumber] = useState('');
+    const [alertMessage, setAlertMessage] = useState({});
+    const [statusName, setStatusName] = useState('');
+    const [hoursTotal, setHoursTotal] = useState(null);
 
     const handleHourClick = () => {
-        setIsEditingHour(true); 
+        setIsEditingHour(true);
     };
 
     const handleHourCancel = () => {
-        setIsEditingHour(false); 
+        setIsEditingHour(false);
     };
 
     const handleDateClick = () => {
-        setIsEditingDate(true); 
+        setIsEditingDate(true);
     };
 
     const handleDateCancel = () => {
-        setIsEditingDate(false); 
+        setIsEditingDate(false);
     };
 
     const handleStatusClick = () => {
-        setIsEditingStatus(prevState => !prevState); 
+        setIsEditingStatus(prevState => !prevState);
     };
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`/api/projects/project/${id}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }, true);
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                const result = await response.json();
+
+                const newStatusName = result.data?.properties?.Status?.select?.name;
+                setStatusName(newStatusName);
+
+                const newEndDate = result.data?.properties?.Timespan?.date?.end;
+                setEndDate(newEndDate);
+
+                const newHoursTotal = result.data?.properties?.['Total Hours']?.number;
+                setHoursTotal(newHoursTotal);
+            } catch (error) {
+                console.error("Error fetching categories: ", error);
+            }
+        };
+        fetchData();
+    }, [id]);
 
     const submitHours = () => {
-        console.log("Submitted number:", inputNumber);
-        fetch(`/api/projects/changeTime/${id}`, { 
+        fetch(`/api/projects/changeTime/${id}`, {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({ inputNumber }),
             credentials: "include",
         })
-        .then(response => {
-            if (response.ok) {
-                setAlertMessage({
-                    message: "Total hours on project updated to: " + inputNumber,
-                    severity: "success"
-                });
-                setInputNumber('');
-                setIsEditingHour(false);
-            } else {
-                console.error('Failed to submit input number');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+            .then(response => {
+                if (response.ok) {
+                    setAlertMessage({
+                        message: "Total hours on project updated to: " + inputNumber,
+                        severity: "success"
+                    });
+                    setInputNumber('');
+                    setIsEditingHour(false);
+                    setHoursTotal(inputNumber);
+                } else {
+                    console.error('Failed to submit input number');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     };
 
     const submitEndDate = (newEndDate) => {
         const inputDate = new Date(newEndDate);
         const formattedDate = inputDate.toISOString().slice(0, 10);
-        fetch(`/api/projects/changeDate/${id}`, { 
+        fetch(`/api/projects/changeDate/${id}`, {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify({ newEndDate: formattedDate }), 
+            body: JSON.stringify({ newEndDate: formattedDate }),
             credentials: "include",
         })
-        .then(response => {
-            if (response.ok) {
-                setAlertMessage({
-                    message: "New end date submitted to project: " + newEndDate,
-                    severity: "success"
-                });
-                setEndDate('');
-                setIsEditingDate(false);
-            } else {
-                console.error('Failed to submit new enddate');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+            .then(response => {
+                if (response.ok) {
+                    setAlertMessage({
+                        message: "New end date submitted to project: " + newEndDate,
+                        severity: "success"
+                    });
+                    setEndDate('');
+                    setIsEditingDate(false);
+                    setEndDate(newEndDate);
+                } else {
+                    console.error('Failed to submit new enddate');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     };
 
     const submitStatus = (inputStatus) => {
-        console.log("New status selected:", inputStatus);
-        fetch(`/api/projects/changeStatus/${id}`, { 
+        fetch(`/api/projects/changeStatus/${id}`, {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify({inputStatus}),
+            body: JSON.stringify({ inputStatus }),
             credentials: "include",
         })
-        .then(response => {
-            if (response.ok) {
-                setAlertMessage({
-                    message: "Status updated to: " + inputStatus,
-                    severity: "success"
-                });
-                setIsEditingStatus(false);
-            } else {
-                console.error('Failed to update status');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+            .then(response => {
+                if (response.ok) {
+                    setAlertMessage({
+                        message: "Status updated to: " + inputStatus,
+                        severity: "success"
+                    });
+                    setIsEditingStatus(false);
+                    setStatusName(inputStatus);
+                } else {
+                    console.error('Failed to update status');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         setIsEditingStatus(false);
     };
-    
 
     const { data, isLoading, error } = useFetchData(`/api/projects/project/${id}`, true);
 
-    if (isLoading) return <PageLoadingContext/>;
+    if (isLoading) return <PageLoadingContext />;
     if (error) return <div>{error}</div>;
     if (!data) return <div>No data available</div>;
 
     const properties = data.properties;
     const projectName = properties?.Projectname?.title[0]?.plain_text || '';
-    const statusName = properties?.Status?.select?.name || '';
     const startDate = new Date(data.created_time);
-    const endDate = new Date(properties?.Timespan?.date?.end);
     const leaderName = properties?.['Project Leader Name']?.rollup?.array?.[0]?.formula?.string || '';
-    const hoursTotal = properties?.['Total Hours']?.number || 0;
     const description = properties?.Description?.rich_text?.[0]?.plain_text || '';
-    console.log(description);
 
     const buttons = ["Active", "Next up", "Paused", "Done"]
-    .filter(status => status !== statusName) 
-    .map(status => (
-      <Button key={status} color={statusCheck(status)} onClick={() => submitStatus(status)}>
-        {status}
-      </Button>
-    ));
+        .filter(status => status !== statusName)
+        .map(status => (
+            <Button key={status} color={statusCheck(status)} onClick={() => submitStatus(status)}>
+                {status}
+            </Button>
+        ));
 
     return (
         <div className='single'>
@@ -179,53 +201,56 @@ function Project() {
                         />
                         <Chip className="status" color={statusCheck(statusName)} size="small" label={statusName} />
                         <div>
-                        <Pencil className="edit" size={12} onClick={handleStatusClick}/>
-                        {isEditingStatus ? (
-                        <ButtonGroup size="small" aria-label="Small button group" sx={{marginLeft:2}}>
-                            {buttons}
-                        </ButtonGroup>
-                    ) : null}
-                    </div>
+                            <Pencil className="edit" size={12} onClick={handleStatusClick} />
+                            {isEditingStatus ? (
+                                <ButtonGroup
+                                    size="small"
+                                    aria-label="Small button group"
+                                    sx={{ marginLeft: 2 }}>
+                                    {buttons}
+                                </ButtonGroup>
+                            ) : null}
+                        </div>
                     </div>
                     <div className="project-info">
                         <div className='item'>
                             <div className='itemTitle'>Start date: </div>
-                            <div className='itemValue'>{dateFormatter.format(startDate)}</div>             
+                            <div className='itemValue'>{dateFormatter.format(startDate)}</div>
                         </div>
                         <div className='item'>
-                            <div className='itemTitle'>End date: <Pencil className="edit" size={12} onClick={handleDateClick}/> </div>
-                            <div className='itemValue'>{dateFormatter.format(endDate)}</div>
+                            <div className='itemTitle'>End date: <Pencil className="edit" size={12} onClick={handleDateClick} /> </div>
+                            <div className='itemValue'>{endDate}</div>
                             {isEditingDate ? (
-                        <EditEndDate
-                        currentEndDate={endDate}
-                        handleCancel={handleDateCancel}
-                        submitEndDate={submitEndDate} 
-                    />
-                    ) : null}
-                        </div>                     
+                                <EditEndDate
+                                    currentEndDate={endDate}
+                                    handleCancel={handleDateCancel}
+                                    submitEndDate={submitEndDate}
+                                />
+                            ) : null}
+                        </div>
                         <div className='item'>
                             <div className='itemTitle'>Leader: </div>
-                            <div className='itemValue'>{leaderName}</div>             
+                            <div className='itemValue'>{leaderName}</div>
                         </div>
                         <div className='item'>
-                    <div className='itemTitle'>Total hours: <Pencil className="edit" onClick={handleHourClick} size={12}/></div>
-                    <div className='itemValue'>{hoursTotal}</div>
-                    {isEditingHour ? (
-                        <EditHours
-                            inputNumber={inputNumber}
-                            setInputNumber={setInputNumber}
-                            handleCancel={handleHourCancel}
-                            submitHours={submitHours}
-                        />
-                    ) : null}
-                </div>
+                            <div className='itemTitle'>Total hours: <Pencil className="edit" onClick={handleHourClick} size={12} /></div>
+                            <div className='itemValue'>{hoursTotal}</div>
+                            {isEditingHour ? (
+                                <EditHours
+                                    inputNumber={inputNumber}
+                                    setInputNumber={setInputNumber}
+                                    handleCancel={handleHourCancel}
+                                    submitHours={submitHours}
+                                />
+                            ) : null}
+                        </div>
                         <div className='item'>
                             <div className='itemTitle'>Team: </div>
                             <div className='itemValue'>
-                                <AvatarGroup max={4} spacing={0}>
+                                <AvatarGroup key={id} max={4} spacing={0}>
                                     <GetProjectAvatar />
                                 </AvatarGroup>
-                            </div>             
+                            </div>
                         </div>
                         <div className='item'>
                             <div className='itemTitle'>Project info</div>
@@ -235,10 +260,10 @@ function Project() {
                 </div>
                 <div className='grid-item box'><TimeLine projectId={id} /></div>
                 <div className='grid-item box'>
-                <WeeklyReport projectId={id} />
+                    <WeeklyReport projectId={id} />
                 </div>
                 <div className='grid-item box charts'><CategoryChart project={data} /> </div>
-                <div className='grid-item box charts'><ProjectChart project={data} /></div>               
+                <div className='grid-item box charts'><ProjectChart project={data} /></div>
             </div>
         </div>
     );

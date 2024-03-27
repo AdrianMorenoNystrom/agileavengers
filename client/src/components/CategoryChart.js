@@ -4,16 +4,15 @@ import { PiePlot } from '@mui/x-charts/PieChart';
 import { ChartsLegend } from '@mui/x-charts/ChartsLegend';
 import useFetchTimereports from './useFetchTimereports.js';
 import { ChartsTooltip } from "@mui/x-charts/ChartsTooltip";
-import LoadingContext from '.././components/functions/LoadingContext.js'
+import LoadingContext from '.././components/functions/LoadingContext.js';
 
 
 const CategoryChart = ({ project }) => {
     const { timereports, isLoading, error } = useFetchTimereports(project?.id);
-    console.log(project?.id)
     const hoursWorked = project?.properties?.['Hours Worked']?.rollup?.number || 0;
 
     if (isLoading) {
-        return  <LoadingContext/>;
+        return <LoadingContext />;
     }
 
     if (error) {
@@ -37,7 +36,7 @@ const CategoryChart = ({ project }) => {
     }));
     return (
         <>
-        <h4>Logged work</h4>
+            <h4>Logged work</h4>
             <ResponsiveChartContainer
                 series={[
                     {
@@ -54,7 +53,7 @@ const CategoryChart = ({ project }) => {
                 ]}
                 height={220}
             >
-                <ChartsTooltip trigger='item'/>
+                <ChartsTooltip trigger='item' />
                 <PiePlot />
                 <ChartsLegend
                     slotProps={{

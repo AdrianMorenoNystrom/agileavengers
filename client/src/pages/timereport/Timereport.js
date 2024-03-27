@@ -25,7 +25,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/en-gb";
 import axios from "axios";
 import statusCheck from "../../components/functions/statusCheck";
-import PageLoadingContext from '../../components/functions/PageLoadingContext'
+import PageLoadingContext from '../../components/functions/PageLoadingContext';
 
 export default function Timereport({ isUpdate }) {
   const { id } = useParams();
@@ -136,7 +136,7 @@ export default function Timereport({ isUpdate }) {
     fetchUserId();
   }, []);
 
-  if (isLoading) return <PageLoadingContext/>;
+  if (isLoading) return <PageLoadingContext />;
   if (error) return <div>Error fetching data: {error}</div>;
 
   const isFormInvalid = () => {
@@ -188,8 +188,6 @@ export default function Timereport({ isUpdate }) {
 
       const alertMessage = handleResponse(response.status);
       setAlertMessage(alertMessage);
-
-      console.log(response.status);
 
       if (response.status === 200 || response.status === 201) {
         resetUserInput();
