@@ -7,19 +7,20 @@ import { ChartsTooltip } from '@mui/x-charts/ChartsTooltip';
 const ProjectChart = ({ project }) => {
     const hoursWorked = project?.properties?.['Hours Worked']?.rollup?.number || 0;
     const hoursLeft = project?.properties?.['Hours Left']?.formula?.number || 0;
+    const hoursOverBudget = project?.properties?.['Hours Over Budget']?.formula?.number || 0;
     const totalHours = hoursWorked + hoursLeft;
-  
+
     const seriesData = [
         { id: 2, value: hoursWorked, label: 'Hours Worked', percentage: (hoursWorked / totalHours * 100).toFixed(0) },
         { id: 3, value: hoursLeft, label: 'Hours Left', percentage: (hoursLeft / totalHours * 100).toFixed(0) },
+        { id: 4, value: hoursOverBudget, label: 'Hours Over Budget', percentage: (hoursOverBudget / totalHours * 100).toFixed(0) }
     ];
 
     return (
         <>
-        <div className='box-headers'>
-        <h4>Project hours</h4>
-        <h4>Total: {totalHours}</h4>
-        </div>
+            <div className='box-headers'>
+                <h4>Logged Hours</h4>
+            </div>
             <ResponsiveChartContainer
                 series={[
                     {
@@ -37,25 +38,25 @@ const ProjectChart = ({ project }) => {
                 ]}
                 height={220}
             >
-                <ChartsTooltip trigger='item'/>
+                <ChartsTooltip trigger='item' />
                 <PiePlot />
-                <ChartsLegend 
+                <ChartsLegend
                     slotProps={{
                         legend: {
-                          direction: 'row',
-                          position: { vertical: 'bottom', horizontal: 'middle' },
-                          padding: 0,
-                          itemMarkWidth: 5,
-                          itemMarkHeight: 5,
-                          markGap: 5,
-                          itemGap: 10,
-                          labelStyle: {
-                            fontSize: 10,
-                          },
+                            direction: 'row',
+                            position: { vertical: 'bottom', horizontal: 'middle' },
+                            padding: 0,
+                            itemMarkWidth: 5,
+                            itemMarkHeight: 5,
+                            markGap: 5,
+                            itemGap: 10,
+                            labelStyle: {
+                                fontSize: 10,
+                            },
 
                         },
-                      }}
-                     />
+                    }}
+                />
             </ResponsiveChartContainer>
         </>
     );
