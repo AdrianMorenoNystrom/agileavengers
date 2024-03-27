@@ -48,10 +48,9 @@ const WeeklyReport = ({ projectId }) => {
       {totalHours !== 0 ? (
         <div className="project-graph">
           <div className="project-title">
-            <h4>Hours Reported Last Week</h4>
+            <h4 style={{marginBottom: "1.5em"}}>Hours Reported Last Week</h4>
           </div>
           <BarChart
-            margin={{ top: 50, bottom: 50, left: 50, right: 200 }}
             xAxis={[
               {
                 scaleType: "band",
@@ -61,18 +60,23 @@ const WeeklyReport = ({ projectId }) => {
               },
             ]}
             series={chartData}
-            width={500}
-            height={300}
+            height={280}
             slotProps={{
               legend: {
-                direction: "column",
-                position: { vertical: "center", horizontal: "right" },
-                itemMarkHeight: 10,
-                itemMarkWidth: 10,
-                itemGap: 5,
+                direction: 'row',
+                position: { vertical: 'top', horizontal: 'middle' },
+                padding: 0,
+                itemMarkWidth: 5,
+                itemMarkHeight: 5,
+                markGap: 5,
+                itemGap: 10,
+                labelStyle: {
+                  fontSize: 12,
+                },
               },
             }}
             tooltip={{ trigger: "item" }}
+            
           />
         </div>
       ) : (

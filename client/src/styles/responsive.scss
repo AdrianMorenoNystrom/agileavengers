@@ -33,3 +33,9 @@ $xxl: 1400px;
         @content;
     }
 }
+
+@mixin min-xl {
+    @media screen and (min-width: ($xl)) {
+        @content;
+    }
+}

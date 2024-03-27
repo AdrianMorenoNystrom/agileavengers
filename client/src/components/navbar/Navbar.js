@@ -1,23 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import "./navbar.scss";
 import { Rocket } from 'lucide-react';
 import Menu from '@mui/material/Menu';
 import Logout from "../Logout";
 import GetAvatar from "../UserAvatar";
 import NotificationMessage from "../Notification";
- 
- 
+
 const Navbar = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
- 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
- 
+
   const handleClose = () => {
     setAnchorEl(null);
   };
- 
+
   return (
     <div className="navbar">
       <div className="logo">
@@ -44,6 +43,5 @@ const Navbar = () => {
     </div>
   );
 };
- 
+
 export default Navbar;
- 

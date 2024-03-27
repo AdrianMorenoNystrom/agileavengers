@@ -1,4 +1,5 @@
 @import "../../styles/variables.scss";
+@import "../../styles/responsive.scss";
 
 .project {
     display: grid;
@@ -6,10 +7,27 @@
     grid-template-columns: repeat(3, 1fr);
     grid-auto-rows: minmax(180px, auto);
 
+    @include xl {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @include lg {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include sm {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
     .project-heading {
+        grid-column: span 2;
+        grid-row: span 1;
         border-radius: $rounded;
-        padding: 1.5em;
         background-color: $light-bg;
+
+        @include sm {
+            grid-column: span 1;
+        }
 
         .topInfo {
             display: flex;
@@ -18,43 +36,54 @@
             .status {
                 margin: 0 1em;
             }
+
+            @include sm {
+                margin-bottom: 0.5em;
+            }
         }
 
         .project-info {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
+            font-size: 0.8em;
 
             .item {
                 margin: 1em 0.5em;
                 flex-basis: calc(50% - 1em);
 
-                .itemTitle {
-                    margin: 0.5em 0;
-                    font-size: 0.75em;
-                    font-weight: 600;
+                @include sm {
+                    margin: 0.5em;
                 }
+            }
 
-                .itemValue {
-                    display: flex;
+            @include sm {
+                .item:last-child {
+                    flex-basis: calc(100% - 1em); // Apply flex-basis to the last .item on small screens
                 }
             }
         }
-    }
 
-    .activities {
-        background-color: $light-bg;
-        padding: 0 1em;
-        border-radius: $rounded;
-    }
+        .itemTitle {
+            margin: 0.5em 0;
+            font-size: 0.75em;
+            font-weight: 600;
+        }
 
-    .project-content {
-        grid-column: span 4;
+        .itemValue {
+            display: flex;
+        }
     }
+}
 
-    .charts {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+.activities {
+    background-color: $light-bg;
+    padding: 0 1em;
+    border-radius: $rounded;
+}
+
+.charts {
+    h4 {
+        margin-bottom: 1em;
     }
 }

@@ -1,7 +1,26 @@
 @import "../../styles/variables.scss";
 @import "../../styles/responsive.scss";
 
-.menu {
+.sideBarContainer {
+    width: 0;
+    transition: width 0.3s ease;
+
+    &.open {
+        width: 200px;
+    }
+}
+
+.sidebar {
+    width: 200px;
+    padding: 20px;
+    transform: translateX(-200px);
+    transition: transform 0.3s ease;
+
+
+    &.open {
+        transform: translateX(0);
+    }
+
     .item {
         display: flex;
         flex-direction: column;
@@ -13,10 +32,6 @@
             font-weight: 200;
             color: #b0b0b0;
             text-transform: uppercase;
-
-            @include lg {
-                display: none;
-            }
         }
 
         .listItem {
@@ -31,11 +46,6 @@
                 background-color: $light-bg;
             }
 
-            .listItemTitle {
-                @include lg {
-                    display: none;
-                }
-            }
 
             .unfold-item {
                 margin-left: auto;

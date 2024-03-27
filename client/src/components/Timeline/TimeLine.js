@@ -44,8 +44,7 @@ function TimeLine({ projectId, filterByUser }) {
                     </li>
                 ))}
             </ul>
-            {/* Change the link to see ALL timereports not just your own. */}
-            <div className='timeline-bottom'><a href='/timereports/all-history'>View all activity <ChevronRight size={14} /></a></div>
+            <a href='/timereports/all-history'><div className='timeline-bottom'>View all activity <ChevronRight size={14} /></div></a>
         </div>
         </>
     );

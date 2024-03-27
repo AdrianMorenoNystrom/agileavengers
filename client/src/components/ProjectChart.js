@@ -52,7 +52,6 @@ const ProjectChart = ({ project }) => {
                           labelStyle: {
                             fontSize: 10,
                           },
-
                         },
                       }}
                      />
