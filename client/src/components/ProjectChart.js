@@ -43,17 +43,16 @@ const ProjectChart = ({ project }) => {
                 <ChartsLegend
                     slotProps={{
                         legend: {
-                            direction: 'row',
-                            position: { vertical: 'bottom', horizontal: 'middle' },
-                            padding: 0,
-                            itemMarkWidth: 5,
-                            itemMarkHeight: 5,
-                            markGap: 5,
-                            itemGap: 10,
-                            labelStyle: {
-                                fontSize: 10,
-                            },
-
+                          direction: 'row',
+                          position: { vertical: 'bottom', horizontal: 'middle' },
+                          padding: 0,
+                          itemMarkWidth: 5,
+                          itemMarkHeight: 5,
+                          markGap: 5,
+                          itemGap: 10,
+                          labelStyle: {
+                            fontSize: 10,
+                          },
                         },
                     }}
                 />

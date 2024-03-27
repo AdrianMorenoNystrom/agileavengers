@@ -10,7 +10,6 @@ import User from './pages/user/User';
 import Timereport from "./pages/timereport/Timereport";
 import TimereportHistory from "./pages/timereport/History";
 import Navbar from './components/navbar/Navbar';
-import Menu from './components/menu/Menu';
 import PrivateRoutes from './components/PrivateRoutes';
 import AuthProvider from './components/AuthProvider';
 import CreateAccount from './pages/CreateAccount-page';
@@ -20,20 +19,21 @@ import NewProject from './pages/new project/NewProject';
 import '@fontsource-variable/inter';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './styles/theme';
+import SideBar from './components/sidebar/SideBar';
+import './components/sidebar/SideBar';
 
 function App() {
+
     const Layout = () => {
         return (
             <ThemeProvider theme={theme}>
                 <div className="main">
                     <Navbar />
                     <div className="container">
-                        <div className="menuContainer">
-                            <Menu />
-                        </div>
-                        <div className="contentContainer">
-                            <Outlet />
-                        </div>
+                        <SideBar/>
+                      <div className="contentContainer">
+                          <Outlet />
+                      </div>
                     </div>
                 </div>
             </ThemeProvider>

@@ -1,3 +1,5 @@
+@import "../../styles/responsive.scss";
+
 .worked-hours {
 
     display: flex;
@@ -10,6 +12,10 @@
         justify-content: space-around;
         font-size: 0.7em;
         text-transform: uppercase;
+
+        @include sm {
+            font-size: 0.5em;
+        }
     }
 
     .widget-result {
@@ -17,6 +23,10 @@
         font-weight: 600;
         font-size: 4em;
         line-height: 1.2;
+
+        @include sm {
+            font-size: 3em;
+        }
     }
 
 }

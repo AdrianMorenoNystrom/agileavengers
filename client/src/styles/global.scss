@@ -1,6 +1,6 @@
 @import "./variables.scss";
 @import "./responsive.scss";
-
+@import "../components/sidebar/sidebar.scss";
 
 * {
     margin: 0;
@@ -27,7 +27,6 @@ p {
 .grid-item {
     padding: 20px;
     border-radius: $rounded;
-    // border: 1px solid $border-color;
     background-color: $light-bg;
 }
 
@@ -45,12 +44,14 @@ p {
     grid-column: span 2;
     grid-row: span 1;
 
-    @include md {
+    @include sm {
         grid-column: span 1;
     }
+
 }
 
 .box-headers {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -61,19 +62,9 @@ p {
     height: 100vh;
 }
 
-.menuContainer {
-    width: 200px;
-    padding: 5px 20px;
-    // border-right: 2px solid $border-color;
-
-    @include lg {
-        width: max-content;
-    }
-}
-
 .contentContainer {
     padding: 5px 20px;
-    width: 90%;
+    width: 100%;
 }
 
 table {

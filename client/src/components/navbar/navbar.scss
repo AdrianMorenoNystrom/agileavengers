@@ -1,5 +1,18 @@
 @import "../../styles/responsive.scss";
-@import "../../styles/responsive.scss";
+
+.mobileMenu {
+    position: absolute;
+    top: 29px;
+    left: 27px;
+}
+
+.mobileMenu {
+    display: none;
+
+    @include md {
+        display: block;
+    }
+}
 
 .navbar {
     width: 100%;
@@ -8,11 +21,19 @@
     align-items: center;
     justify-content: space-between;
 
+    @include md {
+        justify-content: right;
+    }
+
     .logo {
         display: flex;
         align-items: center;
         font-weight: bold;
         gap: 10px;
+
+        @include md {
+            display: none;
+        }
     }
 
     .icons {
@@ -22,7 +43,7 @@
         cursor: pointer;
 
         .icon {
-            @include sm {
+            @include md {
                 display: none;
             }
         }

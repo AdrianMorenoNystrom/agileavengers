@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import "./navbar.scss";
 import { Rocket } from 'lucide-react';
 import Menu from '@mui/material/Menu';
@@ -15,7 +15,7 @@ const Navbar = () => {
   const handleProfileClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
- 
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -51,6 +51,5 @@ const Navbar = () => {
     </div>
   );
 };
- 
+
 export default Navbar;
- 
