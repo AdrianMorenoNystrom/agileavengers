@@ -43,8 +43,8 @@ export default function ActiveProjects({ onProjectSelect }) {
                 <TableRow>
                     <TableCell>Open</TableCell>
                     <TableCell>Project</TableCell>
-                    <TableCell align="right">Leader</TableCell>
-                    <TableCell align="right">Deadline</TableCell>
+                    <TableCell>Leader</TableCell>
+                    <TableCell>Deadline</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
@@ -66,10 +66,10 @@ export default function ActiveProjects({ onProjectSelect }) {
                         <TableCell component="th" scope="row">
                             {project?.properties?.Projectname?.title?.[0]?.text?.content}
                         </TableCell>
-                        <TableCell align="right">
+                        <TableCell>
                             {project?.properties?.['Project Leader Name']?.rollup?.array?.[0]?.formula?.string || "N/A"}
                         </TableCell>
-                        <TableCell align="right">
+                        <TableCell>
                             {project?.properties?.Timespan?.date?.end || "N/A"}
                         </TableCell>
                     </TableRow>
