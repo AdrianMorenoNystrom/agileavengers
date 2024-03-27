@@ -3,6 +3,7 @@ import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import useFetchData from './UseFetchData';
 import stringToColor from './functions/stringToColor';
+import LoadingContext from './functions/LoadingContext'
 
 function generateAvatarInfo(data) {
     const fullName = data?.properties?.['Full Name']?.formula?.string || '';
@@ -15,7 +16,7 @@ function generateAvatarInfo(data) {
 const GetAvatar = () => {
     const { data, isLoading, error } = useFetchData('/api/people/user');
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <LoadingContext/>;
     if (error) return <div>{error}</div>;
     if (!data) return <div>No data available</div>;
 

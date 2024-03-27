@@ -16,6 +16,7 @@ import statusCheck from './functions/statusCheck';
 import '../pages/projects/projects.scss';
 import { formatTime } from './functions/timeFormatter';
 import { ExternalLink } from 'lucide-react';
+import PageLoadingContext from './functions/PageLoadingContext'
 
 export default function ProjectTable() {
     const { data, isLoading, error } = useFetchData('/api/projects');
@@ -109,7 +110,7 @@ export default function ProjectTable() {
         navigate(`/projects/${projectId}`);
     };
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <PageLoadingContext/>;
     if (error) return <div>{error}</div>;
 
     return (
