@@ -90,7 +90,7 @@ export default function CreateAccount() {
           </Avatar>
 
           <Typography component="h1" variant="h5">
-            New User
+            New user
           </Typography>
 
           {showLoading && (
@@ -166,7 +166,7 @@ export default function CreateAccount() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Add new user
+                Create new user
               </Button>
               <Grid item></Grid>
             </Grid>

@@ -25,7 +25,7 @@ const Menu = () => {
             <div key={listItem.id}>
               {listItem.title === "Create" ? (
                 <div onClick={handleClick} className='listItem'>
-                  <SquarePlus size={20} /> Create <span className='unfold-item'></span>
+                  <SquarePlus size={20} /> Create
                 </div>
               ) : (
                 <Link to={listItem.url} className="listItem">

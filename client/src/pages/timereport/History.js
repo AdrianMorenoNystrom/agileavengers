@@ -77,7 +77,7 @@ export default function TimeReportHistory({ isAllHistory }) {
 
   return (
     <Fragment>
-      <Typography variant="h2" mb={2}>
+      <Typography variant="h5" mb={2}>
         {isAllHistory ? "All Time Reports" : "Your Time Reports"}
       </Typography>
       <TableContainer component={Paper}>
