@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 import {
     DataGrid,
     GridToolbarContainer,
@@ -7,22 +8,22 @@ import {
     GridToolbarDensitySelector,
     getGridDateOperators,
 } from '@mui/x-data-grid';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
 import useFetchData from './UseFetchData';
 import WeeklyReport from './GetWeeklyReport';
-import { Box, Container, Chip } from '@mui/material';
-import Divider from '@mui/material/Divider';
+import { Box, Container, Chip, Divider, FormControlLabel, Switch, Tooltip } from '@mui/material';
 import GetAllProjectAvatars from './GetAllProjectAvatars';
 import statusCheck from './functions/statusCheck';
 import '../pages/projects/projects.scss';
 import { formatTime } from './functions/timeFormatter';
+import { ExternalLink } from 'lucide-react';
+import PageLoadingContext from './functions/PageLoadingContext'
 
 export default function ProjectTable() {
     const { data, isLoading, error } = useFetchData('/api/projects');
     const [showOnlyUserProjects, setShowOnlyUserProjects] = useState(false);
     const [userId, setUserId] = useState("");
     const [selectedProjectId, setSelectedProjectId] = useState(null);
+    const navigate = useNavigate();
 
     function CustomToolbar() {
         return (
@@ -34,31 +35,30 @@ export default function ProjectTable() {
         );
     }
 
-
     const columns = [
         { field: 'projectName', headerName: 'Project', width: 130, },
         { field: 'status', headerName: 'Status', width: 70 },
         { field: 'projectLeader', headerName: 'Project Leader', width: 130 },
-        { 
-            field: 'teamMembers', 
-            headerName: 'Team Members', 
-            width: 200, 
+        {
+            field: 'teamMembers',
+            headerName: 'Team Members',
+            width: 190,
             renderCell: (params) => {
-                const projectId = params.row.projectId; 
+                const projectId = params.row.projectId;
                 return (
-                        <GetAllProjectAvatars projectId={projectId} max={3}/>
+                    <GetAllProjectAvatars projectId={projectId} max={4} />
                 );
             }
         },
-        { field: 'startDate', headerName: 'Start Date', width: 125 },
-        { field: 'endDate', headerName: 'End Date', width: 125 },
-        { field: 'hoursTotal', headerName: 'Total Hours Planned', width: 150, align: 'right' },
+        { field: 'startDate', headerName: 'Start Date', width: 120 },
+        { field: 'endDate', headerName: 'End Date', width: 120 },
+        { field: 'hoursTotal', headerName: 'Total Hours Planned', width: 140, align: 'right' },
         { field: 'hoursWorked', headerName: 'Hours Worked', width: 120, align: 'right' },
         { field: 'hoursLeft', headerName: 'Hours Remaining', width: 130, align: 'right' },
         { field: 'hoursOverBudget', headerName: 'Hours Over Budget', width: 135, align: 'right' },
     ];
-    
-    
+
+
     const rows = data && data.map((project, index) => ({
         id: index + 1,
         projectId: project?.id,
@@ -106,7 +106,11 @@ export default function ProjectTable() {
         setSelectedProjectId(projectId.row.projectId);
     };
 
-    if (isLoading) return <div>Loading...</div>;
+    const handleExternalLinkClick = (projectId) => {
+        navigate(`/projects/${projectId}`);
+    };
+
+    if (isLoading) return <PageLoadingContext/>;
     if (error) return <div>{error}</div>;
 
     return (
@@ -150,6 +154,15 @@ export default function ProjectTable() {
                                 size="small"
                                 label={rows.find(row => row.projectId === selectedProjectId).status}
                             />
+                            <Box className="icon-container">
+                                <Tooltip title="Open project">
+                                    <ExternalLink
+                                        className='external-link-icon'
+                                        size={18}
+                                        onClick={() => handleExternalLinkClick(selectedProjectId)}
+                                    />
+                                </Tooltip>
+                            </Box>
                         </Box>
                         <Box className='project-info'>
                             <div className='item'>
@@ -175,7 +188,7 @@ export default function ProjectTable() {
                                 <div className='item-title'>Team</div>
                                 <div className='item-value'>
                                     <ul>
-                                        <GetAllProjectAvatars projectId={selectedProjectId} max={10} spacing={'large'}/>
+                                        <GetAllProjectAvatars projectId={selectedProjectId} max={10} spacing={'large'} />
                                     </ul>
                                 </div>
                             </div>

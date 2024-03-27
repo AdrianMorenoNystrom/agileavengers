@@ -19,7 +19,6 @@ function useFetchTimereports(projectId, filterByUser) {
         if (response.status === 401) {
           throw new Error("Unauthorized");
         }
-        console.log("data", response.data);
         setTimereports(response.data);
       } catch (error) {
         console.error("Error fetching timereports:", error);

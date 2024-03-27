@@ -23,6 +23,17 @@
             .status {
                 margin: 0 1em;
             }
+
+            .icon-container {
+                border-radius: 50%;
+                cursor: pointer;
+                transition: all ease-in-out 0.3s;
+            }
+
+            .icon-container:hover {
+                background-color: $border-color;
+                scale: 1.1;
+            }
         }
 
         .project-title h2 {

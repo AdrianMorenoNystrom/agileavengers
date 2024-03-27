@@ -4,11 +4,12 @@ import { BarChart } from "@mui/x-charts";
 import getWeekNumber from "./functions/getWeekNumber";
 import "../pages/projects/projects.scss";
 import { formatTime } from "./functions/timeFormatter";
+import LoadingContext from './functions/LoadingContext';
 
 const WeeklyReport = ({ projectId }) => {
   const { data, isLoading, error } = useFetchData("/api/timereports/weekly");
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LoadingContext />;
   if (error) return <div>{error}</div>;
 
   const selectedProject = data.filter(
@@ -81,7 +82,7 @@ const WeeklyReport = ({ projectId }) => {
         </div>
       ) : (
         <div className="project-title">
-          <h4>This project has no hours reported for last week.</h4>
+          <h4>This project has no hours reported for last week</h4>
         </div>
       )}
     </>
@@ -89,12 +90,3 @@ const WeeklyReport = ({ projectId }) => {
 };
 
 export default WeeklyReport;
-
-// {filteredTimeReports.map((timereport) => (
-//     <div key={timereport.id}>
-//         {/* <div>{timereport?.properties?.Name?.rollup?.array?.[0]?.formula?.string}</div> */}
-//         <div>{timereport?.properties?.Date?.date?.start}</div>
-//         {/* <div>{timereport?.properties?.Hours?.number}</div> */}
-//         {/* <div>{timereport?.properties?.Category?.select !== null ? timereport?.properties?.Category?.select.name : ''}</div> */}
-//     </div>
-// ))}

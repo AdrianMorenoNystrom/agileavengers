@@ -2,13 +2,13 @@ import React from 'react';
 import useFetchTimereports from '../useFetchTimereports';
 import { ChevronRight, MoveRight } from 'lucide-react';
 import { formatTime } from '../functions/timeFormatter';
+import LoadingContext from '../functions/LoadingContext';
 
 function TimeLine({ projectId, filterByUser }) {
     const { timereports, isLoading, error } = useFetchTimereports(projectId, filterByUser);
-    console.log(timereports);
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <LoadingContext />;
     }
 
     if (error) {

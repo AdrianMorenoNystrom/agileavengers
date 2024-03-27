@@ -25,6 +25,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/en-gb";
 import axios from "axios";
 import statusCheck from "../../components/functions/statusCheck";
+import PageLoadingContext from '../../components/functions/PageLoadingContext';
 
 export default function Timereport({ isUpdate }) {
   const { id } = useParams();
@@ -56,6 +57,7 @@ export default function Timereport({ isUpdate }) {
   const [alertMessage, setAlertMessage] = useState({});
   const [category, setCategory] = useState("");
   const [allCategories, setAllCategories] = useState([]);
+  const [userId, setUserId] = useState("");
 
   useEffect(() => {
     if (timereportData) {
@@ -117,7 +119,24 @@ export default function Timereport({ isUpdate }) {
     fetchCategories();
   }, []);
 
-  if (isLoading) return <div>Loading...</div>;
+  useEffect(() => {
+    const fetchUserId = async () => {
+      try {
+        const response = await fetch("/api/people/user");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const result = await response.json();
+        const newUserId = result.message.id;
+        setUserId(newUserId);
+      } catch (error) {
+        console.error("Error fetching categories: ", error);
+      }
+    };
+    fetchUserId();
+  }, []);
+
+  if (isLoading) return <PageLoadingContext />;
   if (error) return <div>Error fetching data: {error}</div>;
 
   const isFormInvalid = () => {
@@ -170,7 +189,7 @@ export default function Timereport({ isUpdate }) {
       const alertMessage = handleResponse(response.status);
       setAlertMessage(alertMessage);
 
-      if (response.status === 200) {
+      if (response.status === 200 || response.status === 201) {
         resetUserInput();
       }
     } catch (error) {
@@ -196,6 +215,28 @@ export default function Timereport({ isUpdate }) {
       };
     }
   };
+
+  const userProjects = data.filter(project =>
+    project.properties?.People?.relation?.some(user => user.id === userId) ||
+    project.properties?.['Project Leader']?.relation?.[0]?.id === userId
+  );
+
+  const otherProjects = data.filter(project =>
+    !userProjects.includes(project)
+  );
+
+  const optionsWithHeaders = [
+    { label: "Your Projects", disabled: true },
+    ...userProjects.map(project => ({
+      ...project,
+      status: project.properties?.Status?.select?.name
+    })).filter(project => project.status !== 'Paused'),
+    { label: "Other Projects", disabled: true },
+    ...otherProjects.map(project => ({
+      ...project,
+      status: project.properties?.Status?.select?.name
+    })).filter(project => project.status !== 'Paused')
+  ];
 
   return (
     <Container maxWidth="md">
@@ -237,33 +278,40 @@ export default function Timereport({ isUpdate }) {
             onChange={(event, newValue) =>
               setProjectId(newValue ? newValue.id : "")
             }
-            options={data || []}
+            options={optionsWithHeaders.filter(option => option.properties?.Status?.select?.name !== 'Paused')}
+            groupBy={(option) => option.label}
             getOptionLabel={(option) =>
               option?.properties?.Projectname?.title?.[0]?.text?.content || ""
             }
             isOptionEqualToValue={(option, value) => option.id === value.id}
-            renderOption={(props, option) => (
-              <MenuItem {...props} key={option.id} value={option.id}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    width: "100%",
-                  }}>
-                  <span style={{ marginRight: 8 }}>
-                    {option?.properties?.Projectname?.title?.[0]?.text?.content}
-                  </span>
-                  <Chip
-                    label={option?.properties?.Status?.select?.name}
-                    color={statusCheck(
-                      option?.properties?.Status?.select?.name
-                    )}
-                    size="small"
-                  />
-                </Box>
-              </MenuItem>
-            )}
+            renderOption={(props, option) => {
+              if (option.id) {
+                return (
+                  <MenuItem {...props} key={option.id} value={option.id}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        width: "100%",
+                      }}>
+                      <span style={{ marginRight: 8 }}>
+                        {option?.properties?.Projectname?.title?.[0]?.text?.content}
+                      </span>
+                      <Chip
+                        label={option.status}
+                        color={statusCheck(
+                          option.status
+                        )}
+                        size="small"
+                      />
+                    </Box>
+                  </MenuItem>
+                );
+              } else {
+                return null;
+              }
+            }}
             renderInput={(params) => <TextField {...params} label="Project" />}
             sx={{ marginBottom: 2 }}
           />
@@ -281,6 +329,7 @@ export default function Timereport({ isUpdate }) {
             }}>
             <DatePicker
               value={date}
+              maxDate={dayjs(new Date())}
               onChange={(newDate) => {
                 if (newDate) {
                   setDate(dayjs(newDate.$d).format("YYYY-MM-DD"));
