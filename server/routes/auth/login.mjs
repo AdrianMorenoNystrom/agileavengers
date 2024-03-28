@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import notion from "../../notion.mjs";
+import bcrypt from "bcrypt";
 
 dotenv.config();
 
@@ -21,11 +22,16 @@ router.post("/api/auth/login", async (request, response) => {
     return user.properties.Email?.rich_text[0]?.text.content === email;
   });
 
-  if (!foundUser || foundUser.properties.Password?.rich_text[0]?.text.content !== password)
+  // Password comparison
+  const isCorrectPassword = await bcrypt.compare(
+    password,
+    foundUser.properties.Password?.rich_text[0]?.text.content
+  );
+
+  if (!foundUser || !isCorrectPassword)
     return response.status(401).send({ msg: "Invalid credentials" });
 
   request.session.user = { id: foundUser.id }; // Lagrar ID i sessionen.
-
 
   return response.status(200).send(foundUser);
 });
