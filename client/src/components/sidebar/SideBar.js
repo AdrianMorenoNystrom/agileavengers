@@ -8,10 +8,10 @@ import { Menu as MenuIcon } from 'lucide-react';
 import { useMediaQuery } from '@mui/material';
 
 
-const SideBar = ({ }) => {
+const SideBar = () => {
   const isMobile = useMediaQuery('(max-width: 768px)'); 
   const [anchorEl, setAnchorEl] = useState(null);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(!isMobile);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(isMobile);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
