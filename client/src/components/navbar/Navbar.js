@@ -8,6 +8,8 @@ import NotificationMessage from "../Notification";
 import { Chip } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+
+
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
@@ -26,9 +28,11 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
-      <div className="logo">
-        <Rocket size={20} />
-        <span>Agile Avengers</span>
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <div className="logo">
+          <Rocket size={20} />
+          <span>Agile Avengers</span>
+        </div>
         <Chip label="Report time" variant="outlined" icon={<EventAvailableIcon />} onClick={handleClick} sx={{marginLeft:5}}/>
       </div>
       <div className="icons">

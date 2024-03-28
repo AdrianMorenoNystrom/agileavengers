@@ -21,9 +21,7 @@
     align-items: center;
     justify-content: space-between;
 
-    @include md {
-        justify-content: right;
-    }
+    @include md {}
 
     .logo {
         display: flex;
