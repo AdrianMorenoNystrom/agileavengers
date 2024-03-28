@@ -41,7 +41,7 @@ function Home() {
         <ActiveProjects onProjectSelect={setSelectedProject} />
       </div>
       <div className="grid-item box"><TimeLine /></div>
-      <div className="grid-item box"><WidgetPlaceholder /></div>
+      <div className="grid-item box placeholder"><WidgetPlaceholder /></div>
       {selectedProject && !isLoading && (
         <div className="grid-item box charts">
           <CategoryChart project={selectedProject} /></div>
