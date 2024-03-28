@@ -9,10 +9,13 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import useFetchTimeReport from "../../components/useFetchTimereports";
 import { formatTime } from "../../components/functions/timeFormatter";
-import { Typography } from "@mui/material";
-import PageLoadingContext from '../../components/functions/PageLoadingContext'
+import { Stack, Typography } from "@mui/material";
+import PageLoadingContext from "../../components/functions/PageLoadingContext";
+import axios from "axios";
+import AlertMessage from "../../components/AlertMessage";
 
 export default function TimeReportHistory({ isAllHistory }) {
   const { timereports, isLoading, error } = useFetchTimeReport(
@@ -23,12 +26,15 @@ export default function TimeReportHistory({ isAllHistory }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [hoveredRow, setHoveredRow] = useState(null);
+  const [updatedTimereports, setUpdatedTimereports] = useState(timereports);
+  const [alertMessage, setAlertMessage] = useState({});
 
   useEffect(() => {
     setPage(0);
-  }, [isAllHistory]);
+    setUpdatedTimereports(timereports);
+  }, [isAllHistory, timereports]);
 
-  if (isLoading) return <PageLoadingContext/>;
+  if (isLoading) return <PageLoadingContext />;
   if (error) return <div>{error}</div>;
 
   let columns = [
@@ -48,7 +54,7 @@ export default function TimeReportHistory({ isAllHistory }) {
     ];
   }
 
-  const rows = timereports.map((timereport, index) => {
+  const rows = updatedTimereports.map((timereport, index) => {
     const projectId = timereport.id;
     const time = formatTime(timereport.properties.Hours.number);
     const date = timereport.properties.Date.date.start;
@@ -76,8 +82,42 @@ export default function TimeReportHistory({ isAllHistory }) {
     setPage(0);
   };
 
+  async function handleDelete(time_report_id) {
+    try {
+      const response = await axios.post("/api/timereport/delete", {
+        time_report_id,
+      });
+
+      setUpdatedTimereports((prevTimereports) =>
+        prevTimereports.filter((report) => report.id !== time_report_id)
+      );
+      const alertMessage = handleResponse(response.status);
+      setAlertMessage(alertMessage);
+    } catch (error) {}
+  }
+
+  const handleResponse = (status) => {
+    if (status === 200) {
+      return {
+        severity: "success",
+        message: "Your timereport has been deleted!",
+      };
+    } else {
+      return {
+        severity: "error",
+        message: "Oh no! Failed to delete time report!",
+      };
+    }
+  };
+
   return (
     <Fragment>
+      <AlertMessage
+        open={!!alertMessage.message}
+        message={alertMessage.message || ""}
+        severity={alertMessage.severity || ""}
+        onClose={() => setAlertMessage({})}
+      />
       <Typography variant="h5" mb={2}>
         {isAllHistory ? "All Time Reports" : "Your Time Reports"}
       </Typography>
@@ -111,9 +151,14 @@ export default function TimeReportHistory({ isAllHistory }) {
                     <strong>{row.projectName}</strong>
                     <br />
                     {!isAllHistory && hoveredRow === index ? (
-                      <Link to={`../timereport/edit/${row.projectId}`}>
-                        <EditIcon style={{ fontSize: 22 }} />
-                      </Link>
+                      <Stack direction="row">
+                        <Link to={`../timereport/edit/${row.projectId}`}>
+                          <EditIcon style={{ fontSize: 22 }} />
+                        </Link>
+                        <DeleteIcon
+                          onClick={() => handleDelete(row.projectId)}
+                          style={{ cursor: "pointer" }}></DeleteIcon>
+                      </Stack>
                     ) : (
                       <span
                         style={{
