@@ -3,6 +3,7 @@ import useFetchTimereports from '../useFetchTimereports';
 import { ChevronRight, MoveRight } from 'lucide-react';
 import { formatTime } from '../functions/timeFormatter';
 import LoadingContext from '../functions/LoadingContext';
+import WidgetTagger from "../widgets/widgetTagger";
 
 function TimeLine({ projectId, filterByUser }) {
     const { timereports, isLoading, error } = useFetchTimereports(projectId, filterByUser);
@@ -23,7 +24,10 @@ function TimeLine({ projectId, filterByUser }) {
 
     return (
         <>
-        <h4 className='box-headers add-margin'>Latest activities</h4>
+        <div className='box-headers'>
+            <h4 className='add-margin'>Latest activities</h4>
+            <WidgetTagger projectId={projectId} />
+        </div>
         <div className='activities'>
             <ul>
                 {latestActivities.map((timereport, index) => (

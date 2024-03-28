@@ -1,19 +1,11 @@
 @import "../../styles/variables.scss";
 @import "../../styles/responsive.scss";
 
-@include xl {}
-
-@include md {}
-
-
-.add-margin {
-  margin-bottom: 1em;
-}
-
 .activities {
   position: relative;
   overflow: hidden;
   padding: 0 1em;
+  margin-top: 0.5em;
 
   @include md {
     padding: 0 0.5em;

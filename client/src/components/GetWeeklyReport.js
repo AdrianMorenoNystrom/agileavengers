@@ -5,6 +5,7 @@ import getWeekNumber from "./functions/getWeekNumber";
 import "../pages/projects/projects.scss";
 import { formatTime } from "./functions/timeFormatter";
 import LoadingContext from './functions/LoadingContext';
+import WidgetTagger from "../components/widgets/widgetTagger";
 
 const WeeklyReport = ({ projectId }) => {
   const { data, isLoading, error } = useFetchData("/api/timereports/weekly");
@@ -48,8 +49,9 @@ const WeeklyReport = ({ projectId }) => {
     <>
       {totalHours !== 0 ? (
         <div className="project-graph">
-          <div className="project-title">
-            <h4 style={{marginBottom: "1.5em"}}>Hours Reported Last Week</h4>
+          <div style={{marginBottom:"1em"}} className="box-headers">
+            <h4>Hours reported last week</h4>
+            <WidgetTagger projectId={projectId}/>
           </div>
           <BarChart
             xAxis={[

@@ -3,6 +3,7 @@ import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer
 import { PiePlot } from '@mui/x-charts/PieChart';
 import { ChartsLegend } from '@mui/x-charts/ChartsLegend';
 import { ChartsTooltip } from '@mui/x-charts/ChartsTooltip';
+import WidgetTagger from "../components/widgets/widgetTagger";
 
 const ProjectChart = ({ project }) => {
     const hoursWorked = project?.properties?.['Hours Worked']?.rollup?.number || 0;
@@ -19,7 +20,8 @@ const ProjectChart = ({ project }) => {
     return (
         <>
             <div className='box-headers'>
-                <h4>Logged Hours</h4>
+                <h4>Logged hours</h4>
+                <WidgetTagger projectId={project} />
             </div>
             <ResponsiveChartContainer
                 series={[

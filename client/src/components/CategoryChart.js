@@ -5,6 +5,7 @@ import { ChartsLegend } from '@mui/x-charts/ChartsLegend';
 import useFetchTimereports from './useFetchTimereports.js';
 import { ChartsTooltip } from "@mui/x-charts/ChartsTooltip";
 import LoadingContext from '.././components/functions/LoadingContext.js';
+import WidgetTagger from "../components/widgets/widgetTagger";
 
 
 const CategoryChart = ({ project }) => {
@@ -36,7 +37,10 @@ const CategoryChart = ({ project }) => {
     }));
     return (
         <>
-            <h4>Logged work</h4>
+            <div className='box-headers'>
+                <h4>Work distribution</h4>
+                <WidgetTagger projectId={project} />
+            </div>
             <ResponsiveChartContainer
                 series={[
                     {
