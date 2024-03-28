@@ -50,7 +50,7 @@ const WeeklyReport = ({ projectId }) => {
       {totalHours !== 0 ? (
         <div className="project-graph">
           <div style={{marginBottom:"1em"}} className="box-headers">
-            <h4>Hours Reported Last Week</h4>
+            <h4>Hours reported last week</h4>
             <WidgetTagger projectId={projectId}/>
           </div>
           <BarChart

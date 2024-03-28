@@ -20,7 +20,7 @@ const ProjectChart = ({ project }) => {
     return (
         <>
             <div className='box-headers'>
-                <h4>Logged Hours</h4>
+                <h4>Logged hours</h4>
                 <WidgetTagger projectId={project} />
             </div>
             <ResponsiveChartContainer
