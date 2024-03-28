@@ -47,6 +47,25 @@ export default function Timereport({ isUpdate }) {
     }
   }, [isUpdate, id]);
 
+
+  useEffect(() => {
+    const fetchProjectsData = async () => {
+      try {
+        const response = await axios.get("/api/projects");
+        if (response.data && response.data.message) {
+          setProjectsData(response.data.message); 
+        }
+      } catch (error) {
+        console.error("Kunde inte hämta projektdata:", error);
+      }
+    };
+  
+    fetchProjectsData();
+  }, []); 
+  
+  
+
+
   const [projectId, setProjectId] = useState("");
   const [projectName, setProjectName] = useState("");
   const [date, setDate] = useState(null);
@@ -58,6 +77,8 @@ export default function Timereport({ isUpdate }) {
   const [category, setCategory] = useState("");
   const [allCategories, setAllCategories] = useState([]);
   const [userId, setUserId] = useState("");
+  const [projectsData, setProjectsData] = useState([]);
+  
 
   useEffect(() => {
     if (timereportData) {
@@ -216,6 +237,38 @@ export default function Timereport({ isUpdate }) {
     }
   };
 
+
+  const handleDateChange = (newDate) => {
+    if (newDate) {
+      const formattedDate = dayjs(newDate);
+      setDate(formattedDate);
+
+      const selectedProject = projectsData.find(project => project.id === projectId);
+      if (!selectedProject) {
+        console.error("Selected project not found in projectsData");
+        return;
+      }
+
+      const projectTimespan = selectedProject.properties.Timespan.date;
+      if (!projectTimespan || !projectTimespan.start || !projectTimespan.end) {
+        console.error("Timespan data missing for selected project");
+        return;
+      }
+  
+      const projectStart = dayjs(projectTimespan.start);
+      const projectEnd = dayjs(projectTimespan.end);
+  
+      if (formattedDate.isBefore(projectStart) || formattedDate.isAfter(projectEnd)) {
+        setAlertMessage({
+          severity: "warning",
+          message: "You are attempting to report time outside the project's time period."
+        });
+      } else {
+        setAlertMessage({});
+      }
+    }
+  };
+  
   const userProjects = data.filter(project =>
     project.properties?.People?.relation?.some(user => user.id === userId) ||
     project.properties?.['Project Leader']?.relation?.[0]?.id === userId
@@ -327,22 +380,20 @@ export default function Timereport({ isUpdate }) {
                 flex: "1",
               },
             }}>
-            <DatePicker
-              value={date}
-              maxDate={dayjs(new Date())}
-              onChange={(newDate) => {
-                if (newDate) {
-                  setDate(dayjs(newDate.$d).format("YYYY-MM-DD"));
-                }
-              }}
-              label="Date"
-              sx={{ marginBottom: 2 }}
-              slotProps={{
-                textField: {
-                  error: false,
-                },
-              }}
-            />
+           <DatePicker
+          value={date}
+          maxDate={dayjs(new Date())}
+          onChange={handleDateChange} // Använder den uppdaterade handleDateChange funktionen här
+          label="Date"
+          sx={{ marginBottom: 2 }}
+          renderInput={(params) => (
+          <TextField
+          {...params}
+          error={!!alertMessage.message}
+          helperText={alertMessage.message}
+         />
+        )}
+        />
             <TimePicker
               ampm={false}
               value={fromTime}
