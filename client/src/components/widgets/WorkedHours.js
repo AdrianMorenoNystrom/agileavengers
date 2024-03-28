@@ -3,6 +3,8 @@ import useFetchTimereports from '../useFetchTimereports';
 import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import LoadingContext from '../../components/functions/LoadingContext'
+import WidgetTagger from './widgetTagger';
+
 
 function WorkedHours() {
   const { timereports, isLoading, error } = useFetchTimereports();
@@ -56,7 +58,10 @@ function WorkedHours() {
 
   return (
     <>
-      <h4>Logged hours</h4>
+    <div className='box-headers'>
+      <h4>Hours summary</h4>
+      <WidgetTagger />
+      </div>
       <div className='worked-hours'>
         {[
           { title: 'week', hours: hoursWeek },
