@@ -100,7 +100,7 @@ export default function TimeReportHistory({ isAllHistory }) {
     if (status === 200) {
       return {
         severity: "success",
-        message: "Your timereport has been deleted!",
+        message: "Your time report has been deleted!",
       };
     } else {
       return {
