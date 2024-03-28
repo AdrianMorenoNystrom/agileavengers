@@ -8,6 +8,7 @@ import WorkedHours from "../../components/widgets/WorkedHours";
 import CategoryChart from "../../components/CategoryChart";
 import { Chip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import WidgetPlaceholder from "../../components/widgets/WidgetPlaceholder";
 
 function Home() {
   const [selectedProject, setSelectedProject] = useState(null);
@@ -40,7 +41,7 @@ function Home() {
         <ActiveProjects onProjectSelect={setSelectedProject} />
       </div>
       <div className="grid-item box"><TimeLine /></div>
-      {/* <div className="grid-item box"><h1>Some stuff</h1></div> */}
+      <div className="grid-item box"><WidgetPlaceholder /></div>
       {selectedProject && !isLoading && (
         <div className="grid-item box charts">
           <CategoryChart project={selectedProject} /></div>
