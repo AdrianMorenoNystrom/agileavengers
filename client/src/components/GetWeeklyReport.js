@@ -49,9 +49,9 @@ const WeeklyReport = ({ projectId }) => {
     <>
       {totalHours !== 0 ? (
         <div className="project-graph">
-          <div style={{marginBottom:"1em"}} className="box-headers">
+          <div style={{ marginBottom: "1em" }} className="box-headers">
             <h4>Hours reported last week</h4>
-            <WidgetTagger projectId={projectId}/>
+            <WidgetTagger projectId={projectId} />
           </div>
           <BarChart
             xAxis={[
@@ -63,6 +63,7 @@ const WeeklyReport = ({ projectId }) => {
               },
             ]}
             series={chartData}
+            width={350}
             height={280}
             slotProps={{
               legend: {
@@ -79,7 +80,7 @@ const WeeklyReport = ({ projectId }) => {
               },
             }}
             tooltip={{ trigger: "item" }}
-            
+
           />
         </div>
       ) : (
