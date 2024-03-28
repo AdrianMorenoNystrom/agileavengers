@@ -20,58 +20,57 @@ import '@fontsource-variable/inter';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './styles/theme';
 import SideBar from './components/sidebar/SideBar';
-import './components/sidebar/SideBar';
 
 function App() {
 
-    const Layout = () => {
-        return (
-            <ThemeProvider theme={theme}>
-                <div className="main">
-                    <Navbar />
-                    <div className="container">
-                        <SideBar/>
-                      <div className="contentContainer">
-                          <Outlet />
-                      </div>
-                    </div>
-                </div>
-            </ThemeProvider>
-        );
-    };
-
+  const Layout = () => {
     return (
-      <Router>
-        <AuthProvider>
-          <Routes>
-            <Route element={<PrivateRoutes element={<Layout />} />}>
-              <Route path="/" element={<Home />} />
-              <Route path="/projects" element={<Projects />} />
-              <Route path="/projects/:id" element={<Project />} />
-              <Route path="/users" element={<Users />} />
-              <Route path="/users/:id" element={<User />} />
-              <Route path="/adduser" element={<CreateAccount />} />
-              <Route path="/new/timereport" element={<Timereport />} />
-              <Route path='/new/project' element={<NewProject />} />           
-              <Route
-                path="/timereport/edit/:id"
-                element={<Timereport isUpdate={true} />}
-              />
-              <Route
-                path="/timereports/history"
-                element={<TimereportHistory />}
-              />
-              <Route
-                path="/timereports/all-history"
-                element={<TimereportHistory isAllHistory={true} />}
-              />
-              <Route path="*" element={<Page404 />} />
-            </Route>
-            <Route path="/login" element={<Login />} />
-          </Routes>
-        </AuthProvider>
-      </Router>
+      <ThemeProvider theme={theme}>
+        <div className="main">
+          <Navbar />
+          <div className="container">
+            <SideBar />
+            <div className="contentContainer">
+              <Outlet />
+            </div>
+          </div>
+        </div>
+      </ThemeProvider>
     );
+  };
+
+  return (
+    <Router>
+      <AuthProvider>
+        <Routes>
+          <Route element={<PrivateRoutes element={<Layout />} />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/projects/:id" element={<Project />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/users/:id" element={<User />} />
+            <Route path="/adduser" element={<CreateAccount />} />
+            <Route path="/new/timereport" element={<Timereport />} />
+            <Route path='/new/project' element={<NewProject />} />
+            <Route
+              path="/timereport/edit/:id"
+              element={<Timereport isUpdate={true} />}
+            />
+            <Route
+              path="/timereports/history"
+              element={<TimereportHistory />}
+            />
+            <Route
+              path="/timereports/all-history"
+              element={<TimereportHistory isAllHistory={true} />}
+            />
+            <Route path="*" element={<Page404 />} />
+          </Route>
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </AuthProvider>
+    </Router>
+  );
 }
 
 export default App;

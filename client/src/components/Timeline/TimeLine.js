@@ -4,6 +4,7 @@ import { ChevronRight, MoveRight } from 'lucide-react';
 import { formatTime } from '../functions/timeFormatter';
 import LoadingContext from '../functions/LoadingContext';
 import WidgetTagger from "../widgets/widgetTagger";
+import '../../pages/project/project.scss';
 
 function TimeLine({ projectId, filterByUser }) {
     const { timereports, isLoading, error } = useFetchTimereports(projectId, filterByUser);
@@ -24,32 +25,32 @@ function TimeLine({ projectId, filterByUser }) {
 
     return (
         <>
-        <div className='box-headers'>
-            <h4 className='add-margin'>Latest activities</h4>
-            <WidgetTagger projectId={projectId} />
-        </div>
-        <div className='activities'>
-            <ul>
-                {latestActivities.map((timereport, index) => (
-                    <li key={index}>
-                        <div className='activity'>
-                            <time className='date'>{timereport?.properties?.Date?.date?.start}</time>
-                            <p className=''>{timereport?.properties?.Name?.rollup?.array[0]?.formula?.string} worked {formatTime(timereport.properties.Hours?.number)}</p>
-                            <div className='activity-details'>
-                                <span className='activity-tag'>{timereport?.properties?.Category?.select?.name}</span>
-                                {!projectId && (
-                                    <>
-                                        <MoveRight size={12}/> 
-                                        <span className='project-name'>{timereport?.properties?.['Project Name']?.rollup?.array[0]?.title[0]?.text?.content}</span>
-                                    </>
-                                )}
+            <div className='box-headers'>
+                <h4 className='add-margin'>Latest activities</h4>
+                <WidgetTagger projectId={projectId} />
+            </div>
+            <div className='activities'>
+                <ul>
+                    {latestActivities.map((timereport, index) => (
+                        <li key={index}>
+                            <div className='activity'>
+                                <time className='date'>{timereport?.properties?.Date?.date?.start}</time>
+                                <p className=''>{timereport?.properties?.Name?.rollup?.array[0]?.formula?.string} worked {formatTime(timereport.properties.Hours?.number)}</p>
+                                <div className='activity-details'>
+                                    <span className='activity-tag'>{timereport?.properties?.Category?.select?.name}</span>
+                                    {!projectId && (
+                                        <>
+                                            <MoveRight size={12} />
+                                            <span className='project-name'>{timereport?.properties?.['Project Name']?.rollup?.array[0]?.title[0]?.text?.content}</span>
+                                        </>
+                                    )}
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                ))}
-            </ul>
-            <a href='/timereports/all-history'><div className='timeline-bottom'>View all activity <ChevronRight size={14} /></div></a>
-        </div>
+                        </li>
+                    ))}
+                </ul>
+                <a className='link-all-activities' href='/timereports/all-history'><div className='timeline-bottom'>View all activity <ChevronRight size={14} /></div></a>
+            </div>
         </>
     );
 }

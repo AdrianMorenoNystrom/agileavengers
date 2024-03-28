@@ -16,7 +16,7 @@ import statusCheck from './functions/statusCheck';
 import '../pages/projects/projects.scss';
 import { formatTime } from './functions/timeFormatter';
 import { ExternalLink } from 'lucide-react';
-import PageLoadingContext from './functions/PageLoadingContext'
+import PageLoadingContext from './functions/PageLoadingContext';
 
 export default function ProjectTable() {
     const { data, isLoading, error } = useFetchData('/api/projects');
@@ -110,7 +110,7 @@ export default function ProjectTable() {
         navigate(`/projects/${projectId}`);
     };
 
-    if (isLoading) return <PageLoadingContext/>;
+    if (isLoading) return <PageLoadingContext />;
     if (error) return <div>{error}</div>;
 
     return (
@@ -194,7 +194,7 @@ export default function ProjectTable() {
                             </div>
                         </Box>
                     </Box>
-                    <Divider orientation="vertical" flexItem />
+                    {/* <Divider orientation="vertical" flexItem /> */}
                     <Box className='project-data'>
                         {<WeeklyReport projectId={selectedProjectId} />}
                     </Box>

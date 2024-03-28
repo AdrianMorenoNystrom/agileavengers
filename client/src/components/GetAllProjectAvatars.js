@@ -4,7 +4,7 @@ import useFetchData from './UseFetchData';
 import Tooltip from '@mui/material/Tooltip';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import stringToColor from './functions/stringToColor';
-import LoadingContext from './functions/LoadingContext'
+import LoadingContext from './functions/LoadingContext';
 
 function generateAvatarInfo(data) {
     const teamMembers = data?.properties?.['Team Members']?.rollup?.array || [];
@@ -19,7 +19,7 @@ function generateAvatarInfo(data) {
 const GetAllProjectAvatars = ({ projectId, max, spacing }) => {
     const { data, isLoading, error } = useFetchData(`/api/projects/project/${projectId}`, true);
 
-    if (isLoading) return <LoadingContext/>;
+    if (isLoading) return <LoadingContext />;
     if (error) return <div>{error}</div>;
     if (!data) return <div>No data available</div>;
 
@@ -27,7 +27,7 @@ const GetAllProjectAvatars = ({ projectId, max, spacing }) => {
 
     const avatars = avatarInfoList.map(({ initials, bgColor, fullName }, index) => (
         <Tooltip title={fullName} key={index}>
-            <Avatar sx={{ bgcolor: bgColor }}>{initials}</Avatar>
+            <Avatar sx={{ bgcolor: bgColor, width: 36, height: 36 }}>{initials}</Avatar>
         </Tooltip>
     ));
 

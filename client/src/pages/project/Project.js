@@ -4,8 +4,7 @@ import { useParams } from 'react-router-dom';
 import dateFormatter from '../../components/functions/dateFormatter';
 import GetProjectAvatar from '../../components/TeamAvatars';
 import Chip from '@mui/material/Chip';
-import '../../components/single/single.scss'
-import './project.scss'
+import ProjectChart from '../../components/ProjectChart';
 import statusCheck from '../../components/functions/statusCheck';
 import { Pencil } from 'lucide-react';
 import AlertMessage from '../../components/AlertMessage';
@@ -188,7 +187,7 @@ function Project() {
     return (
         <div className='single'>
             <div className='project'>
-                <div className='grid-item project-heading'>
+                <div className='grid-item landscape project-heading'>
                     <div className='topInfo'>
                         <h1>{projectName}</h1>
                         <AlertMessage
@@ -252,15 +251,22 @@ function Project() {
                             </div>
                         </div>
                         <div className='item'>
-                            <div className='itemTitle '>Project info</div>
+                            <div className='itemTitle'>Project info</div>
                             {<p className='itemValue'>{description}</p>}
                         </div>
                     </div>
                 </div>
-                <div className='grid-item'><TimeLine projectId={id} /></div>
-                <div className='grid-item box charts'><CategoryChart project={data} /> </div>
-                <div className='grid-item landscape'>
-                <WeeklyReport projectId={id} />
+                <div className='grid-item box'>
+                    <TimeLine projectId={id} />
+                </div>
+                <div className='grid-item box charts'>
+                    <WeeklyReport projectId={id} />
+                </div>
+                <div className='grid-item box charts'>
+                    <CategoryChart project={data} />
+                </div>
+                <div className='grid-item box charts'>
+                    <ProjectChart project={data} />
                 </div>
             </div>
         </div>
