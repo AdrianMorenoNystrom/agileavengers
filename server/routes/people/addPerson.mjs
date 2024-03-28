@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import notion from "../../notion.mjs";
 import bodyParser from "body-parser";
+import bcrypt from "bcrypt";
 
 dotenv.config();
 
@@ -17,9 +18,13 @@ router.post("/api/people/add", jsonParser, async (request, response) => {
   const password = request.body.password;
   const role = request.body.role;
 
+  // Encryption with Bcrypt
+  const saltRounds = 10;
+  const hash = await bcrypt.hash(password, saltRounds);
+
   const databaseId = process.env.NOTION_DATABASE_ID_PEOPLE;
   try {
-    const result = await notion.pages.create({
+    await notion.pages.create({
       parent: { database_id: databaseId },
       properties: {
         "First Name": {
@@ -32,7 +37,7 @@ router.post("/api/people/add", jsonParser, async (request, response) => {
           ],
         },
         "Last Name": {
-          "rich_text": [
+          rich_text: [
             {
               text: {
                 content: lastName,
@@ -53,7 +58,7 @@ router.post("/api/people/add", jsonParser, async (request, response) => {
           rich_text: [
             {
               text: {
-                content: password,
+                content: hash,
               },
             },
           ],
@@ -65,7 +70,7 @@ router.post("/api/people/add", jsonParser, async (request, response) => {
         },
       },
     });
-    
+
     console.log("Success!");
     response.status(200).json({ message: "Success!" });
   } catch (error) {
