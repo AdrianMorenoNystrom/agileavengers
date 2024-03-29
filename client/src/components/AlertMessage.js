@@ -10,12 +10,15 @@ export default function AlertMessage({ open, onClose, message, severity }) {
     onClose(event, reason);
   };
 
+  //autoHideDuration baserat på meddelandets severity
+  const autoHideDuration = severity === "error" ? 6000 : null;
+
   return (
     <div>
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={open}
-        autoHideDuration={6000}
+        autoHideDuration={autoHideDuration}
         onClose={handleClose}>
         <Alert onClose={handleClose} severity={severity} sx={{ width: "100%" }}>
           {message}
