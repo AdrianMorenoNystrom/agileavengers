@@ -23,7 +23,7 @@ export default function ActiveProjects({ onProjectSelect }) {
         }
     }, [data, onProjectSelect]);
 
-    if (isLoading) return <LoadingContext/>;
+    if (isLoading) return <LoadingContext />;
     if (error) return <div>{error}</div>;
 
     // Slice the data array to get only the first 3 projects
@@ -39,13 +39,13 @@ export default function ActiveProjects({ onProjectSelect }) {
     };
 
     return (
-            <Table size={isMobile ? "small" : "medium"} aria-label="active projects table">
+        <Table size={isMobile ? "small" : "medium"} aria-label="active projects table">
             <TableHead>
                 <TableRow>
                     <TableCell>Open</TableCell>
                     <TableCell>Project</TableCell>
-                    {!isMobile && <TableCell align="right">Leader</TableCell>}
-                    {<TableCell align="right">Deadline</TableCell>}
+                    {!isMobile && <TableCell>Leader</TableCell>}
+                    {<TableCell>Deadline</TableCell>}
                 </TableRow>
             </TableHead>
             <TableBody>
@@ -68,13 +68,13 @@ export default function ActiveProjects({ onProjectSelect }) {
                             {project?.properties?.Projectname?.title?.[0]?.text?.content}
                         </TableCell>
                         {!isMobile && (
-                            <TableCell align="right">
+                            <TableCell>
                                 {project?.properties?.['Project Leader Name']?.rollup?.array?.[0]?.formula?.string || "N/A"}
                             </TableCell>
                         )}
-                            <TableCell align="right">
-                                {project?.properties?.Timespan?.date?.end || "N/A"}
-                            </TableCell>
+                        <TableCell>
+                            {project?.properties?.Timespan?.date?.end || "N/A"}
+                        </TableCell>
                     </TableRow>
                 ))}
             </TableBody>

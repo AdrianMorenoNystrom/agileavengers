@@ -33,7 +33,7 @@ const Navbar = () => {
           <Rocket size={20} />
           <span>Agile Avengers</span>
         </div>
-        <Chip label="Report time" variant="outlined" icon={<EventAvailableIcon />} onClick={handleClick} sx={{marginLeft:5}}/>
+        <Chip label="Report time" variant="outlined" icon={<EventAvailableIcon />} onClick={handleClick} sx={{ marginLeft: 5, padding: '2px 0px 2px 6px' }} />
       </div>
       <div className="icons">
         <NotificationMessage />

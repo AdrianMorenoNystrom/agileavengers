@@ -1,6 +1,10 @@
 @import "../../styles/variables.scss";
 @import "../../styles/responsive.scss";
 
+.mobileMenu {
+    cursor: pointer;
+}
+
 .sideBarContainer {
     width: 0;
     transition: width 0.3s ease;

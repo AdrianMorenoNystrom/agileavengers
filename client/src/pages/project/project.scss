@@ -8,7 +8,7 @@
     grid-auto-rows: minmax(180px, auto);
 
     @include xl {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
     }
 
     @include lg {
@@ -78,6 +78,5 @@
 
 .activities {
     background-color: $light-bg;
-    padding: 0 1em;
     border-radius: $rounded;
 }

@@ -301,17 +301,6 @@ export default function Timereport({ isUpdate }) {
           f
           severity={alertMessage.severity || ""}
         />
-        <Stack
-          direction="row"
-          spacing={2}
-          sx={{ justifyContent: "flex-end", marginBottom: 2 }}>
-          <Button onClick={resetUserInput} variant="outlined">
-            Reset
-          </Button>
-          <Button type="submit" variant="contained">
-            {isUpdate ? "Update" : "Submit"}
-          </Button>
-        </Stack>
         {isUpdate ? (
           <Select
             fullWidth
@@ -437,6 +426,17 @@ export default function Timereport({ isUpdate }) {
           rows={4}
           sx={{ marginBottom: 2 }}
         />
+        <Stack
+          direction="row"
+          spacing={2}
+          sx={{ justifyContent: "flex-end", marginBottom: 2 }}>
+          <Button onClick={resetUserInput} variant="outlined">
+            Reset
+          </Button>
+          <Button type="submit" variant="contained">
+            {isUpdate ? "Update" : "Submit"}
+          </Button>
+        </Stack>
       </Box>
     </Container>
   );
