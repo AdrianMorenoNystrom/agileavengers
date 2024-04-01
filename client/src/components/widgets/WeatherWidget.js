@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import LoadingContext from '../../components/functions/LoadingContext'
 
 function WeatherWidget({ lat, lon }) {
   const [weather, setWeather] = useState(null);
@@ -24,7 +25,7 @@ function WeatherWidget({ lat, lon }) {
   }, [lat, lon]);
 
   if (!weather || !weather.main || !weather.weather) {
-    return <Box sx={{ display: 'flex', justifyContent: 'center', m: 2 }}>Loading weather data...</Box>;
+    return <Box sx={{ display: 'flex', justifyContent: 'center', m: 2 }}> <LoadingContext/></Box>;
   }
 
   const iconUrl = `https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`;
