@@ -53,17 +53,17 @@ export default function Timereport({ isUpdate }) {
       try {
         const response = await axios.get("/api/projects");
         if (response.data && response.data.message) {
-          setProjectsData(response.data.message); 
+          setProjectsData(response.data.message);
         }
       } catch (error) {
         console.error("Kunde inte hämta projektdata:", error);
       }
     };
-  
+
     fetchProjectsData();
-  }, []); 
-  
-  
+  }, []);
+
+
 
 
   const [projectId, setProjectId] = useState("");
@@ -78,7 +78,7 @@ export default function Timereport({ isUpdate }) {
   const [allCategories, setAllCategories] = useState([]);
   const [userId, setUserId] = useState("");
   const [projectsData, setProjectsData] = useState([]);
-  
+
 
   useEffect(() => {
     if (timereportData) {
@@ -254,10 +254,10 @@ export default function Timereport({ isUpdate }) {
         console.error("Timespan data missing for selected project");
         return;
       }
-  
+
       const projectStart = dayjs(projectTimespan.start);
       const projectEnd = dayjs(projectTimespan.end);
-  
+
       if (formattedDate.isBefore(projectStart) || formattedDate.isAfter(projectEnd)) {
         setAlertMessage({
           severity: "warning",
@@ -268,7 +268,7 @@ export default function Timereport({ isUpdate }) {
       }
     }
   };
-  
+
   const userProjects = data.filter(project =>
     project.properties?.People?.relation?.some(user => user.id === userId) ||
     project.properties?.['Project Leader']?.relation?.[0]?.id === userId
@@ -369,20 +369,20 @@ export default function Timereport({ isUpdate }) {
                 flex: "1",
               },
             }}>
-           <DatePicker
-          value={date}
-          maxDate={dayjs(new Date())}
-          onChange={handleDateChange} // Använder den uppdaterade handleDateChange funktionen här
-          label="Date"
-          sx={{ marginBottom: 2 }}
-          renderInput={(params) => (
-          <TextField
-          {...params}
-          error={!!alertMessage.message}
-          helperText={alertMessage.message}
-         />
-        )}
-        />
+            <DatePicker
+              value={date}
+              maxDate={dayjs(new Date())}
+              onChange={handleDateChange} // Använder den uppdaterade handleDateChange funktionen här
+              label="Date"
+              sx={{ marginBottom: 2 }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  error={!!alertMessage.message}
+                  helperText={alertMessage.message}
+                />
+              )}
+            />
             <TimePicker
               ampm={false}
               value={fromTime}

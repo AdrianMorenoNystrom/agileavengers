@@ -265,8 +265,10 @@ const CreateNewProject = () => {
                     value={description}
                     onChange={(event) => setDescription(event.target.value)}
                     label="Project Description"
+                    placeholder="130 characters or less"
                     multiline
                     rows={4}
+                    inputProps={{ maxLength: 130 }}
                     fullWidth
                     required
                 />
