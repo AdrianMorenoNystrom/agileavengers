@@ -4,8 +4,13 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 
-    &>h4 {
+    & > h4 {
         margin-bottom: 3em;
+    }
+
+    .widgets-icon:hover {
+        color: rgba(0, 0, 0, 0.7); /* Ändra färgen efter dina preferenser */
     }
 }
