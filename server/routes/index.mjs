@@ -22,6 +22,7 @@ import deleteTimereportRoute from "./timereports/deleteTimereport.mjs";
 import logoutRoute from "./auth/logout.mjs";
 import getTasksRoute from "./tasks/getTasks.mjs";
 import GetUserSpecificProjects from "./projects/getprojectsforTimereport.mjs";
+import getWeatherRoute from "./tasks/getWeather.mjs"
 
 const app = express();
 
@@ -46,5 +47,6 @@ app.use(changeStatusRoute);
 app.use(logoutRoute);
 app.use(getTasksRoute);
 app.use(GetUserSpecificProjects);
+app.use(getWeatherRoute);
 
 export default app;
