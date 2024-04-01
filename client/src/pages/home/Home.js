@@ -13,8 +13,7 @@ import WidgetPlaceholder from "../../components/widgets/WidgetPlaceholder";
 function Home() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const navigate = useNavigate(); 
-
+  const navigate = useNavigate();
 
   // Added this because CategoryChart needs to wait for its proper projectId.
   useEffect(() => {

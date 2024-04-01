@@ -1,12 +1,13 @@
 import React from 'react';
+import { Container } from '@mui/material';
 import './projects.scss';
 import ProjectTable from '../../components/ProjectTable';
 
 function Projects() {
   return (
-    <div className='projects'>
+    <Container className='projects'>
       <ProjectTable />
-    </div>
+    </Container>
   );
 }
 

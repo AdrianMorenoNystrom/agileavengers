@@ -114,35 +114,37 @@ export default function ProjectTable() {
     if (error) return <div>{error}</div>;
 
     return (
-        <Container style={{ width: '100%' }}>
-            <DataGrid
-                sx={{
-                    cursor: 'pointer',
-                    '& .MuiDataGrid-cell:hover': {
-                        color: 'primary.main',
-                    }
-                }}
-                key={showOnlyUserProjects.toString()}
-                rows={filteredRows(rows)}
-                columns={columns}
-                initialState={{
-                    pagination: {
-                        paginationModel: { page: 0, pageSize: 5 },
-                    },
-                }}
-                pageSizeOptions={[5, 10]}
-                // checkboxSelection
-                slots={{ toolbar: CustomToolbar, getGridDateOperators }}
-                slotProps={{ toolbar: { showColumnSelector: false } }}
-                showOnlyActiveProjects={showOnlyUserProjects}
-                onRowClick={handleProjectClick}
-            />
-            <FormControlLabel
-                control={<Switch />}
-                label="View Only Your Projects"
-                checked={showOnlyUserProjects}
-                onChange={(event) => setShowOnlyUserProjects(event.target.checked)}
-            />
+        <>
+            <Box sx={{ width: '100%' }}>
+                <DataGrid
+                    sx={{
+                        cursor: 'pointer',
+                        '& .MuiDataGrid-cell:hover': {
+                            color: 'primary.main',
+                        }
+                    }}
+                    key={showOnlyUserProjects.toString()}
+                    rows={filteredRows(rows)}
+                    columns={columns}
+                    initialState={{
+                        pagination: {
+                            paginationModel: { page: 0, pageSize: 5 },
+                        },
+                    }}
+                    pageSizeOptions={[5, 10]}
+                    // checkboxSelection
+                    slots={{ toolbar: CustomToolbar, getGridDateOperators }}
+                    slotProps={{ toolbar: { showColumnSelector: false } }}
+                    showOnlyActiveProjects={showOnlyUserProjects}
+                    onRowClick={handleProjectClick}
+                />
+                <FormControlLabel
+                    control={<Switch />}
+                    label="View Only Your Projects"
+                    checked={showOnlyUserProjects}
+                    onChange={(event) => setShowOnlyUserProjects(event.target.checked)}
+                />
+            </Box>
             {selectedProjectId && (
                 <Box className='project-container'>
                     <Box className='project-data'>
@@ -200,6 +202,6 @@ export default function ProjectTable() {
                     </Box>
                 </Box>
             )}
-        </Container>
+        </>
     );
 }

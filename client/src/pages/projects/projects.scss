@@ -1,74 +1,78 @@
 @import "../../styles/variables.scss";
 
-.project-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: minmax(180px, auto);
+.projects {
+    max-width: 700px;
 
-    @media screen and (max-width: 768px) {
-        grid-template-columns: repeat(1, 1fr);
-    }
+    .project-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: minmax(180px, auto);
 
-    .project-data {
-        flex: 1;
-        padding: 1em;
-        border: 1px solid rgb(212, 212, 212);
-        border-radius: 4px;
-
-        .project-title {
-            display: flex;
-            align-items: center;
-
-            .status {
-                margin: 0 1em;
-            }
-
-            .icon-container {
-                border-radius: 50%;
-                cursor: pointer;
-                transition: all ease-in-out 0.3s;
-            }
-
-            .icon-container:hover {
-                background-color: $border-color;
-                scale: 1.1;
-            }
+        @media screen and (max-width: 1024px) {
+            grid-template-columns: repeat(1, 1fr);
         }
 
-        .project-title h2 {
-            margin-bottom: 0;
-        }
+        .project-data {
+            flex: 2;
+            padding: 1em;
+            border: 1px solid rgb(212, 212, 212);
+            border-radius: 4px;
 
-        .project-info {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+            .project-title {
+                display: flex;
+                align-items: center;
 
-            .item {
-                margin: 1em 0.5em;
-                flex-basis: calc(50% - 1em);
-
-                .item-title {
-                    margin: 0.2em 0;
-                    font-size: 0.8em;
-                    font-weight: 600;
+                .status {
+                    margin: 0 1em;
                 }
 
-                .item-value {
-                    display: flex;
+                .icon-container {
+                    border-radius: 50%;
+                    cursor: pointer;
+                    transition: all ease-in-out 0.3s;
                 }
 
-                .item-list-value {
-                    list-style-type: none;
+                .icon-container:hover {
+                    background-color: $border-color;
+                    scale: 1.1;
                 }
             }
 
-        }
+            .project-title h2 {
+                margin-bottom: 0;
+            }
 
-        .project-graph {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            .project-info {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+
+                .item {
+                    margin: 1em 0.5em;
+                    flex-basis: calc(50% - 1em);
+
+                    .item-title {
+                        margin: 0.2em 0;
+                        font-size: 0.8em;
+                        font-weight: 600;
+                    }
+
+                    .item-value {
+                        display: flex;
+                    }
+
+                    .item-list-value {
+                        list-style-type: none;
+                    }
+                }
+
+            }
+
+            .project-graph {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
         }
     }
 }
